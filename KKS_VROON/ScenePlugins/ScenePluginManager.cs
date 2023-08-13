@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 using KKS_VROON.Logging;
+using KKS_VROON.ScenePlugins.ActiveScene;
 using KKS_VROON.ScenePlugins.SimpleScreenScene;
 
 namespace KKS_VROON.ScenePlugins
 {
     public class ScenePluginManager : MonoBehaviour
     {
-        #region SceneControl
+        #region Control scene
         void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             switch (scene.name)
@@ -19,13 +20,24 @@ namespace KKS_VROON.ScenePlugins
                 case "Title":
                     CreateSceneControllerGameObject(typeof(SimpleScreenScenePlugin));
                     break;
+                case "Action":
+                case "FreeH":
+                case "OpeningScene":
+                    CreateSceneControllerGameObject(typeof(ActiveScenePlugin));
+                    break;
             }
         }
 
-        void OnSceneUnloaded(Scene scene)
+        void OnEnable()
         {
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
-        #endregion SceneControl
+
+        void OnDisable()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+        #endregion
 
         #region Initialize
         public static void Initialize()
@@ -36,18 +48,6 @@ namespace KKS_VROON.ScenePlugins
         }
         #endregion
 
-        void OnEnable()
-        {
-            SceneManager.sceneLoaded += OnSceneLoaded;
-            SceneManager.sceneUnloaded += OnSceneUnloaded;
-        }
-
-        void OnDisable()
-        {
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-            SceneManager.sceneUnloaded -= OnSceneUnloaded;
-        }
-
         #region CurrentScene Control
         private GameObject CurrentSceneControllerGameObject { get; set; }
 
@@ -55,10 +55,7 @@ namespace KKS_VROON.ScenePlugins
         {
             PluginLog.Info($"CreateSceneGameObject: {type.Name}");
 
-            if (CurrentSceneControllerGameObject != null)
-            {
-                Destroy(CurrentSceneControllerGameObject);
-            }
+            if (CurrentSceneControllerGameObject != null) Destroy(CurrentSceneControllerGameObject);
 
             CurrentSceneControllerGameObject = new GameObject(type.Name);
             CurrentSceneControllerGameObject.AddComponent(type);

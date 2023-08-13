@@ -29,6 +29,7 @@ namespace KKS_VROON.ScenePlugins.SimpleScreenScene
             if (!UIScreen)
             {
                 UIScreen = UIScreen.Create(new GameObject(gameObject.name + nameof(UIScreen)), UGUICapture, UI_SCREEN_LAYER);
+                UIScreen.Camera.gameObject.AddComponent<CameraCurtain>();
                 UIScreen.Camera.Normal.clearFlags = CameraClearFlags.Skybox;
                 UIScreen.Camera.Normal.depth = UI_SCREEN_CAMERA_DEPTH;
 
@@ -60,9 +61,9 @@ namespace KKS_VROON.ScenePlugins.SimpleScreenScene
 
         #region Constants
         // Set depth larger than existing game camera.
-        private const int UI_SCREEN_CAMERA_DEPTH = 101;
+        public const int UI_SCREEN_CAMERA_DEPTH = 101;
         // Use game unused layers.
-        public static int UGUI_CAPTURE_LAYER = 15;
+        public const int UGUI_CAPTURE_LAYER = 15;
         public const int UI_SCREEN_LAYER = 31;
         // Distance(meter)
         public const float DISTANCE_OF_SCREEN = 1f;

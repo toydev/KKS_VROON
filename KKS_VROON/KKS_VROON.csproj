@@ -134,9 +134,13 @@
     <Compile Include="Patches\InputPatches\InputPatch.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScenePlugins\ActiveScene\ActiveSceneController.cs" />
+    <Compile Include="ScenePlugins\ActiveScene\ActiveScenePlugin.cs" />
     <Compile Include="ScenePlugins\ScenePluginManager.cs" />
     <Compile Include="ScenePlugins\SimpleScreenScene\SimpleScreenSceneController.cs" />
     <Compile Include="ScenePlugins\SimpleScreenScene\SimpleScreenScenePlugin.cs" />
+    <Compile Include="VRUtils\CameraCurtain.cs" />
+    <Compile Include="VRUtils\CameraHijacker.cs" />
     <Compile Include="VRUtils\UGUICapture.cs" />
     <Compile Include="VRUtils\UIScreen.cs" />
     <Compile Include="VRUtils\VR.cs" />
