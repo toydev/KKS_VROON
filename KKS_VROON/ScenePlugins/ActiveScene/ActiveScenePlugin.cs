@@ -1,14 +1,10 @@
-﻿using ADV.Commands.CameraEffect;
+﻿using System.Linq;
+
+using UnityEngine;
+
 using KKS_VROON.Effects;
 using KKS_VROON.Logging;
 using KKS_VROON.VRUtils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using UnityStandardAssets.ImageEffects;
 
 namespace KKS_VROON.ScenePlugins.ActiveScene
 {
@@ -33,23 +29,18 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
         void LateUpdate()
         {
             var gameMainCamera = Camera.main;
-            if (gameMainCamera)
+            if ((gameMainCamera && gameMainCamera != CurrentGameMainCamera) || !MainCamera) UpdateCamera(false);
+
+            if (ActionScene != null)
             {
-                // 実メインカメラの変更またはオブジェクトの無効化でカメラを更新する。
-                // オブジェクトの無効化は、Additive シーンのカメラとの関連付けから連鎖して発生する。
-                if (gameMainCamera != CurrentGameMainCamera || !MainCamera)
+                // Force FPS mode
+                if (ActionScene.CameraState.Mode != ActionGame.CameraMode.FPS)
                 {
-                    UpdateCamera(false);
+                    ActionScene.CameraState.ModeChangeForce(ActionGame.CameraMode.FPS);
                 }
-            }
 
-            // 強制的に FPS モードに変更する。
-            if (ActionScene?.CameraState.Mode != ActionGame.CameraMode.FPS)
-            {
-                ActionScene?.CameraState?.ModeChangeForce(ActionGame.CameraMode.FPS);
+                if (UIScreen) UIScreen.MouseCursorVisible = !ActionScene.isCursorLock;
             }
-
-            if (UIScreen) UIScreen.MouseCursorVisible = ActionScene?.isCursorLock == false || ActionScene?.isCursorLock == null;
         }
 
         // Correspnd to the following camera updates.
@@ -61,9 +52,9 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
         public void UpdateCamera(bool updateBaseHead)
         {
             var gameMainCamera = CurrentGameMainCamera = Camera.main;
-            PluginLog.Info($"UpdateCamera to {gameMainCamera.name}");
             if (gameMainCamera != null)
             {
+                PluginLog.Info($"UpdateCamera to {gameMainCamera.name}");
                 // Create objects as needed.
                 if (!MainCamera)
                 {
@@ -95,9 +86,7 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
                 {
                     if (updateBaseHead) VRCamera.UpdateBaseHeadLocalValues();
 
-                    // 実メインカメラとメインカメラの位置を紐づける。
-                    // 更新タイミングの頭の位置と向きを差し引くことで実メインカメラの視点と現在の HMD の視点を一致させる。
-                    // 向きを差し引き、差し引いた後の向きで位置を差し引く。
+                    // Link the game main camera and the VR main camera.
                     MainCamera.VR.origin.rotation = gameMainCamera.transform.rotation * Quaternion.Inverse(VRCamera.BaseHeadLocalRotation);
                     MainCamera.VR.origin.position = gameMainCamera.transform.position - MainCamera.VR.origin.rotation * VRCamera.BaseHeadLocalPosition;
                     MainCamera.VR.origin.SetParent(gameMainCamera.transform);
@@ -112,12 +101,12 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
                 }
                 else
                 {
-                    // 実メインカメラとメインカメラの位置を紐づける。
+                    // Link the game main camera and the VR main camera.
                     MainCamera.Normal.transform.SetParent(gameMainCamera.transform);
                     MainCamera.Normal.transform.position = gameMainCamera.transform.position;
                     MainCamera.Normal.transform.rotation = gameMainCamera.transform.rotation;
 
-                    // 画面サイズに合わせて 2D スクリーンとして配置する。
+                    // Set as normal 2D screen.
                     UIScreen.Camera.Normal.orthographic = true;
                     UIScreen.Camera.Normal.orthographicSize = Screen.height / 2;
                     UIScreen.transform.SetParent(UIScreen.Camera.transform);

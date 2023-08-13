@@ -14,17 +14,21 @@ namespace KKS_VROON.ScenePlugins
         #region Control scene
         void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            switch (scene.name)
+            if (mode == LoadSceneMode.Single)
             {
-                case "Logo":
-                case "Title":
-                    CreateSceneControllerGameObject(typeof(SimpleScreenScenePlugin));
-                    break;
-                case "Action":
-                case "FreeH":
-                case "OpeningScene":
-                    CreateSceneControllerGameObject(typeof(ActiveScenePlugin));
-                    break;
+                switch (scene.name)
+                {
+                    case "Logo":
+                    case "Title":
+                    case "FreeH":
+                        CreateSceneControllerGameObject(typeof(SimpleScreenScenePlugin));
+                        break;
+                    case "Action":
+                    case "OpeningScene":
+                    case "H":
+                        CreateSceneControllerGameObject(typeof(ActiveScenePlugin));
+                        break;
+                }
             }
         }
 

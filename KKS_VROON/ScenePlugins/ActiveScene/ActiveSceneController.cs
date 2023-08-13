@@ -6,6 +6,7 @@ using KKS_VROON.Logging;
 using KKS_VROON.Patches.InputPatches;
 using KKS_VROON.VRUtils;
 using KKS_VROON.WindowNativeUtils;
+using KKS_VROON.Patches.HandPatches;
 
 namespace KKS_VROON.ScenePlugins.ActiveScene
 {
@@ -29,6 +30,8 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
 
             HandController = new GameObject(gameObject.name + nameof(HandController)).AddComponent<VRHandController>();
             InputPatch.Emulator = this;
+            ScreenPointToRayPatch.GetRay = () => HandController ? HandController.GetRay() : null;
+            ColDisposableInfoPatch.Controller = HandController;
         }
 
         void LateUpdate()
@@ -37,18 +40,22 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
             var controllerState = HandController.State;
             var plugin = GetComponent<ActiveScenePlugin>();
 
-            if (ActionScene == null || ActionScene.isCursorLock != true)
+            PluginLog.Info($"LateUpdate1");
+            if (!ActionScene || ActionScene.isCursorLock != true)
             {
+                PluginLog.Info($"LateUpdate2");
                 // Control the mouse pointer.
-                if (HandController.State.IsPositionChanging() && HandController.RayCast(plugin.UIScreen.GetScreenPlane(), out var hit))
+                if (controllerState.IsPositionChanging() && plugin.UIScreen && HandController.RayCast(plugin.UIScreen.GetScreenPlane(), out var hit))
                 {
                     var screenPosition = plugin.UIScreen.GetScreenPositionFromWorld(hit.point, WindowUtils.GetGameWindowRect());
                     MouseKeyboardUtils.NativeMethods.SetCursorPos((int)screenPosition.x, (int)screenPosition.y);
                 }
             }
+            PluginLog.Info($"LateUpdate4");
 
             // Update base head.
             if (controllerState.IsButtonYDown || controllerState.IsButtonBDown) plugin.UpdateCamera(true);
+            PluginLog.Info($"LateUpdate5");
         }
 
         private VRHandController HandController { get; set; }
@@ -59,12 +66,34 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
         {
             if (!HandController) return null;
 
-            if (axisName == "Mouse X") return HandController.State.JoystickAxis.x;
-            else if (axisName == "Mouse Y")
+            // Translate hand movements to mouse movements while interrupting Camera.ScreenPointToRay.
+            if (ScreenPointToRayPatch.Enabled)
             {
-                // Stop vertical movement of vision when walking.
-                if (Manager.Scene.NowSceneNames?.First() == "Action") return null;
-                return HandController.State.JoystickAxis.y;
+                var deltaThreshold = 0.1f;  /* 10cm */
+                if (axisName == "Mouse X")
+                {
+                    var value = HandController.State.PositionDelta.x;
+                    if (value <= -deltaThreshold) return -1.0f;
+                    if (deltaThreshold <= value) return 1.0f;
+                    return value / deltaThreshold;
+                }
+                else if (axisName == "Mouse Y")
+                {
+                    var value = HandController.State.PositionDelta.y;
+                    if (value <= -deltaThreshold) return -1.0f;
+                    if (deltaThreshold <= value) return 1.0f;
+                    return value / deltaThreshold;
+                }
+            }
+            else
+            {
+                if (axisName == "Mouse X") return HandController.State.JoystickAxis.x;
+                else if (axisName == "Mouse Y")
+                {
+                    // Stop vertical movement of vision when walking.
+                    if (Manager.Scene.NowSceneNames?.First() == "Action") return null;
+                    return HandController.State.JoystickAxis.y;
+                }
             }
             return null;
         }
@@ -115,6 +144,24 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
                 case 2: return HandController.State.IsButtonXUp || HandController.State.IsButtonAUp;
                 default: return null;
             }
+        }
+        #endregion
+
+        #region Cursor
+        void OnEnable()
+        {
+            CursorPatch.onChangeCursor += OnChangeCursor;
+        }
+
+        void OnDisable()
+        {
+            if (HandController) HandController.SetHandIcon(null);
+            CursorPatch.onChangeCursor -= OnChangeCursor;
+        }
+
+        void OnChangeCursor(Texture2D texture)
+        {
+            if (HandController) HandController.SetHandIcon(texture);
         }
         #endregion
     }

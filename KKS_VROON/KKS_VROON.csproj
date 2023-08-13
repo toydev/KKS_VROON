@@ -140,6 +140,12 @@
     <Compile Include="Effects\ReSunShafts.cs" />
     <Compile Include="Effects\ReVignetteAndChromaticAberration.cs" />
     <Compile Include="Logging\PluginLog.cs" />
+    <Compile Include="Patches\HandPatches\ColDisposableInfoPatch.cs" />
+    <Compile Include="Patches\HandPatches\CursorPatch.cs" />
+    <Compile Include="Patches\HandPatches\EstheticProcPatch.cs" />
+    <Compile Include="Patches\HandPatches\HandCtrlPatch.cs" />
+    <Compile Include="Patches\HandPatches\HPointMovePatch.cs" />
+    <Compile Include="Patches\HandPatches\ScreenPointToRayPatch.cs" />
     <Compile Include="Patches\InputPatches\IMouseEmulator.cs" />
     <Compile Include="Patches\InputPatches\InputPatch.cs" />
     <Compile Include="Plugin.cs" />
