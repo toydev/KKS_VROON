@@ -303,17 +303,8 @@
     <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_Utils.cs">
       <Link>SteamVR\Scripts\SteamVR_Utils.cs</Link>
     </Compile>
-    <Compile Include="..\SteamVRUnity\Assets\SteamVR_Input\ActionSetClasses\SteamVR_Input_ActionSet_buggy.cs">
-      <Link>SteamVR_Input\ActionSetClasses\SteamVR_Input_ActionSet_buggy.cs</Link>
-    </Compile>
     <Compile Include="..\SteamVRUnity\Assets\SteamVR_Input\ActionSetClasses\SteamVR_Input_ActionSet_default.cs">
       <Link>SteamVR_Input\ActionSetClasses\SteamVR_Input_ActionSet_default.cs</Link>
-    </Compile>
-    <Compile Include="..\SteamVRUnity\Assets\SteamVR_Input\ActionSetClasses\SteamVR_Input_ActionSet_mixedreality.cs">
-      <Link>SteamVR_Input\ActionSetClasses\SteamVR_Input_ActionSet_mixedreality.cs</Link>
-    </Compile>
-    <Compile Include="..\SteamVRUnity\Assets\SteamVR_Input\ActionSetClasses\SteamVR_Input_ActionSet_platformer.cs">
-      <Link>SteamVR_Input\ActionSetClasses\SteamVR_Input_ActionSet_platformer.cs</Link>
     </Compile>
     <Compile Include="..\SteamVRUnity\Assets\SteamVR_Input\SteamVR_Input_Actions.cs">
       <Link>SteamVR_Input\SteamVR_Input_Actions.cs</Link>

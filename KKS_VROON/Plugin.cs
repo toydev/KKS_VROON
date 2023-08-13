@@ -8,6 +8,8 @@ using KKAPI;
 using KKS_VROON.Logging;
 using KKS_VROON.VRUtils;
 using KKS_VROON.ScenePlugins;
+using KKS_VROON.WindowNativeUtils;
+using HarmonyLib;
 
 namespace KKS_VROON
 {
@@ -30,6 +32,11 @@ namespace KKS_VROON
         void Awake()
         {
             PluginLog.Setup(Logger);
+
+            // Assumption: The game window has focus immediately after startup.
+            WindowUtils.InitializeGameWindowHandle();
+
+            new Harmony(nameof(KKS_VROON)).PatchAll();
 
             try
             {

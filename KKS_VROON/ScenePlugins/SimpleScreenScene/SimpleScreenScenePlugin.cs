@@ -11,6 +11,8 @@ namespace KKS_VROON.ScenePlugins.SimpleScreenScene
         {
             PluginLog.Info($"Awake: {name}");
 
+            gameObject.AddComponent<SimpleScreenSceneController>().SetLayer(UI_SCREEN_LAYER);
+
             UGUICapture = UGUICapture.Create(new GameObject(gameObject.name + nameof(UGUICapture)), UGUI_CAPTURE_LAYER);
             UGUICapture.gameObject.transform.SetParent(gameObject.transform);
 
@@ -29,6 +31,8 @@ namespace KKS_VROON.ScenePlugins.SimpleScreenScene
                 UIScreen = UIScreen.Create(new GameObject(gameObject.name + nameof(UIScreen)), UGUICapture, UI_SCREEN_LAYER);
                 UIScreen.Camera.Normal.clearFlags = CameraClearFlags.Skybox;
                 UIScreen.Camera.Normal.depth = UI_SCREEN_CAMERA_DEPTH;
+
+                GetComponent<SimpleScreenSceneController>().SetOrigin(UIScreen.Camera.VR.origin);
             }
 
             if (VR.Initialized)
@@ -52,6 +56,8 @@ namespace KKS_VROON.ScenePlugins.SimpleScreenScene
             }
         }
 
+        public UIScreen UIScreen { get; set; }
+
         #region Constants
         // Set depth larger than existing game camera.
         private const int UI_SCREEN_CAMERA_DEPTH = 101;
@@ -63,6 +69,5 @@ namespace KKS_VROON.ScenePlugins.SimpleScreenScene
         #endregion
 
         private UGUICapture UGUICapture { get; set; }
-        private UIScreen UIScreen { get; set; }
     }
 }
