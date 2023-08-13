@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34003.232
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KKS_VROON", "KKS_VROON\KKS_VROON.csproj", "{CBF42E7F-4877-46C1-BF21-11C681056C72}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamVRLib_UnityEngine.SpatialTracking", "SteamVRLib_UnityEngine.SpatialTracking\SteamVRLib_UnityEngine.SpatialTracking.csproj", "{1905A87B-826D-48A6-BFC6-FB2C2FC02860}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{CBF42E7F-4877-46C1-BF21-11C681056C72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBF42E7F-4877-46C1-BF21-11C681056C72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBF42E7F-4877-46C1-BF21-11C681056C72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1905A87B-826D-48A6-BFC6-FB2C2FC02860}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1905A87B-826D-48A6-BFC6-FB2C2FC02860}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1905A87B-826D-48A6-BFC6-FB2C2FC02860}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1905A87B-826D-48A6-BFC6-FB2C2FC02860}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
