@@ -13,7 +13,7 @@ So I made a simple VR mod from scratch. Of course, KKS_VR is a great mod and I u
 
 The following is the basic idea of implementation.
 
-- Simply use the perspective of the game camera for the VR camera. And you can reset the front of the VR camera at any time.
+- Simply use the perspective of the game camera for the VR camera. And you can reset the front of the VR camera at any time. It is easy to do because the camera control is simple.
 - Convert hand controller operation to mouse operation. All mouse operations can be performed with one hand.
 
 Currently, only the main game is supported, but I think that the same concept can be applied to CharaStudio.
