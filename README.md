@@ -1,3 +1,5 @@
+[日本語](README.ja.md)
+
 # KKS_VROON - Simple VR plugin for Koikatsu Sunshine
 
 **Preparing for release**
@@ -36,10 +38,10 @@ Enabled by detecting the SteamVR process on startup.
 ----
 
 # Operations
-## Mouse and Hand
+## Mouse and Hand controller
 The left and right hand controller operations are the same.
 
-|Mouse operation|Hand operation|
+|Mouse operation|Hand controller operation|
 |----|----|
 |Left click|Press trigger|
 |Right click|Press grip|
@@ -49,7 +51,7 @@ The left and right hand controller operations are the same.
 |Lateral rotation when moving|Joystick|
 |Vertical rotation when moving|Looking up with HMD|
 
-## Hand only
-|Hand Operation|Action|
+## Hand controller only
+|Hand controller Operation|Action|
 |----|----|
 |Press Y / Press B|Reset the front of the VR camera|
