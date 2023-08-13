@@ -40,10 +40,8 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
             var controllerState = HandController.State;
             var plugin = GetComponent<ActiveScenePlugin>();
 
-            PluginLog.Info($"LateUpdate1");
             if (!ActionScene || ActionScene.isCursorLock != true)
             {
-                PluginLog.Info($"LateUpdate2");
                 // Control the mouse pointer.
                 if (controllerState.IsPositionChanging() && plugin.UIScreen && HandController.RayCast(plugin.UIScreen.GetScreenPlane(), out var hit))
                 {
@@ -51,11 +49,9 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
                     MouseKeyboardUtils.NativeMethods.SetCursorPos((int)screenPosition.x, (int)screenPosition.y);
                 }
             }
-            PluginLog.Info($"LateUpdate4");
 
             // Update base head.
             if (controllerState.IsButtonYDown || controllerState.IsButtonBDown) plugin.UpdateCamera(true);
-            PluginLog.Info($"LateUpdate5");
         }
 
         private VRHandController HandController { get; set; }
