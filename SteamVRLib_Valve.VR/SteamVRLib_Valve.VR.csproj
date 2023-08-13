@@ -1,0 +1,358 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6EDA02C9-156B-4176-9CFA-92EF7D8E1A15}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SteamVRLib_Valve.VR</RootNamespace>
+    <AssemblyName>SteamVRLib_Valve.VR</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;UNITY_5_3_OR_NEWER,UNITY_2017_2_OR_NEWER,OPENVR_XR_API</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;UNITY_5_3_OR_NEWER,UNITY_2017_2_OR_NEWER,OPENVR_XR_API</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Sirenix.Serialization, Version=2.1.13.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModule.2019.4.9\lib\net46\Sirenix.Serialization.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModule.2019.4.9\lib\net46\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.AudioModule.2019.4.9\lib\net46\UnityEngine.AudioModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModule.2019.4.9\lib\net46\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.ImageConversionModule.2019.4.9\lib\net46\UnityEngine.ImageConversionModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.IMGUIModule.2019.4.9\lib\net46\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.InputLegacyModule.2019.4.9\lib\net46\UnityEngine.InputLegacyModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.PhysicsModule.2019.4.9\lib\net46\UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.VRModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.VRModule.2019.4.9\lib\net46\UnityEngine.VRModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Valve.Newtonsoft.Json">
+      <HintPath>..\SteamVRUnity\Assets\SteamVR\Input\Plugins\JSON.NET\Valve.Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_BooleanEvent.cs">
+      <Link>SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_BooleanEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_PoseEvent.cs">
+      <Link>SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_PoseEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_Pose_ConnectedChangedEvent.cs">
+      <Link>SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_Pose_ConnectedChangedEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_Pose_DeviceIndexChangedEvent.cs">
+      <Link>SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_Pose_DeviceIndexChangedEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_Pose_TrackingChangedEvent.cs">
+      <Link>SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_Pose_TrackingChangedEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_SingleEvent.cs">
+      <Link>SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_SingleEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_SkeletonEvent.cs">
+      <Link>SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_SkeletonEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_Skeleton_ConnectedChangedEvent.cs">
+      <Link>SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_Skeleton_ConnectedChangedEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_Skeleton_TrackingChangedEvent.cs">
+      <Link>SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_Skeleton_TrackingChangedEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_Vector2Event.cs">
+      <Link>SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_Vector2Event.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_Vector3Event.cs">
+      <Link>SteamVR\Input\BehaviourUnityEvents\SteamVR_Behaviour_Vector3Event.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Action.cs">
+      <Link>SteamVR\Input\SteamVR_Action.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_ActionDirections.cs">
+      <Link>SteamVR\Input\SteamVR_ActionDirections.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_ActionSet.cs">
+      <Link>SteamVR\Input\SteamVR_ActionSet.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_ActionSet_Manager.cs">
+      <Link>SteamVR\Input\SteamVR_ActionSet_Manager.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Action_Boolean.cs">
+      <Link>SteamVR\Input\SteamVR_Action_Boolean.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Action_In.cs">
+      <Link>SteamVR\Input\SteamVR_Action_In.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Action_Out.cs">
+      <Link>SteamVR\Input\SteamVR_Action_Out.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Action_Pose.cs">
+      <Link>SteamVR\Input\SteamVR_Action_Pose.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Action_Single.cs">
+      <Link>SteamVR\Input\SteamVR_Action_Single.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Action_Skeleton.cs">
+      <Link>SteamVR\Input\SteamVR_Action_Skeleton.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Action_Vector2.cs">
+      <Link>SteamVR\Input\SteamVR_Action_Vector2.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Action_Vector3.cs">
+      <Link>SteamVR\Input\SteamVR_Action_Vector3.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Action_Vibration.cs">
+      <Link>SteamVR\Input\SteamVR_Action_Vibration.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_ActivateActionSetOnLoad.cs">
+      <Link>SteamVR\Input\SteamVR_ActivateActionSetOnLoad.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Behaviour_Boolean.cs">
+      <Link>SteamVR\Input\SteamVR_Behaviour_Boolean.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Behaviour_Pose.cs">
+      <Link>SteamVR\Input\SteamVR_Behaviour_Pose.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Behaviour_Single.cs">
+      <Link>SteamVR\Input\SteamVR_Behaviour_Single.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Behaviour_Skeleton.cs">
+      <Link>SteamVR\Input\SteamVR_Behaviour_Skeleton.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Behaviour_SkeletonCustom.cs">
+      <Link>SteamVR\Input\SteamVR_Behaviour_SkeletonCustom.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Behaviour_Vector2.cs">
+      <Link>SteamVR\Input\SteamVR_Behaviour_Vector2.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Behaviour_Vector3.cs">
+      <Link>SteamVR\Input\SteamVR_Behaviour_Vector3.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_DefaultAction.cs">
+      <Link>SteamVR\Input\SteamVR_DefaultAction.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_DefaultActionSet.cs">
+      <Link>SteamVR\Input\SteamVR_DefaultActionSet.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Input.cs">
+      <Link>SteamVR\Input\SteamVR_Input.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Input_ActionFile.cs">
+      <Link>SteamVR\Input\SteamVR_Input_ActionFile.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Input_ActionScopes.cs">
+      <Link>SteamVR\Input\SteamVR_Input_ActionScopes.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Input_ActionSetUsages.cs">
+      <Link>SteamVR\Input\SteamVR_Input_ActionSetUsages.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Input_BindingFile.cs">
+      <Link>SteamVR\Input\SteamVR_Input_BindingFile.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Input_Generator_Names.cs">
+      <Link>SteamVR\Input\SteamVR_Input_Generator_Names.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Input_References.cs">
+      <Link>SteamVR\Input\SteamVR_Input_References.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Input_Source.cs">
+      <Link>SteamVR\Input\SteamVR_Input_Source.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Input_Sources.cs">
+      <Link>SteamVR\Input\SteamVR_Input_Sources.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Skeleton_Pose.cs">
+      <Link>SteamVR\Input\SteamVR_Skeleton_Pose.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_Skeleton_Poser.cs">
+      <Link>SteamVR\Input\SteamVR_Skeleton_Poser.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Input\SteamVR_UpdateModes.cs">
+      <Link>SteamVR\Input\SteamVR_UpdateModes.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR.cs">
+      <Link>SteamVR\Scripts\SteamVR.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_Behaviour.cs">
+      <Link>SteamVR\Scripts\SteamVR_Behaviour.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_Camera.cs">
+      <Link>SteamVR\Scripts\SteamVR_Camera.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_CameraFlip.cs">
+      <Link>SteamVR\Scripts\SteamVR_CameraFlip.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_CameraMask.cs">
+      <Link>SteamVR\Scripts\SteamVR_CameraMask.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_Ears.cs">
+      <Link>SteamVR\Scripts\SteamVR_Ears.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_EnumEqualityComparer.cs">
+      <Link>SteamVR\Scripts\SteamVR_EnumEqualityComparer.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_Events.cs">
+      <Link>SteamVR\Scripts\SteamVR_Events.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_ExternalCamera.cs">
+      <Link>SteamVR\Scripts\SteamVR_ExternalCamera.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_ExternalCamera_LegacyManager.cs">
+      <Link>SteamVR\Scripts\SteamVR_ExternalCamera_LegacyManager.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_Fade.cs">
+      <Link>SteamVR\Scripts\SteamVR_Fade.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_Frustum.cs">
+      <Link>SteamVR\Scripts\SteamVR_Frustum.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_IK.cs">
+      <Link>SteamVR\Scripts\SteamVR_IK.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_LoadLevel.cs">
+      <Link>SteamVR\Scripts\SteamVR_LoadLevel.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_Menu.cs">
+      <Link>SteamVR\Scripts\SteamVR_Menu.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_Overlay.cs">
+      <Link>SteamVR\Scripts\SteamVR_Overlay.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_PlayArea.cs">
+      <Link>SteamVR\Scripts\SteamVR_PlayArea.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_Render.cs">
+      <Link>SteamVR\Scripts\SteamVR_Render.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_RenderModel.cs">
+      <Link>SteamVR\Scripts\SteamVR_RenderModel.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_RingBuffer.cs">
+      <Link>SteamVR\Scripts\SteamVR_RingBuffer.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_Settings.cs">
+      <Link>SteamVR\Scripts\SteamVR_Settings.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_Skybox.cs">
+      <Link>SteamVR\Scripts\SteamVR_Skybox.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_SphericalProjection.cs">
+      <Link>SteamVR\Scripts\SteamVR_SphericalProjection.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_TrackedCamera.cs">
+      <Link>SteamVR\Scripts\SteamVR_TrackedCamera.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_TrackedObject.cs">
+      <Link>SteamVR\Scripts\SteamVR_TrackedObject.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_TrackingReferenceManager.cs">
+      <Link>SteamVR\Scripts\SteamVR_TrackingReferenceManager.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR\Scripts\SteamVR_Utils.cs">
+      <Link>SteamVR\Scripts\SteamVR_Utils.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR_Input\ActionSetClasses\SteamVR_Input_ActionSet_buggy.cs">
+      <Link>SteamVR_Input\a\SteamVR_Input_ActionSet_buggy.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR_Input\ActionSetClasses\SteamVR_Input_ActionSet_default.cs">
+      <Link>SteamVR_Input\a\SteamVR_Input_ActionSet_default.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR_Input\ActionSetClasses\SteamVR_Input_ActionSet_mixedreality.cs">
+      <Link>SteamVR_Input\a\SteamVR_Input_ActionSet_mixedreality.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR_Input\ActionSetClasses\SteamVR_Input_ActionSet_platformer.cs">
+      <Link>SteamVR_Input\a\SteamVR_Input_ActionSet_platformer.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR_Input\SteamVR_Input_Actions.cs">
+      <Link>SteamVR_Input\SteamVR_Input_Actions.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR_Input\SteamVR_Input_ActionSets.cs">
+      <Link>SteamVR_Input\SteamVR_Input_ActionSets.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Assets\SteamVR_Input\SteamVR_Input_Initialization.cs">
+      <Link>SteamVR_Input\SteamVR_Input_Initialization.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SteamVRLib_Unity.XR.OpenVR\SteamVRLib_Unity.XR.OpenVR.csproj">
+      <Project>{7fb88c7a-a71f-4ec2-b7f3-4659f3a478eb}</Project>
+      <Name>SteamVRLib_Unity.XR.OpenVR</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModule.targets" Condition="Exists('..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModule.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModule.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModule.targets'))" />
+    <Error Condition="!Exists('..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.AudioModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.AudioModule.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.AudioModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.AudioModule.targets'))" />
+    <Error Condition="!Exists('..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.ImageConversionModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.ImageConversionModule.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.ImageConversionModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.ImageConversionModule.targets'))" />
+    <Error Condition="!Exists('..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.IMGUIModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.IMGUIModule.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.IMGUIModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.IMGUIModule.targets'))" />
+    <Error Condition="!Exists('..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.VRModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.VRModule.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.VRModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.VRModule.targets'))" />
+    <Error Condition="!Exists('..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.InputLegacyModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.InputLegacyModule.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.InputLegacyModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.InputLegacyModule.targets'))" />
+    <Error Condition="!Exists('..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.PhysicsModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.PhysicsModule.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.PhysicsModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.PhysicsModule.targets'))" />
+  </Target>
+  <Import Project="..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.AudioModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.AudioModule.targets" Condition="Exists('..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.AudioModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.AudioModule.targets')" />
+  <Import Project="..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.ImageConversionModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.ImageConversionModule.targets" Condition="Exists('..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.ImageConversionModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.ImageConversionModule.targets')" />
+  <Import Project="..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.IMGUIModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.IMGUIModule.targets" Condition="Exists('..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.IMGUIModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.IMGUIModule.targets')" />
+  <Import Project="..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.VRModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.VRModule.targets" Condition="Exists('..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.VRModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.VRModule.targets')" />
+  <Import Project="..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.InputLegacyModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.InputLegacyModule.targets" Condition="Exists('..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.InputLegacyModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.InputLegacyModule.targets')" />
+  <Import Project="..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.PhysicsModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.PhysicsModule.targets" Condition="Exists('..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.PhysicsModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.PhysicsModule.targets')" />
+</Project>

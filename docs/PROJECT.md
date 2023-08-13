@@ -16,22 +16,40 @@ https://github.com/IllusionMods/IllusionLibs
 Create some Class Library (.NET Framework) projects as follows.
 Add the source with Add As Link of Existing Item.
 - SteamVRLib_UnityEngine.SpatialTracking
-  - source: SteamVRUnity/Library/PackageCache/com.unity.xr.legacyinputhelpers@2.1.10/Runtime/TrackedPoseDriver/*.cs
+  - source: SteamVRUnity\Library\PackageCache\com.unity.xr.legacyinputhelpers@2.1.10\Runtime\TrackedPoseDriver\*.cs
   - conditional compliation symbols: UNITY_2019_3_OR_NEWER,ENABLE_VR
   - references:
     - IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModules
     - IllusionLibs.KoikatsuSunshine.UnityEngine.XRModule
 - SteamVRLib_UnityEngine.XR.Management
-  - source: SteamVRUnityProject/Library/PackageCache/com.unity.xr.management@4.3.3/Runtime/*.cs
+  - source: SteamVRUnity\Library\PackageCache\com.unity.xr.management@4.3.3\Runtime\*.cs
   - conditional compliation symbols: -
   - references:
     - IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModules
     - UnityEngine.SubsystemsModule.dll (from C:\illusion\KoikatsuSunshine\KoikatsuSunshine_Data\Managed)
 - SteamVRLib_Unity.XR.OpenVR
-  - source: SteamVRUnityProject/Library/PackageCache/com.valvesoftware.unity.openvr@3ee6c452bc34/Runtime/*.cs
+  - source: SteamVRUnity\Library\PackageCache\com.valvesoftware.unity.openvr@3ee6c452bc34\Runtime\*.cs
   - conditional compliation symbols: UNITY_5_3_OR_NEWER,UNITY_XR_MANAGEMENT
   - references:
     - SteamVRLib_UnityEngine.XR.Management
     - IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModules
     - IllusionLibs.KoikatsuSunshine.UnityEngine.XRModule
     - UnityEngine.SubsystemsModule.dll (from C:\illusion\KoikatsuSunshine\KoikatsuSunshine_Data\Managed)
+- SteamVRLib_Valve.VR
+  - source:
+    - SteamVRUnity\Assets\SteamVR\Input\*.cs
+    - SteamVRUnity\Assets\SteamVR\Input\BehaviourUnityEvents\*.cs
+    - SteamVRUnity\Assets\SteamVR\Scripts\*.cs
+    - SteamVRUnity\Assets\SteamVR_Input\*.cs
+    - SteamVRUnity\Assets\SteamVR_Input\ActionSetClasses\*.cs
+  - conditional compliation symbols: UNITY_5_3_OR_NEWER,UNITY_2017_2_OR_NEWER,OPENVR_XR_API
+  - references:
+    - SteamVRLib_Unity.XR.OpenVR
+    - IllusionLibs.KoikatsuSunshine.UnityEngine.AudioModule
+    - IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModules
+    - IllusionLibs.KoikatsuSunshine.UnityEngine.ImageConversionModule
+    - IllusionLibs.KoikatsuSunshine.UnityEngine.IMGUIModule
+    - IllusionLibs.KoikatsuSunshine.UnityEngine.InputLegacyModule
+    - IllusionLibs.KoikatsuSunshine.UnityEngine.PhysicsModule
+    - IllusionLibs.KoikatsuSunshine.UnityEngine.VRModule
+    - Valve.Newtonsoft.Json.dll (from SteamVRUnity\Assets\SteamVR\Input\Plugins\JSON.NET)
