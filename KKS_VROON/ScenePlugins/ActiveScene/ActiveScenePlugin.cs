@@ -1,4 +1,5 @@
 ﻿using ADV.Commands.CameraEffect;
+using KKS_VROON.Effects;
 using KKS_VROON.Logging;
 using KKS_VROON.VRUtils;
 using System;
@@ -77,6 +78,17 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
                 }
 
                 CameraHijacker.Hijack(gameMainCamera, MainCamera.Normal);
+                MainCamera.GetOrAddComponent<ReGlobalFog>().Source = gameMainCamera;
+                MainCamera.GetOrAddComponent<ReAmplifyOcclusionEffect>().Source = gameMainCamera;
+                MainCamera.GetOrAddComponent<ReBloomAndFlares>().Source = gameMainCamera;
+                MainCamera.GetOrAddComponent<ReAmplifyColorEffect>().Source = gameMainCamera;
+                MainCamera.GetOrAddComponent<ReSunShafts>().Source = gameMainCamera;
+                MainCamera.GetOrAddComponent<ReVignetteAndChromaticAberration>().Source = gameMainCamera;
+                // Stopped DepthOfField, because it's blurry.
+                // MainCamera.GetOrAddComponent<ReDepthOfField>().Source = gameMainCamera;
+                MainCamera.GetOrAddComponent<ReBlur>().Source = gameMainCamera;
+                MainCamera.GetOrAddComponent<ReCrossFade>().Source = gameMainCamera;
+                MainCamera.GetOrAddComponent<ReSepiaTone>().Source = gameMainCamera;
                 MainCamera.Normal.depth = MAIN_CAMERA_DEPTH;
 
                 if (VR.Initialized)
