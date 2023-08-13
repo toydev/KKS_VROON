@@ -27,3 +27,11 @@ Add the source with Add As Link of Existing Item.
   - references:
     - IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModules
     - UnityEngine.SubsystemsModule.dll (from C:\illusion\KoikatsuSunshine\KoikatsuSunshine_Data\Managed)
+- SteamVRLib_Unity.XR.OpenVR
+  - source: SteamVRUnityProject/Library/PackageCache/com.valvesoftware.unity.openvr@3ee6c452bc34/Runtime/*.cs
+  - conditional compliation symbols: UNITY_5_3_OR_NEWER,UNITY_XR_MANAGEMENT
+  - references:
+    - SteamVRLib_UnityEngine.XR.Management
+    - IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModules
+    - IllusionLibs.KoikatsuSunshine.UnityEngine.XRModule
+    - UnityEngine.SubsystemsModule.dll (from C:\illusion\KoikatsuSunshine\KoikatsuSunshine_Data\Managed)

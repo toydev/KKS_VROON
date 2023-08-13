@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7FB88C7A-A71F-4EC2-B7F3-4659F3A478EB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SteamVRLib_Unity.XR.OpenVR</RootNamespace>
+    <AssemblyName>SteamVRLib_Unity.XR.OpenVR</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;UNITY_5_3_OR_NEWER,UNITY_XR_MANAGEMENT</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;UNITY_5_3_OR_NEWER,UNITY_XR_MANAGEMENT</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Sirenix.Serialization, Version=2.1.13.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModule.2019.4.9\lib\net46\Sirenix.Serialization.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModule.2019.4.9\lib\net46\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModule.2019.4.9\lib\net46\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.SubsystemsModule">
+      <HintPath>C:\illusion\KoikatsuSunshine\KoikatsuSunshine_Data\Managed\UnityEngine.SubsystemsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.XRModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.XRModule.2019.4.9\lib\net46\UnityEngine.XRModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SteamVRUnity\Library\PackageCache\com.valvesoftware.unity.openvr%403ee6c452bc34\Runtime\DeviceLayouts.cs">
+      <Link>DeviceLayouts.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Library\PackageCache\com.valvesoftware.unity.openvr%403ee6c452bc34\Runtime\OpenVREvents.cs">
+      <Link>OpenVREvents.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Library\PackageCache\com.valvesoftware.unity.openvr%403ee6c452bc34\Runtime\OpenVRHelpers.cs">
+      <Link>OpenVRHelpers.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Library\PackageCache\com.valvesoftware.unity.openvr%403ee6c452bc34\Runtime\OpenVRLoader.cs">
+      <Link>OpenVRLoader.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Library\PackageCache\com.valvesoftware.unity.openvr%403ee6c452bc34\Runtime\OpenVRSettings.cs">
+      <Link>OpenVRSettings.cs</Link>
+    </Compile>
+    <Compile Include="..\SteamVRUnity\Library\PackageCache\com.valvesoftware.unity.openvr%403ee6c452bc34\Runtime\openvr_api.cs">
+      <Link>openvr_api.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SteamVRLib_UnityEngine.XR.Management\SteamVRLib_UnityEngine.XR.Management.csproj">
+      <Project>{f3b9339b-33f1-4c9d-a953-3d1f27d1ffb0}</Project>
+      <Name>SteamVRLib_UnityEngine.XR.Management</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModule.targets" Condition="Exists('..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModule.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModule.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModule.targets'))" />
+    <Error Condition="!Exists('..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.XRModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.XRModule.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.XRModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.XRModule.targets'))" />
+  </Target>
+  <Import Project="..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.XRModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.XRModule.targets" Condition="Exists('..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.XRModule.2019.4.9\build\IllusionLibs.KoikatsuSunshine.UnityEngine.XRModule.targets')" />
+</Project>
