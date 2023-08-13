@@ -1,6 +1,8 @@
 ﻿using BepInEx;
 using KKAPI;
 
+using KKS_VROON.Logging;
+
 namespace KKS_VROON
 {
     [BepInPlugin(GUID, Name, Version)]
@@ -15,7 +17,9 @@ namespace KKS_VROON
 
         void Awake()
         {
-            Logger.LogInfo("Awake");
+            PluginLog.Setup(Logger);
+
+            PluginLog.Info("Awake");
         }
     }
 }
