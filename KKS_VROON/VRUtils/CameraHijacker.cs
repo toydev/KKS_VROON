@@ -28,8 +28,6 @@ namespace KKS_VROON.VRUtils
                 PluginLog.Info($"Hijack camera: {camera.name}");
                 LastCullingMask = camera.cullingMask;
                 LastClearFlags = camera.clearFlags;
-                camera.cullingMask = 0;
-                camera.clearFlags = CameraClearFlags.Nothing;
             }
         }
 
@@ -39,7 +37,6 @@ namespace KKS_VROON.VRUtils
             var camera = GetComponent<Camera>();
             if (camera != null)
             {
-                camera.enabled = false;
                 camera.cullingMask = 0;
                 camera.clearFlags = CameraClearFlags.Nothing;
             }
@@ -49,7 +46,11 @@ namespace KKS_VROON.VRUtils
         {
             // Enable camera before the rendering phase ends.
             var camera = GetComponent<Camera>();
-            if (camera != null && Event.current.type == EventType.Repaint) camera.enabled = true;
+            if (camera != null && Event.current.type == EventType.Repaint)
+            {
+                camera.cullingMask = LastCullingMask;
+                camera.clearFlags = LastClearFlags;
+            }
         }
     }
 }
