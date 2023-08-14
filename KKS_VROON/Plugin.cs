@@ -40,7 +40,9 @@ namespace KKS_VROON
 
             try
             {
-                if (!KoikatuAPI.IsVR() && IsSteamVRRunning) VR.Initialize(() => Setup());
+                // Debug vroon mode ... Apply plugin while on the 2D screen
+                if (Environment.CommandLine.Contains("--debug-vroon")) Setup();
+                else if (!KoikatuAPI.IsVR() && IsSteamVRRunning) VR.Initialize(() => Setup());
             }
             catch (Exception e)
             {
