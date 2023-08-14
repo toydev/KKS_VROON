@@ -32,13 +32,14 @@ namespace KKS_VROON.ScenePlugins.SimpleScreenScene
                 UIScreen.Camera.gameObject.AddComponent<CameraCurtain>();
                 UIScreen.Camera.Normal.clearFlags = CameraClearFlags.Skybox;
                 UIScreen.Camera.Normal.depth = UI_SCREEN_CAMERA_DEPTH;
-
-                GetComponent<SimpleScreenSceneController>().SetOrigin(UIScreen.Camera.VR.origin);
             }
 
             if (VR.Initialized)
             {
                 if (updateBaseHead) VRCamera.UpdateBaseHeadLocalValues();
+
+                // Link the hand controller and the VR main camera.
+                GetComponent<SimpleScreenSceneController>().SetOrigin(UIScreen.Camera.VR.origin);
 
                 // Put the screen in front.
                 UIScreen.transform.SetParent(UIScreen.Camera.VR.origin);

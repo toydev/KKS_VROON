@@ -64,8 +64,6 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
                     UIScreen = UIScreen.Create(new GameObject(gameObject.name + nameof(UIScreen)), UGUICapture, UI_SCREEN_LAYER);
                     UIScreen.Camera.gameObject.AddComponent<CameraCurtain>();
                     UIScreen.Camera.Normal.depth = UI_SCREEN_CAMERA_DEPTH;
-
-                    GetComponent<ActiveSceneController>().SetOrigin(MainCamera.VR.origin);
                 }
 
                 CameraHijacker.Hijack(gameMainCamera, MainCamera.Normal);
@@ -85,6 +83,9 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
                 if (VR.Initialized)
                 {
                     if (updateBaseHead) VRCamera.UpdateBaseHeadLocalValues();
+
+                    // Link the hand controller and the VR main camera.
+                    GetComponent<ActiveSceneController>().SetOrigin(MainCamera.VR.origin);
 
                     // Link the game main camera and the VR main camera.
                     MainCamera.VR.origin.rotation = gameMainCamera.transform.rotation * Quaternion.Inverse(VRCamera.BaseHeadLocalRotation);
