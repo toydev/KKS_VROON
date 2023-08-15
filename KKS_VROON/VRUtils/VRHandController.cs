@@ -109,7 +109,7 @@ namespace KKS_VROON.VRUtils
 
             if (VR.Initialized)
             {
-                // Separate SteamVR_RenderModelSteamVR_RenderModel,
+                // Separate SteamVR_RenderModel,
                 // Because it rebuilds related elements when the model is loaded.
                 LControllerVisual = CreatePose(SteamVR_Input_Sources.LeftHand, true);
                 RControllerVisual = CreatePose(SteamVR_Input_Sources.RightHand, true);
