@@ -23,18 +23,6 @@ namespace KKS_VROON.VRUtils
             return null;
         }
 
-        public bool RayCast(out RaycastHit hit, float maxDistance)
-        {
-            if (enabled)
-            {
-                UpdateState();
-                if (LLaserPointer.gameObject.activeInHierarchy) return RayCast(LLaserPointer, out hit, maxDistance);
-                else if (RLaserPointer.gameObject.activeInHierarchy) return RayCast(RLaserPointer, out hit, maxDistance);
-            }
-            hit = default;
-            return false;
-        }
-
         public bool RayCast(Plane plane, out RaycastHit hit)
         {
             if (enabled)
@@ -116,8 +104,8 @@ namespace KKS_VROON.VRUtils
 
                 LControllerPose = CreatePose(SteamVR_Input_Sources.LeftHand, false);
                 RControllerPose = CreatePose(SteamVR_Input_Sources.RightHand, false);
-                LLaserPointer = CreateLarserPointer(LControllerPose);
-                RLaserPointer = CreateLarserPointer(RControllerPose);
+                LLaserPointer = CreateLaserPointer(LControllerPose);
+                RLaserPointer = CreateLaserPointer(RControllerPose);
                 LHandIcon = CreateHandIcon(LControllerPose);
                 RHandIcon = CreateHandIcon(RControllerPose);
                 LLaserPointer.gameObject.SetActive(IsLeftHandActive);
@@ -145,7 +133,7 @@ namespace KKS_VROON.VRUtils
             return result;
         }
 
-        private Transform CreateLarserPointer(SteamVR_Behaviour_Pose parentPose)
+        private Transform CreateLaserPointer(SteamVR_Behaviour_Pose parentPose)
         {
             var result = new GameObject(gameObject.name + nameof(LineRenderer)).AddComponent<LineRenderer>();
             result.gameObject.transform.SetParent(parentPose.transform);
@@ -254,21 +242,11 @@ namespace KKS_VROON.VRUtils
                 _state.JoystickAxis = (leftJoystickAxisDeltaDistance < rightJoystickAxisDeltaDistance) ? _state.RightJoystickAxis : _state.LeftJoystickAxis;
         }
 
-        private Ray? GetRay(Transform larserTransform) => enabled ? (Ray?)new Ray(larserTransform.position, larserTransform.forward) : null;
+        private Ray? GetRay(Transform laserTransform) => enabled ? (Ray?)new Ray(laserTransform.position, laserTransform.forward) : null;
 
-        private bool RayCast(Transform larserTransform, out RaycastHit hit, float maxDistance)
+        private bool RayCast(Transform laserTransform, Plane plane, out RaycastHit hit)
         {
-            var ray = GetRay(larserTransform);
-            if (ray != null)
-                return Physics.Raycast(ray.Value, out hit, maxDistance, 1 << larserTransform.gameObject.layer);
-
-            hit = default;
-            return false;
-        }
-
-        private bool RayCast(Transform larserTransform, Plane plane, out RaycastHit hit)
-        {
-            var ray = GetRay(larserTransform);
+            var ray = GetRay(laserTransform);
             if (ray != null)
             {
                 if (plane.Raycast(ray.Value, out var enter))
