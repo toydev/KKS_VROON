@@ -1,7 +1,7 @@
-﻿using HarmonyLib;
-using UnityEngine;
+﻿using System;
 
-using KKS_VROON.VRUtils;
+using HarmonyLib;
+using UnityEngine;
 
 namespace KKS_VROON.Patches.HandPatches
 {
@@ -10,7 +10,8 @@ namespace KKS_VROON.Patches.HandPatches
     [HarmonyPatch(typeof(TalkScene.ColDisposableInfo))]
     public class ColDisposableInfoPatch
     {
-        public static VRHandController Controller { get; set; }
+        public static Func<Collider, RaycastHit?> Raycast { get; set; }
+        public static Func<bool> MouseDown { get; set; }
 
         [HarmonyPatch(nameof(TalkScene.ColDisposableInfo.Start))]
         [HarmonyPostfix]
@@ -27,7 +28,7 @@ namespace KKS_VROON.Patches.HandPatches
         [HarmonyPrefix]
         public static bool PrefixEnd(ref TalkScene.ColDisposableInfo __instance)
         {
-            Object.Destroy(__instance.col.GetComponent<ColDisposableInfoWrapper>());
+            UnityEngine.Object.Destroy(__instance.col.GetComponent<ColDisposableInfoWrapper>());
             return true;
         }
 
@@ -39,12 +40,12 @@ namespace KKS_VROON.Patches.HandPatches
             {
                 if (Target.col && ((1 << Target.talkScene.touchMode) & Target.mode) != 0)
                 {
-                    var ray = (Controller != null) ? Controller.GetRay() : null;
-                    if (ray != null)
+                    if (Raycast != null && MouseDown != null)
                     {
-                        if (Target.col.Raycast(ray.Value, out var hitInfo, 10f))
+                        var hitInfo = Raycast(Target.col);
+                        if (hitInfo != null)
                         {
-                            if (Controller.State.IsTriggerOn) Target.touchFunc(Target.name, hitInfo.point);
+                            if (MouseDown()) Target.touchFunc(Target.name, hitInfo.Value.point);
                             else Target.enterFunc(Target.name);
                         }
                         else Target.exitFunc(Target.name);

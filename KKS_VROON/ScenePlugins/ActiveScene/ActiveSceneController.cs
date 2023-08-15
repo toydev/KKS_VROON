@@ -31,7 +31,8 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
             HandController = new GameObject(gameObject.name + nameof(HandController)).AddComponent<VRHandController>();
             InputPatch.Emulator = this;
             ScreenPointToRayPatch.GetRay = () => HandController ? HandController.GetRay() : null;
-            ColDisposableInfoPatch.Controller = HandController;
+            ColDisposableInfoPatch.Raycast = (collider) => HandController ? HandController.WideCast(collider, 0.4f, 10, 10, 10f) : null;
+            ColDisposableInfoPatch.MouseDown = () => HandController.State.IsTriggerOn;
         }
 
         void LateUpdate()

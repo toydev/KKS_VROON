@@ -35,6 +35,17 @@ namespace KKS_VROON.VRUtils
             return false;
         }
 
+        public RaycastHit? WideCast(Collider targetCollider, float width, int xnum, int ynum, float maxDistance)
+        {
+            if (enabled)
+            {
+                UpdateState();
+                if (LLaserPointer.gameObject.activeInHierarchy) return WideCast(LLaserPointer, targetCollider, width, xnum, ynum, maxDistance);
+                else if (RLaserPointer.gameObject.activeInHierarchy) return WideCast(RLaserPointer, targetCollider, width, xnum, ynum, maxDistance);
+            }
+            return null;
+        }
+
         public void SetOrigin(Transform origin)
         {
             if (enabled)
@@ -104,8 +115,8 @@ namespace KKS_VROON.VRUtils
 
                 LControllerPose = CreatePose(SteamVR_Input_Sources.LeftHand, false);
                 RControllerPose = CreatePose(SteamVR_Input_Sources.RightHand, false);
-                LLaserPointer = CreateLaserPointer(LControllerPose);
-                RLaserPointer = CreateLaserPointer(RControllerPose);
+                LLaserPointer = CreateLarserPointer(LControllerPose);
+                RLaserPointer = CreateLarserPointer(RControllerPose);
                 LHandIcon = CreateHandIcon(LControllerPose);
                 RHandIcon = CreateHandIcon(RControllerPose);
                 LLaserPointer.gameObject.SetActive(IsLeftHandActive);
@@ -133,7 +144,7 @@ namespace KKS_VROON.VRUtils
             return result;
         }
 
-        private Transform CreateLaserPointer(SteamVR_Behaviour_Pose parentPose)
+        private Transform CreateLarserPointer(SteamVR_Behaviour_Pose parentPose)
         {
             var result = new GameObject(gameObject.name + nameof(LineRenderer)).AddComponent<LineRenderer>();
             result.gameObject.transform.SetParent(parentPose.transform);
@@ -259,6 +270,30 @@ namespace KKS_VROON.VRUtils
 
             hit = default;
             return false;
+        }
+
+        private RaycastHit? WideCast(Transform laserTransform, Collider targetCollider, float width, int xnum, int ynum, float maxDistance)
+        {
+            float stepX = width / (xnum - 1);
+            float stepY = width / (ynum - 1);
+
+            var closestDistance = maxDistance;
+            RaycastHit? result = null;
+            for (int x = 0; x < xnum; x++)
+            {
+                for (int y = 0; y < ynum; y++)
+                {
+                    var offset = laserTransform.right * (x * stepX - width * 0.5f) + laserTransform.up * (y * stepY - width * 0.5f);
+                    var ray = new Ray(laserTransform.position + offset, laserTransform.forward);
+                    if (targetCollider.Raycast(ray, out var hit, maxDistance) && hit.distance < closestDistance)
+                    {
+                        result = hit;
+                        closestDistance = hit.distance;
+                    }
+                }
+            }
+
+            return result;
         }
     }
 }
