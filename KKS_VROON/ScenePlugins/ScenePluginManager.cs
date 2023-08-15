@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using KKS_VROON.Logging;
 using KKS_VROON.ScenePlugins.ActiveScene;
 using KKS_VROON.ScenePlugins.SimpleScreenScene;
+using KKS_VROON.VRUtils;
 
 namespace KKS_VROON.ScenePlugins
 {
@@ -14,6 +15,8 @@ namespace KKS_VROON.ScenePlugins
         #region Control scene
         void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
+            new GameObject(nameof(VRMirrorManager) + scene.name).AddComponent<VRMirrorManager>();
+
             if (mode == LoadSceneMode.Single)
             {
                 switch (scene.name)
