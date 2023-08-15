@@ -14,13 +14,11 @@ namespace KKS_VROON.VRUtils
             {
                 dest.cullingMask = hijacker.LastCullingMask;
                 dest.clearFlags = hijacker.LastClearFlags;
-                dest.stereoTargetEye = hijacker.LastStereoTargetEye;
             }
         }
 
         private LayerMask LastCullingMask { get; set; }
         private CameraClearFlags LastClearFlags { get; set; }
-        private StereoTargetEyeMask LastStereoTargetEye { get; set; }
 
         void Awake()
         {
@@ -30,10 +28,6 @@ namespace KKS_VROON.VRUtils
                 PluginLog.Info($"Hijack camera: {camera.name}");
                 LastCullingMask = camera.cullingMask;
                 LastClearFlags = camera.clearFlags;
-                LastStereoTargetEye = camera.stereoTargetEye;
-                // Suppress the following logs:
-                // Cannot set field of view on camera with name 'xxx' while VR is enabled.
-                camera.stereoTargetEye = StereoTargetEyeMask.None;
             }
         }
 

@@ -148,6 +148,7 @@
     <Compile Include="Patches\HandPatches\ScreenPointToRayPatch.cs" />
     <Compile Include="Patches\InputPatches\IMouseEmulator.cs" />
     <Compile Include="Patches\InputPatches\InputPatch.cs" />
+    <Compile Include="Patches\SuppressCameraWarningPatches\CameraPatch.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScenePlugins\ActiveScene\ActiveSceneController.cs" />
