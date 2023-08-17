@@ -2,9 +2,7 @@
 
 # KKS_VROON - Simple VR plugin for Koikatsu Sunshine
 
-**Preparing for release**
-
-"It is a VR mod based on the concept of lying down and playing with one hand."
+**It is a VR mod based on the concept of lying down and playing with one hand.**
 
 Do you know why this concept is important?
 
@@ -25,13 +23,24 @@ Maybe it needs to support IMGUI
 
 - Oculus Quest 2
 
-Welcome pull requests.
+Welcome pull requests for any controller support.
+
+----
+
+# Prerequisites
+
+- Koikatsu Sunshine
+- Latest version of BepInEx 5.x and KKSAPI/ModdingAPI
+- SteamVR
+- Oculus Quest 2
+
+- Other VR mods must not be included
 
 ----
 
 # How to play
 
-Install this mod into the game, connect the HMD and SteamVR, and start the game.
+Install [KKS_VROON](https://github.com/toydev/KKS_VROON/releases) into the game, connect the HMD and SteamVR, and start the game.
 
 Enabled by detecting the SteamVR process on startup.
 

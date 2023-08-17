@@ -2,9 +2,7 @@
 
 # KKS_VROON - Simple VR plugin for Koikatsu Sunshine
 
-**リリース準備中です**
-
-"横になって片手で遊べるコンセプトの VR mod です。"
+**横になって片手で遊べるコンセプトの VR mod です。**
 
 なぜこのコンセプトが重要なのかわかりますか？
 
@@ -25,13 +23,24 @@
 
 - Oculus Quest 2
 
-プルリクエスト歓迎です。
+コントローラーサポートのプルリクエスト歓迎です。
+
+----
+
+# 前提
+
+- コイカツ！サンシャイン
+- 最新バージョンの BepInEx 5.X と KKAPI/ModdingAPI
+- SteamVR
+- Oculus Quest 2
+
+- 他の VR 化 mod が入っていないこと
 
 ----
 
 # 遊び方
 
-ゲームに mod をインストールし、HMD と SteamVR を接続してゲームを開始してください。
+ゲームに [KKS_VROON](https://github.com/toydev/KKS_VROON/releases) をインストールし、HMD と SteamVR を接続してゲームを開始してください。
 
 開始時に SteamVR のプロセスを検出して有効になります。
 
