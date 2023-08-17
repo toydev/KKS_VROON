@@ -17,20 +17,25 @@ namespace KKS_VROON.VRUtils
             if (enabled)
             {
                 UpdateState();
-                if (LLaserPointer.gameObject.activeInHierarchy) return GetRay(LLaserPointer);
-                else if (RLaserPointer.gameObject.activeInHierarchy) return GetRay(RLaserPointer);
+                if (LLaserPointer.gameObject.activeInHierarchy) return new Ray(State.LeftLaserPosition, State.LeftLaserRotation * Vector3.forward);
+                else if (RLaserPointer.gameObject.activeInHierarchy) return new Ray(State.RightLaserPosition, State.RightLaserRotation * Vector3.forward);
             }
             return null;
         }
 
         public bool RayCast(Plane plane, out RaycastHit hit)
         {
-            if (enabled)
+            var ray = GetRay();
+            if (ray != null)
             {
-                UpdateState();
-                if (LLaserPointer.gameObject.activeInHierarchy) return RayCast(LLaserPointer, plane, out hit);
-                else if (RLaserPointer.gameObject.activeInHierarchy) return RayCast(RLaserPointer, plane, out hit);
+                if (plane.Raycast(ray.Value, out var enter))
+                {
+                    hit = default;
+                    hit.point = ray.Value.GetPoint(enter);
+                    return true;
+                }
             }
+
             hit = default;
             return false;
         }
@@ -40,8 +45,20 @@ namespace KKS_VROON.VRUtils
             if (enabled)
             {
                 UpdateState();
-                if (LLaserPointer.gameObject.activeInHierarchy) return WideCast(LLaserPointer, targetCollider, width, xnum, ynum, maxDistance);
-                else if (RLaserPointer.gameObject.activeInHierarchy) return WideCast(RLaserPointer, targetCollider, width, xnum, ynum, maxDistance);
+                if (LLaserPointer.gameObject.activeInHierarchy)
+                    return WideCast(
+                        State.LeftLaserPosition,
+                        State.LeftLaserRotation * Vector3.forward,
+                        State.LeftLaserRotation * Vector3.right,
+                        State.LeftLaserRotation * Vector3.up,
+                        targetCollider, width, xnum, ynum, maxDistance);
+                else if (RLaserPointer.gameObject.activeInHierarchy)
+                    return WideCast(
+                        State.RightLaserPosition,
+                        State.RightLaserRotation * Vector3.forward,
+                        State.RightLaserRotation * Vector3.right,
+                        State.RightLaserRotation * Vector3.up,
+                        targetCollider, width, xnum, ynum, maxDistance);
             }
             return null;
         }
@@ -183,6 +200,8 @@ namespace KKS_VROON.VRUtils
 
         private float LastUpdateStateFrameCount { get; set; }
         private VRHandControllerState _state = new VRHandControllerState();
+        private VRHandControllerPoseSmoother LLaserSmoother { get; set; } = new VRHandControllerPoseSmoother(2);
+        private VRHandControllerPoseSmoother RLaserSmoother { get; set; } = new VRHandControllerPoseSmoother(2);
 
         private void UpdateState()
         {
@@ -192,6 +211,9 @@ namespace KKS_VROON.VRUtils
 
             _state.LeftPosition = SteamVR_Actions.default_Pose.GetLocalPosition(SteamVR_Input_Sources.LeftHand);
             _state.LeftPositionDelta = _state.LeftPosition - SteamVR_Actions.default_Pose.GetLastLocalPosition(SteamVR_Input_Sources.LeftHand);
+            LLaserSmoother.AddTransform(LLaserPointer.transform);
+            _state.LeftLaserPosition = LLaserSmoother.GetPosition();
+            _state.LeftLaserRotation = LLaserSmoother.GetRotation();
             _state.LeftJoystickAxis = SteamVR_Actions.default_Move.GetAxis(SteamVR_Input_Sources.LeftHand);
             _state.LeftJoystickAxisDelta = SteamVR_Actions.default_Move.GetAxisDelta(SteamVR_Input_Sources.LeftHand);
             _state.IsLeftTriggerOn = SteamVR_Actions.default_TriggerOn.GetState(SteamVR_Input_Sources.LeftHand);
@@ -206,6 +228,9 @@ namespace KKS_VROON.VRUtils
 
             _state.RightPosition = SteamVR_Actions.default_Pose.GetLocalPosition(SteamVR_Input_Sources.RightHand);
             _state.RightPositionDelta = _state.RightPosition - SteamVR_Actions.default_Pose.GetLastLocalPosition(SteamVR_Input_Sources.RightHand);
+            RLaserSmoother.AddTransform(RLaserPointer.transform);
+            _state.RightLaserPosition = RLaserSmoother.GetPosition();
+            _state.RightLaserRotation = RLaserSmoother.GetRotation();
             _state.RightJoystickAxis = SteamVR_Actions.default_Move.GetAxis(SteamVR_Input_Sources.RightHand);
             _state.RightJoystickAxisDelta = SteamVR_Actions.default_Move.GetAxisDelta(SteamVR_Input_Sources.RightHand);
             _state.IsRightTriggerOn = SteamVR_Actions.default_TriggerOn.GetState(SteamVR_Input_Sources.RightHand);
@@ -253,38 +278,19 @@ namespace KKS_VROON.VRUtils
                 _state.JoystickAxis = (leftJoystickAxisDeltaDistance < rightJoystickAxisDeltaDistance) ? _state.RightJoystickAxis : _state.LeftJoystickAxis;
         }
 
-        private Ray? GetRay(Transform laserTransform) => enabled ? (Ray?)new Ray(laserTransform.position, laserTransform.forward) : null;
-
-        private bool RayCast(Transform laserTransform, Plane plane, out RaycastHit hit)
-        {
-            var ray = GetRay(laserTransform);
-            if (ray != null)
-            {
-                if (plane.Raycast(ray.Value, out var enter))
-                {
-                    hit = default;
-                    hit.point = ray.Value.GetPoint(enter);
-                    return true;
-                }
-            }
-
-            hit = default;
-            return false;
-        }
-
-        private RaycastHit? WideCast(Transform laserTransform, Collider targetCollider, float width, int xnum, int ynum, float maxDistance)
+        private RaycastHit? WideCast(Vector3 position, Vector3 forward, Vector3 right, Vector3 up, Collider targetCollider, float width, int xnum, int ynum, float maxDistance)
         {
             float stepX = width / (xnum - 1);
             float stepY = width / (ynum - 1);
 
             var closestDistance = maxDistance;
             RaycastHit? result = null;
-            for (int x = 0; x < xnum; x++)
+            for (var x = 0; x < xnum; x++)
             {
-                for (int y = 0; y < ynum; y++)
+                for (var y = 0; y < ynum; y++)
                 {
-                    var offset = laserTransform.right * (x * stepX - width * 0.5f) + laserTransform.up * (y * stepY - width * 0.5f);
-                    var ray = new Ray(laserTransform.position + offset, laserTransform.forward);
+                    var offset = right * (x * stepX - width * 0.5f) + up * (y * stepY - width * 0.5f);
+                    var ray = new Ray(position + offset, forward);
                     if (targetCollider.Raycast(ray, out var hit, maxDistance) && hit.distance < closestDistance)
                     {
                         result = hit;

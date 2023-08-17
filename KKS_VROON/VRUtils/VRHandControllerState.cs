@@ -9,6 +9,8 @@ namespace KKS_VROON.VRUtils
         public Vector3 LeftPositionDelta { get; internal set; }
         public Vector2 LeftJoystickAxis { get; internal set; }
         public Vector2 LeftJoystickAxisDelta { get; internal set; }
+        public Vector3 LeftLaserPosition { get; internal set; }
+        public Quaternion LeftLaserRotation { get; internal set; }
         public bool IsLeftTriggerOn { get; internal set; }
         public bool IsLeftTriggerDown { get; internal set; }
         public bool IsLeftTriggerUp { get; internal set; }
@@ -29,6 +31,8 @@ namespace KKS_VROON.VRUtils
         #region Right
         public Vector3 RightPosition { get; internal set; }
         public Vector3 RightPositionDelta { get; internal set; }
+        public Vector3 RightLaserPosition { get; internal set; }
+        public Quaternion RightLaserRotation { get; internal set; }
         public Vector2 RightJoystickAxis { get; internal set; }
         public Vector2 RightJoystickAxisDelta { get; internal set; }
         public bool IsRightTriggerOn { get; internal set; }
