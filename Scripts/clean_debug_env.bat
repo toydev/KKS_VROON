@@ -6,7 +6,7 @@ CALL variables.bat
 REM Plugin
 IF EXIST "%KKS_ROOT_DIR%\BepInEx\plugins\KKS_VROON" (
   ECHO DELETE %KKS_ROOT_DIR%\BepInEx\plugins\KKS_VROON
-  RMDIR "%KKS_ROOT_DIR%\BepInEx\plugins\KKS_VROON"
+  RMDIR /S /Q "%KKS_ROOT_DIR%\BepInEx\plugins\KKS_VROON"
 )
 
 REM DLL files
