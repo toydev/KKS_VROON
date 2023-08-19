@@ -16,10 +16,7 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
 
             gameObject.AddComponent<ActiveSceneController>().SetLayer(UI_SCREEN_LAYER);
 
-            UGUICapture = UGUICapture.Create(
-                new GameObject(gameObject.name + nameof(UGUICapture)),
-                UGUI_CAPTURE_LAYER,
-                (canvas) => UGUI_CAPTURE_TARGET_LAYER.Contains(canvas.gameObject.layer) && !IGNORE_CANVAS.Contains(canvas.name));
+            UGUICapture = UGUICapture.Create(new GameObject(gameObject.name + nameof(UGUICapture)), UGUI_CAPTURE_LAYER, IsTargetCanvas);
 
             ActionScene = FindObjectOfType<ActionScene>();
 
@@ -62,7 +59,11 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
                     MainCamera.gameObject.AddComponent<CameraCurtain>();
 
                     UIScreen = UIScreen.Create(new GameObject(gameObject.name + nameof(UIScreen)), UGUICapture, UI_SCREEN_LAYER);
-                    UIScreen.Camera.gameObject.AddComponent<CameraCurtain>();
+                    // issue #2: Don't use CameraCurtain during OpeningScene for dialog control when playing the game for the first time.
+                    if (Manager.Scene.NowSceneNames?.Contains(SceneNames.OPENING_SCENE) != true)
+                    {
+                        UIScreen.Camera.gameObject.AddComponent<CameraCurtain>();
+                    }
                     UIScreen.Camera.Normal.depth = UI_SCREEN_CAMERA_DEPTH;
                 }
 
@@ -138,6 +139,28 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
         // Ignore the background during talk.
         private string[] IGNORE_CANVAS = new string[] { "Canvas_BackGround" };
         private string[] IGNORE_CAMERA = new string[] { "Camera_BackGround" };
+        #endregion
+
+        #region Control canvas
+        private bool IsTargetCanvas(Canvas canvas)
+        {
+            // Canvas_Background is the background canvas for the talk scene.
+            // In VR, it will be displayed in front of the person, so exclude it.
+            if ("Canvas_BackGround" == canvas.name)
+            {
+                return false;
+            }
+
+            // SceneCanvas is a canvas for loading display.
+            // issue #2: Disable SceneCanvas for dialogs that apppear during loading.
+            if ("SceneCanvas" == canvas.name)
+            {
+                return false;
+            }
+
+            // Basic rule.
+            return UGUI_CAPTURE_TARGET_LAYER.Contains(canvas.gameObject.layer);
+        }
         #endregion
 
         #region IgnoreCamera

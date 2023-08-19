@@ -68,7 +68,8 @@ namespace KKS_VROON.VRUtils
                         }
                         else
                         {
-                            PluginLog.Info($"Skip canvas: {canvas.name} in {LayerMask.LayerToName(canvas.gameObject.layer)}");
+                            PluginLog.Info($"Disable canvas: {canvas.name} in {LayerMask.LayerToName(canvas.gameObject.layer)}");
+                            canvas.enabled = false;
                         }
                     }
                 }
