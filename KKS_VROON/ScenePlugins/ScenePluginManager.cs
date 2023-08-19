@@ -21,13 +21,19 @@ namespace KKS_VROON.ScenePlugins
             {
                 switch (scene.name)
                 {
-                    case "Logo":
-                    case "Title":
-                    case "FreeH":
+                    case SceneNames.LOGO:
+                    case SceneNames.TITLE:
                         CreateSceneControllerGameObject(typeof(SimpleScreenScenePlugin));
                         break;
-                    case "Action":
-                    case "OpeningScene":
+                    case SceneNames.OPENING_SCENE:
+                    case SceneNames.ACTION:
+                        CreateSceneControllerGameObject(typeof(ActiveScenePlugin));
+                        break;
+
+                    // for FreeH
+                    case SceneNames.FREE_H:
+                        CreateSceneControllerGameObject(typeof(SimpleScreenScenePlugin));
+                        break;
                     case "H":
                         CreateSceneControllerGameObject(typeof(ActiveScenePlugin));
                         break;

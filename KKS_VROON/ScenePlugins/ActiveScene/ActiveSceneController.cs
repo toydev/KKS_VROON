@@ -88,7 +88,7 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
                 else if (axisName == "Mouse Y")
                 {
                     // Stop vertical movement of vision when walking.
-                    if (Manager.Scene.NowSceneNames?.First() == "Action") return null;
+                    if (Manager.Scene.NowSceneNames?.First() == SceneNames.ACTION) return null;
                     return HandController.State.JoystickAxis.y;
                 }
             }
