@@ -43,7 +43,7 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
             }
         }
 
-        // Correspnd to the following camera updates.
+        // Correspond to the following camera updates.
         //
         // - initial construction
         // - user request
