@@ -56,7 +56,7 @@ namespace KKS_VROON.VRUtils
                 if (!ProcessedCanvas.Contains(canvas))
                 {
                     ProcessedCanvas.Add(canvas);
-                    if (canvas.renderMode != RenderMode.ScreenSpaceCamera || canvas.worldCamera != camera)
+                    if (canvas.enabled && (canvas.renderMode != RenderMode.ScreenSpaceCamera || canvas.worldCamera != camera))
                     {
                         if (IsTarget(canvas))
                         {

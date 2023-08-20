@@ -152,8 +152,8 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
             }
 
             // SceneCanvas is a canvas for loading display.
-            // issue #2: Disable SceneCanvas for dialogs that apppear during loading.
-            if ("SceneCanvas" == canvas.name)
+            // issue #2: Disable SceneCanvas during autosave tutorial.
+            if ("SceneCanvas" == canvas.name && !Tutorial.Checked(Tutorial.Category.AutoSave))
             {
                 return false;
             }
