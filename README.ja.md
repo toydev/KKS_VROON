@@ -70,4 +70,5 @@
 # 開発者向け
 
 - [このプロジェクトのセットアップ方法](/docs/project/HOW_TO_CREATE_STEAMVR_PROJECT.md)
+- [基本コンセプトとその実装](/docs/project/BASIC_CONCEPTS_AND_IMPLEMENTATIONS.md)
 - [SteamVR プロジェクトを０から作る方法](/docs/projects/HOW_TO_CREATE_STEAMVR_PROJECT.md)

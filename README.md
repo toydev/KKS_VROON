@@ -70,4 +70,5 @@ The left and right hand controller operations are the same.
 # For developers
 
 - [How to set up this project](/docs/project/HOW_TO_SETUP_THIS_PROJECT.md)
-- [How to create a SteamVR project for KoikatsuSunshine from scratch](/docs/projects/HOW_TO_CREATE_STEAMVR_PROJECT.md)
+- [Basic concepts and their implementations](/docs/project/BASIC_CONCEPTS_AND_IMPLEMENTATIONS.md)
+- [How to create a SteamVR project from scratch](/docs/projects/HOW_TO_CREATE_STEAMVR_PROJECT.md)
