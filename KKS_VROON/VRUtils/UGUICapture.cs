@@ -32,7 +32,7 @@ namespace KKS_VROON.VRUtils
         {
             PluginLog.Info($"Awake: {name}");
 
-            Texture = new RenderTexture(Screen.width, Screen.height, 24, RenderTextureFormat.ARGB32);
+            Texture = new RenderTexture(Screen.width, Screen.height, 0, RenderTextureFormat.ARGB32);
 
             var camera = gameObject.AddComponent<Camera>();
             camera.cullingMask = 1 << Layer;

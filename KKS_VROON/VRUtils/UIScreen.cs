@@ -7,11 +7,11 @@ namespace KKS_VROON.VRUtils
     public class UIScreen : MonoBehaviour
     {
         #region Create
-        public static UIScreen Create(GameObject gameObject, UGUICapture UGUICapture, int uiScreenLayer)
+        public static UIScreen Create(GameObject gameObject, Texture[] textures, int uiScreenLayer)
         {
             gameObject.SetActive(false);
             var result = gameObject.AddComponent<UIScreen>();
-            result.UGUICapture = UGUICapture;
+            result.Textures = textures;
             result.UIScreenLayer = uiScreenLayer;
             gameObject.SetActive(true);
             return result;
@@ -24,7 +24,7 @@ namespace KKS_VROON.VRUtils
         #region Transform Screen <-> World
         public Vector2 GetScreenPositionFromWorld(Vector3 worldPositionOnScreen, Rect gameWindowRect)
         {
-            var localHitPoint = ScreenObject.transform.InverseTransformPoint(worldPositionOnScreen);
+            var localHitPoint = MainScreenObject.transform.InverseTransformPoint(worldPositionOnScreen);
             var actualWidth = gameWindowRect.height * 16f / 9f;
             return new Vector2(
                 (int)(gameWindowRect.x + (gameWindowRect.width - actualWidth) / 2f + (localHitPoint.x + 0.5f) * actualWidth),
@@ -33,21 +33,21 @@ namespace KKS_VROON.VRUtils
 
         public Vector3 GetWorldPositionFromScreen(float x, float y)
         {
-            return ScreenObject.transform.TransformPoint(
+            return MainScreenObject.transform.TransformPoint(
                 x / Screen.width - 0.5f,
                 y / Screen.height - 0.5f, 0f);
         }
         #endregion
 
         #region Implementations
-        private UGUICapture UGUICapture { get; set; }
+        private Texture[] Textures { get; set; }
         private int UIScreenLayer { get; set; } = 31;
-        private GameObject ScreenObject { get; set; }
+        private GameObject MainScreenObject { get; set; }
         private GameObject MouseCursor { get; set; }
 
         public Plane GetScreenPlane()
         {
-            return new Plane(ScreenObject.transform.forward, ScreenObject.transform.position);
+            return new Plane(MainScreenObject.transform.forward, MainScreenObject.transform.position);
         }
 
         void Awake()
@@ -61,22 +61,29 @@ namespace KKS_VROON.VRUtils
             Camera.Normal.nearClipPlane = 0.01f;  // 1cm
 
             // Screen
-            ScreenObject = new GameObject(gameObject.name + nameof(Screen));
-            ScreenObject.transform.SetParent(transform, false);
-            ScreenObject.transform.localScale = new Vector3(UGUICapture.Texture.width / (float)UGUICapture.Texture.height, 1f, 0f);
-            ScreenObject.layer = UIScreenLayer;
-            var meshFilter = ScreenObject.AddComponent<MeshFilter>();
-            meshFilter.mesh = Resources.GetBuiltinResource<Mesh>("Quad.fbx");
-            var material = new Material(Shader.Find("Unlit/Transparent"))
+            for (var i = 0; i < Textures.Length; ++i)
             {
-                mainTexture = UGUICapture.Texture,
-            };
-            var meshRenderer = ScreenObject.AddComponent<MeshRenderer>();
-            meshRenderer.material = material;
+                var screenObject = new GameObject(gameObject.name + $"ScreenObject{i}");
+                screenObject.transform.SetParent(transform, false);
+                screenObject.transform.localPosition = new Vector3(0.0f, 0.0f, -0.001f * i);
+                screenObject.transform.localScale = new Vector3(Textures[i].width / (float)Textures[i].height, 1f, 1f);
+                screenObject.layer = UIScreenLayer;
+                var meshFilter = screenObject.AddComponent<MeshFilter>();
+                meshFilter.mesh = Resources.GetBuiltinResource<Mesh>("Quad.fbx");
+                var material = new Material(Shader.Find("Unlit/Transparent"))
+                {
+                    mainTexture = Textures[i],
+                };
+                var meshRenderer = screenObject.AddComponent<MeshRenderer>();
+                meshRenderer.material = material;
+
+                if (i == 0) MainScreenObject = screenObject;
+            }
 
             // MouseCursor
             MouseCursor = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             MouseCursor.transform.SetParent(GetComponent<UIScreen>().transform);
+            MouseCursor.transform.localPosition = new Vector3(0.0f, 0.0f, -0.001f * Textures.Length);
             MouseCursor.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
             MouseCursor.GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Color"))
             {

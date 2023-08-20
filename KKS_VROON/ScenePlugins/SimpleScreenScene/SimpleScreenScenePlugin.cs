@@ -15,6 +15,8 @@ namespace KKS_VROON.ScenePlugins.SimpleScreenScene
 
             UGUICapture = UGUICapture.Create(new GameObject(gameObject.name + nameof(UGUICapture)), UGUI_CAPTURE_LAYER);
             UGUICapture.gameObject.transform.SetParent(gameObject.transform);
+            IMGUICapture = IMGUICapture.Create(new GameObject(gameObject.name + nameof(IMGUICapture)));
+            IMGUICapture.gameObject.transform.SetParent(gameObject.transform);
 
             UpdateCamera(false);
         }
@@ -28,7 +30,7 @@ namespace KKS_VROON.ScenePlugins.SimpleScreenScene
             // Create objects as needed.
             if (!UIScreen)
             {
-                UIScreen = UIScreen.Create(new GameObject(gameObject.name + nameof(UIScreen)), UGUICapture, UI_SCREEN_LAYER);
+                UIScreen = UIScreen.Create(new GameObject(gameObject.name + nameof(UIScreen)), new Texture[] { UGUICapture.Texture, IMGUICapture.Texture }, UI_SCREEN_LAYER);
                 UIScreen.Camera.gameObject.AddComponent<CameraCurtain>();
                 UIScreen.Camera.Normal.clearFlags = CameraClearFlags.Skybox;
                 UIScreen.Camera.Normal.depth = UI_SCREEN_CAMERA_DEPTH;
@@ -71,5 +73,6 @@ namespace KKS_VROON.ScenePlugins.SimpleScreenScene
         #endregion
 
         private UGUICapture UGUICapture { get; set; }
+        private IMGUICapture IMGUICapture { get; set; }
     }
 }
