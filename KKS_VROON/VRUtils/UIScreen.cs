@@ -25,9 +25,10 @@ namespace KKS_VROON.VRUtils
         public Vector2 GetScreenPositionFromWorld(Vector3 worldPositionOnScreen, Rect gameWindowRect)
         {
             var localHitPoint = ScreenObject.transform.InverseTransformPoint(worldPositionOnScreen);
+            var actualWidth = gameWindowRect.height * 16f / 9f;
             return new Vector2(
-                (int)(gameWindowRect.x + (localHitPoint.x + 0.5f) * Screen.width),
-                (int)(gameWindowRect.y + (0.5f - localHitPoint.y) * Screen.height));
+                (int)(gameWindowRect.x + (gameWindowRect.width - actualWidth) / 2f + (localHitPoint.x + 0.5f) * actualWidth),
+                (int)(gameWindowRect.y + (0.5f - localHitPoint.y) * gameWindowRect.height));
         }
 
         public Vector3 GetWorldPositionFromScreen(float x, float y)
