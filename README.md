@@ -21,7 +21,7 @@ Maybe it needs to support IMGUI
 
 # Controller Support
 
-- Oculus Quest 2
+- Meta Quest 2
 
 Welcome pull requests for any controller support.
 
@@ -32,7 +32,7 @@ Welcome pull requests for any controller support.
 - Koikatsu Sunshine
 - Latest version of BepInEx 5.x and KKSAPI/ModdingAPI
 - SteamVR
-- Oculus Quest 2
+- Meta Quest 2
 
 - Other VR mods must not be included
 

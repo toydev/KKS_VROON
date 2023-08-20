@@ -21,7 +21,7 @@
 
 # サポートしているコントローラー
 
-- Oculus Quest 2
+- Meta Quest 2
 
 コントローラーサポートのプルリクエスト歓迎です。
 
@@ -32,7 +32,7 @@
 - コイカツ！サンシャイン
 - 最新バージョンの BepInEx 5.X と KKAPI/ModdingAPI
 - SteamVR
-- Oculus Quest 2
+- Meta Quest 2
 
 - 他の VR 化 mod が入っていないこと
 
