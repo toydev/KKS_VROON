@@ -64,3 +64,10 @@
 |ハンドコントローラー操作|アクション|
 |----|----|
 |Y / B 押下|VR カメラの正面をリセット|
+
+----
+
+# 開発者向け
+
+- [このプロジェクトのセットアップ方法](/docs/project/HOW_TO_CREATE_STEAMVR_PROJECT.md)
+- [SteamVR プロジェクトを０から作る方法](/docs/projects/HOW_TO_CREATE_STEAMVR_PROJECT.md)

@@ -64,3 +64,10 @@ The left and right hand controller operations are the same.
 |Hand controller Operation|Action|
 |----|----|
 |Press Y / Press B|Reset the front of the VR camera|
+
+----
+
+# For developers
+
+- [How to set up this project](/docs/project/HOW_TO_SETUP_THIS_PROJECT.md)
+- [How to create a SteamVR project for KoikatsuSunshine from scratch](/docs/projects/HOW_TO_CREATE_STEAMVR_PROJECT.md)
