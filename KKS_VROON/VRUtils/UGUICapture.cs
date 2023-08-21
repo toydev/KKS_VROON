@@ -12,7 +12,14 @@ namespace KKS_VROON.VRUtils
 {
     public class UGUICapture : MonoBehaviour
     {
-        public static UGUICapture Create(GameObject parentGameObject, string name, int layer, Func<Canvas, bool> isTarget = null)
+        public enum CanvasUpdateType
+        {
+            CAPTURE,
+            DISABLE,
+            SKIP,
+        }
+
+        public static UGUICapture Create(GameObject parentGameObject, string name, int layer, Func<Canvas, CanvasUpdateType> getCanvasUpdateType = null)
         {
             var gameObject = new GameObject($"{parentGameObject.name}{name}");
             // Synchronized lifecycle
@@ -20,14 +27,14 @@ namespace KKS_VROON.VRUtils
             gameObject.SetActive(false);
             var result = gameObject.AddComponent<UGUICapture>();
             result.Layer = layer;
-            result.IsTarget = isTarget != null ? isTarget : (canvas) => true;
+            result.GetCanvasUpdateType = getCanvasUpdateType != null ? getCanvasUpdateType : (canvas) => CanvasUpdateType.CAPTURE;
             gameObject.SetActive(true);
             return result;
         }
         public RenderTexture Texture { get; private set; }
 
         private int Layer { get; set; }
-        private Func<Canvas, bool> IsTarget { get; set; }
+        private Func<Canvas, CanvasUpdateType> GetCanvasUpdateType { get; set; }
         private IDictionary<Canvas, IndexedSet<Graphic>> CanvasGraphics { get; set; }
         private ISet<Canvas> ProcessedCanvas { get; set; } = new HashSet<Canvas>();
 
@@ -62,18 +69,23 @@ namespace KKS_VROON.VRUtils
                     ProcessedCanvas.Add(canvas);
                     if (canvas.enabled && (canvas.renderMode != RenderMode.ScreenSpaceCamera || canvas.worldCamera != camera))
                     {
-                        if (IsTarget(canvas))
+                        switch (GetCanvasUpdateType(canvas))
                         {
-                            PluginLog.Info($"Capture canvas: {canvas.name} in {LayerMask.LayerToName(canvas.gameObject.layer)}");
-                            canvas.renderMode = RenderMode.ScreenSpaceCamera;
-                            canvas.worldCamera = camera;
-                            foreach (var i in canvas.gameObject.GetComponentsInChildren<Transform>())
-                                i.gameObject.layer = Layer;
-                        }
-                        else
-                        {
-                            // Canvas cannot be disabled while processing CanvasGraphics.Keys
-                            disableCanvas.Add(canvas);
+                            case CanvasUpdateType.CAPTURE:
+                                PluginLog.Info($"Capture canvas: {canvas.name} in {canvas.gameObject.layer}:{LayerMask.LayerToName(canvas.gameObject.layer)}");
+                                canvas.renderMode = RenderMode.ScreenSpaceCamera;
+                                canvas.worldCamera = camera;
+                                foreach (var i in canvas.gameObject.GetComponentsInChildren<Transform>())
+                                    i.gameObject.layer = Layer;
+                                break;
+                            case CanvasUpdateType.DISABLE:
+                                // Canvas cannot be disabled while processing CanvasGraphics.Keys
+                                disableCanvas.Add(canvas);
+                                break;
+                            case CanvasUpdateType.SKIP:
+                            default:
+                                PluginLog.Info($"Skip canvas: {canvas.name} in {canvas.gameObject.layer}:{LayerMask.LayerToName(canvas.gameObject.layer)}");
+                                break;
                         }
                     }
                 }
@@ -81,7 +93,7 @@ namespace KKS_VROON.VRUtils
 
             foreach (var canvas in disableCanvas)
             {
-                PluginLog.Info($"Disable canvas: {canvas.name} in {LayerMask.LayerToName(canvas.gameObject.layer)}");
+                PluginLog.Info($"Disable canvas: {canvas.name} in {canvas.gameObject.layer}:{LayerMask.LayerToName(canvas.gameObject.layer)}");
                 canvas.enabled = false;
             }
         }

@@ -6,13 +6,12 @@ using KKS_VROON.Effects;
 using KKS_VROON.Logging;
 using KKS_VROON.VRUtils;
 using KKS_VROON.ScenePlugins.Common;
-using KKS_VROON.Patches.HandPatches;
 using KKS_VROON.Patches.InputPatches;
 using KKS_VROON.WindowNativeUtils;
 
-namespace KKS_VROON.ScenePlugins.ActionScene
+namespace KKS_VROON.ScenePlugins.CustomScene
 {
-    public class ActionScenePlugin : MonoBehaviour
+    public class CustomScenePlugin : MonoBehaviour
     {
         void Awake()
         {
@@ -22,20 +21,17 @@ namespace KKS_VROON.ScenePlugins.ActionScene
             var UGUI_CAPTURE_TARGET_LAYER = new int[] { LayerMask.NameToLayer("UI"), CustomLayers.UGUI_CAPTURE_LAYER };
             UGUICapture = UGUICapture.Create(gameObject, nameof(UGUICapture), CustomLayers.UGUI_CAPTURE_LAYER, (canvas) =>
             {
-                // Canvas_Background is the background canvas for the talk scene.
-                // In VR, it will be displayed in front of the person, so exclude it.
-                if ("Canvas_BackGround" == canvas.name) return UGUICapture.CanvasUpdateType.DISABLE;
+                if ("CvsBackground" == canvas.name) return UGUICapture.CanvasUpdateType.SKIP;
                 // Basic rule.
-                return UGUI_CAPTURE_TARGET_LAYER.Contains(canvas.gameObject.layer) ? UGUICapture.CanvasUpdateType.CAPTURE : UGUICapture.CanvasUpdateType.DISABLE;
+                return UGUI_CAPTURE_TARGET_LAYER.Contains(canvas.gameObject.layer) ? UGUICapture.CanvasUpdateType.CAPTURE : UGUICapture.CanvasUpdateType.SKIP;
             });
             UIScreen = UIScreen.Create(gameObject, nameof(UIScreen), 101, CustomLayers.UI_SCREEN_LAYER, UGUICapture);
+            BackgroundUGUICapture = UGUICapture.Create(gameObject, nameof(BackgroundUGUICapture), CustomLayers.BACKGROUND_UGUI_CAPTURE_LAYER, (canvas) =>
+                "CvsBackground" == canvas.name ? UGUICapture.CanvasUpdateType.CAPTURE : UGUICapture.CanvasUpdateType.SKIP);
+            BackgroundUIScreen = UIScreen.Create(gameObject, nameof(BackgroundUIScreen), 99, CustomLayers.BACKGROUND_UI_SCREEN_LAYER, BackgroundUGUICapture, clearFlags: CameraClearFlags.Skybox, mouseCursorVisible: false);
             HandController = VRHandController.Create(gameObject, nameof(VRHandController), CustomLayers.UI_SCREEN_LAYER);
             HandController.GetOrAddComponent<VRHandControllerMouseIconAttachment>();
-            InputPatch.Emulator = new ActionSceneMouseEmulator(HandController);
-            ScreenPointToRayPatch.GetRay = () => HandController ? HandController.GetRay() : null;
-            ColDisposableInfoPatch.Raycast = (collider) => HandController ? HandController.WideCast(collider, 0.4f, 10, 10, 10f) : null;
-            ColDisposableInfoPatch.MouseDown = () => HandController.State.IsTriggerOn;
-            ActionScene = FindObjectOfType<global::ActionScene>();
+            InputPatch.Emulator = new BasicMouseEmulator(HandController);
 
             UpdateCamera(false);
         }
@@ -45,16 +41,9 @@ namespace KKS_VROON.ScenePlugins.ActionScene
             var gameMainCamera = Camera.main;
             if ((gameMainCamera && gameMainCamera != CurrentGameMainCamera) || !MainCamera) UpdateCamera(false);
 
-            if (ActionScene != null)
-            {
-                // Force FPS mode
-                if (ActionScene.CameraState.Mode != ActionGame.CameraMode.FPS) ActionScene.CameraState.ModeChangeForce(ActionGame.CameraMode.FPS);
-
-                // Control the mouse pointer.
-                if (UIScreen) UIScreen.MouseCursorVisible = !ActionScene.isCursorLock;
-                if (ActionScene.isCursorLock != true && HandController.State.IsPositionChanging() && UIScreen && HandController.RayCast(UIScreen.GetScreenPlane(), out var hit))
-                    MouseKeyboardUtils.SetCursorPos(UIScreen.GetScreenPositionFromWorld(hit.point, WindowUtils.GetGameWindowRect()));
-            }
+            // Control the mouse pointer.
+            if (HandController.State.IsPositionChanging() && UIScreen && HandController.RayCast(UIScreen.GetScreenPlane(), out var hit))
+                MouseKeyboardUtils.SetCursorPos(UIScreen.GetScreenPositionFromWorld(hit.point, WindowUtils.GetGameWindowRect()));
 
             // Update base head.
             if (HandController.State.IsButtonYDown || HandController.State.IsButtonBDown) UpdateCamera(true);
@@ -77,6 +66,7 @@ namespace KKS_VROON.ScenePlugins.ActionScene
                 MainCamera.Hijack(gameMainCamera);
                 ReEffectUtils.AddEffects(gameMainCamera, MainCamera, /* Stopped DepthOfField, because it's blurry. */ useDepthOfField: false);
                 UIScreen.LinkToFront(MainCamera, 1.0f);
+                BackgroundUIScreen.LinkToFront(MainCamera, 1.0f);
                 HandController.Link(MainCamera);
             }
         }
@@ -84,8 +74,9 @@ namespace KKS_VROON.ScenePlugins.ActionScene
         private VRCamera MainCamera { get; set; }
         private UGUICapture UGUICapture { get; set; }
         private UIScreen UIScreen { get; set; }
+        private UGUICapture BackgroundUGUICapture { get; set; }
+        private UIScreen BackgroundUIScreen { get; set; }
         private Camera CurrentGameMainCamera { get; set; }
         private VRHandController HandController { get; set; }
-        private global::ActionScene ActionScene { get; set; }
     }
 }

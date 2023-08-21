@@ -7,7 +7,7 @@ namespace KKS_VROON.VRUtils
     public class UIScreen : MonoBehaviour
     {
         #region Create
-        public static UIScreen Create(GameObject parentGameObject, string name, int cameraDepth, int screenLayer, UGUICapture UGUICapture, bool withCurtain = true, CameraClearFlags clearFlags = CameraClearFlags.Depth)
+        public static UIScreen Create(GameObject parentGameObject, string name, int cameraDepth, int screenLayer, UGUICapture UGUICapture, bool withCurtain = true, CameraClearFlags clearFlags = CameraClearFlags.Depth, bool mouseCursorVisible = true)
         {
             var gameObject = new GameObject($"{parentGameObject.name}{name}");
             // Synchronized lifecycle
@@ -19,6 +19,7 @@ namespace KKS_VROON.VRUtils
             result.ScreenLayer = screenLayer;
             result.WithCurtain = withCurtain;
             result.ClearFlags = clearFlags;
+            result.MouseCursorVisible = mouseCursorVisible;
             gameObject.SetActive(true);
             return result;
         }

@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 using KKS_VROON.Logging;
 using KKS_VROON.ScenePlugins.ActionScene;
+using KKS_VROON.ScenePlugins.CustomScene;
 using KKS_VROON.ScenePlugins.HScene;
 using KKS_VROON.ScenePlugins.OpeningScene;
 using KKS_VROON.ScenePlugins.SimpleScreenScene;
@@ -30,6 +31,9 @@ namespace KKS_VROON.ScenePlugins
                         break;
                     case SceneNames.OPENING_SCENE:
                         CreateSceneControllerGameObject(typeof(OpeningScenePlugin));
+                        break;
+                    case SceneNames.CUSTOM_SCENE:
+                        CreateSceneControllerGameObject(typeof(CustomScenePlugin));
                         break;
                     case SceneNames.ACTION:
                         CreateSceneControllerGameObject(typeof(ActionScenePlugin));

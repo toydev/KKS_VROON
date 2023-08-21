@@ -23,9 +23,9 @@ namespace KKS_VROON.ScenePlugins.OpeningScene
             {
                 // SceneCanvas is a canvas for loading display.
                 // issue #2: Disable SceneCanvas during autosave tutorial.
-                if ("SceneCanvas" == canvas.name && !Tutorial.Checked(Tutorial.Category.AutoSave)) return false;
+                if ("SceneCanvas" == canvas.name && !Tutorial.Checked(Tutorial.Category.AutoSave)) return UGUICapture.CanvasUpdateType.CAPTURE;
                 // Basic rule.
-                return UGUI_CAPTURE_TARGET_LAYER.Contains(canvas.gameObject.layer);
+                return UGUI_CAPTURE_TARGET_LAYER.Contains(canvas.gameObject.layer) ? UGUICapture.CanvasUpdateType.CAPTURE : UGUICapture.CanvasUpdateType.DISABLE;
             });
             UIScreen = UIScreen.Create(gameObject, nameof(UIScreen), 101, CustomLayers.UI_SCREEN_LAYER, UGUICapture,
                 // issue #2: Don't use CameraCurtain during OpeningScene for dialog control when playing the game for the first time.
