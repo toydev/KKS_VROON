@@ -7,12 +7,13 @@ namespace KKS_VROON.VRUtils
     public class UIScreen : MonoBehaviour
     {
         #region Create
-        public static UIScreen Create(GameObject gameObject, UGUICapture UGUICapture, int uiScreenLayer)
+        public static UIScreen Create(GameObject gameObject, UGUICapture UGUICapture, int uiScreenLayer, bool withCurtain = true)
         {
             gameObject.SetActive(false);
             var result = gameObject.AddComponent<UIScreen>();
             result.UGUICapture = UGUICapture;
             result.UIScreenLayer = uiScreenLayer;
+            result.WithCurtain = withCurtain;
             gameObject.SetActive(true);
             return result;
         }
@@ -69,6 +70,7 @@ namespace KKS_VROON.VRUtils
         #region Implementations
         private UGUICapture UGUICapture { get; set; }
         private int UIScreenLayer { get; set; } = 31;
+        private bool WithCurtain { get; set; }
         private GameObject ScreenObject { get; set; }
         private GameObject MouseCursor { get; set; }
 
@@ -82,7 +84,7 @@ namespace KKS_VROON.VRUtils
             PluginLog.Info($"Awake: {name}");
 
             // Camera
-            Camera = new GameObject(gameObject.name + nameof(Camera)).AddComponent<VRCamera>();
+            Camera = VRCamera.Create(gameObject, nameof(Camera), WithCurtain);
             Camera.Normal.cullingMask = 1 << UIScreenLayer;
             Camera.Normal.clearFlags = CameraClearFlags.Depth;
             Camera.Normal.nearClipPlane = 0.01f;  // 1cm

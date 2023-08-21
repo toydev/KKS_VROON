@@ -41,8 +41,20 @@ namespace KKS_VROON.VRUtils
         }
         #endregion
 
+        public static VRCamera Create(GameObject parentGameObject, string name, bool withCurtain = true)
+        {
+            var gameObject = new GameObject($"{parentGameObject.name}{name}");
+            gameObject.SetActive(false);
+            var result = gameObject.AddComponent<VRCamera>();
+            result.WithCurtain = withCurtain;
+            gameObject.SetActive(true);
+            return result;
+        }
+
         public void Hijack(Camera parentCamera)
         {
+            Setup();
+
             CameraHijacker.Hijack(parentCamera, Normal);
 
             if (VRUtils.VR.Initialized)
@@ -62,24 +74,49 @@ namespace KKS_VROON.VRUtils
         public Camera Normal { get; private set; }
         public SteamVR_Camera VR { get; private set; }
 
+        #region Implementations
+        private bool WithCurtain { get; set; }
+        private GameObject CameraObject { get; set; }
+        private void Setup()
+        {
+            if (!CameraObject)
+            {
+                PluginLog.Info($"Setup: {name}");
+
+                CameraObject = new GameObject($"{name}Internal");
+                Normal = CameraObject.AddComponent<Camera>();
+                if (VRUtils.VR.Initialized)
+                {
+                    VR = CameraObject.AddComponent<SteamVR_Camera>();
+                    var trackedPose = CameraObject.AddComponent<TrackedPoseDriver>();
+                    trackedPose.SetPoseSource(TrackedPoseDriver.DeviceType.GenericXRDevice, TrackedPoseDriver.TrackedPose.Center);
+                    trackedPose.updateType = TrackedPoseDriver.UpdateType.UpdateAndBeforeRender;
+                    trackedPose.trackingType = TrackedPoseDriver.TrackingType.RotationAndPosition;
+                }
+
+                if (WithCurtain)
+                {
+                    PluginLog.Info("Add CameraCurtain");
+                    CameraObject.GetOrAddComponent<CameraCurtain>();
+                }
+                else
+                {
+                    PluginLog.Info("No CameraCurtain");
+                }
+            }
+        }
+
         void Awake()
         {
             PluginLog.Info($"Awake: {name}");
-
-            Normal = gameObject.AddComponent<Camera>();
-            if (VRUtils.VR.Initialized)
-            {
-                VR = gameObject.AddComponent<SteamVR_Camera>();
-                var trackedPose = gameObject.AddComponent<TrackedPoseDriver>();
-                trackedPose.SetPoseSource(TrackedPoseDriver.DeviceType.GenericXRDevice, TrackedPoseDriver.TrackedPose.Center);
-                trackedPose.updateType = TrackedPoseDriver.UpdateType.UpdateAndBeforeRender;
-                trackedPose.trackingType = TrackedPoseDriver.TrackingType.RotationAndPosition;
-            }
+            Setup();
         }
 
         void OnDestroy()
         {
             PluginLog.Info($"OnDestroy: {name}");
+            if (CameraObject) Destroy(CameraObject);
         }
+        #endregion
     }
 }

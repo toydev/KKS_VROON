@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using Valve.VR;
 
+using KKS_VROON.Logging;
+
 namespace KKS_VROON.VRUtils
 {
     public class CameraCurtain : MonoBehaviour
@@ -12,6 +14,8 @@ namespace KKS_VROON.VRUtils
                 && !Manager.Scene.IsNowLoading
                 && !Manager.Scene.IsNowLoadingFade
                 ;
+
+            PluginLog.Change($"{name}: cameraEnabled", cameraEnabled);
 
             var camera = GetComponent<Camera>();
             if (camera) camera.enabled = cameraEnabled;

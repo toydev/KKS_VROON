@@ -31,7 +31,6 @@ namespace KKS_VROON.ScenePlugins.SimpleScreenScene
             if (!UIScreen)
             {
                 UIScreen = UIScreen.Create(new GameObject(gameObject.name + nameof(UIScreen)), UGUICapture, UI_SCREEN_LAYER);
-                UIScreen.Camera.gameObject.AddComponent<CameraCurtain>();
                 UIScreen.Camera.Normal.clearFlags = CameraClearFlags.Skybox;
                 UIScreen.Camera.Normal.depth = UI_SCREEN_CAMERA_DEPTH;
             }

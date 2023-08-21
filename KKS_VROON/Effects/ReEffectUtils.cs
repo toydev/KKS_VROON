@@ -21,16 +21,16 @@ namespace KKS_VROON.Effects
             bool useSepiaTone = true
         )
         {
-            if (useGlobalFog) MainCamera.GetOrAddComponent<ReGlobalFog>().Source = gameMainCamera;
-            if (useAmplifyOcclusionEffect) MainCamera.GetOrAddComponent<ReAmplifyOcclusionEffect>().Source = gameMainCamera;
-            if (useBloomAndFlares) MainCamera.GetOrAddComponent<ReBloomAndFlares>().Source = gameMainCamera;
-            if (useAmplifyColorEffect) MainCamera.GetOrAddComponent<ReAmplifyColorEffect>().Source = gameMainCamera;
-            if (useSunShafts) MainCamera.GetOrAddComponent<ReSunShafts>().Source = gameMainCamera;
-            if (useVignetteAndChromaticAberration) MainCamera.GetOrAddComponent<ReVignetteAndChromaticAberration>().Source = gameMainCamera;
-            if (useDepthOfField) MainCamera.GetOrAddComponent<ReDepthOfField>().Source = gameMainCamera;
-            if (useBlur) MainCamera.GetOrAddComponent<ReBlur>().Source = gameMainCamera;
-            if (useCrossFade) MainCamera.GetOrAddComponent<ReCrossFade>().Source = gameMainCamera;
-            if (useSepiaTone) MainCamera.GetOrAddComponent<ReSepiaTone>().Source = gameMainCamera;
+            if (useGlobalFog) MainCamera.Normal.GetOrAddComponent<ReGlobalFog>().Source = gameMainCamera;
+            if (useAmplifyOcclusionEffect) MainCamera.Normal.GetOrAddComponent<ReAmplifyOcclusionEffect>().Source = gameMainCamera;
+            if (useBloomAndFlares) MainCamera.Normal.GetOrAddComponent<ReBloomAndFlares>().Source = gameMainCamera;
+            if (useAmplifyColorEffect) MainCamera.Normal.GetOrAddComponent<ReAmplifyColorEffect>().Source = gameMainCamera;
+            if (useSunShafts) MainCamera.Normal.GetOrAddComponent<ReSunShafts>().Source = gameMainCamera;
+            if (useVignetteAndChromaticAberration) MainCamera.Normal.GetOrAddComponent<ReVignetteAndChromaticAberration>().Source = gameMainCamera;
+            if (useDepthOfField) MainCamera.Normal.GetOrAddComponent<ReDepthOfField>().Source = gameMainCamera;
+            if (useBlur) MainCamera.Normal.GetOrAddComponent<ReBlur>().Source = gameMainCamera;
+            if (useCrossFade) MainCamera.Normal.GetOrAddComponent<ReCrossFade>().Source = gameMainCamera;
+            if (useSepiaTone) MainCamera.Normal.GetOrAddComponent<ReSepiaTone>().Source = gameMainCamera;
         }
     }
 }
