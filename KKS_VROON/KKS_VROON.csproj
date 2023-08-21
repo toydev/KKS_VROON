@@ -154,6 +154,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScenePlugins\ActiveScene\ActiveSceneController.cs" />
     <Compile Include="ScenePlugins\ActiveScene\ActiveScenePlugin.cs" />
+    <Compile Include="ScenePlugins\CustomLayers.cs" />
     <Compile Include="ScenePlugins\SceneNames.cs" />
     <Compile Include="ScenePlugins\ScenePluginManager.cs" />
     <Compile Include="ScenePlugins\SimpleScreenScene\SimpleScreenSceneController.cs" />
