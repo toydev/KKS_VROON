@@ -29,7 +29,7 @@ namespace KKS_VROON.ScenePlugins.ActionScene
                 // Basic rule.
                 return UGUI_CAPTURE_TARGET_LAYER.Contains(canvas.gameObject.layer) ? UGUICapture.CanvasUpdateType.CAPTURE : UGUICapture.CanvasUpdateType.DISABLE;
             });
-            UIScreen = UIScreen.Create(gameObject, nameof(UIScreen), 101, CustomLayers.UI_SCREEN_LAYER, new UIScreenPanel[] { new UIScreenPanel(UGUICapture.Texture) });
+            UIScreen = UIScreen.Create(gameObject, nameof(UIScreen), 110, CustomLayers.UI_SCREEN_LAYER, new UIScreenPanel[] { new UIScreenPanel(UGUICapture.Texture) });
             HandController = VRHandController.Create(gameObject, nameof(VRHandController), CustomLayers.UI_SCREEN_LAYER);
             HandController.GetOrAddComponent<VRHandControllerMouseIconAttachment>();
             InputPatch.Emulator = new ActionSceneMouseEmulator(HandController);
@@ -83,7 +83,7 @@ namespace KKS_VROON.ScenePlugins.ActionScene
             if (gameMainCamera != null)
             {
                 PluginLog.Info($"UpdateCamera to {gameMainCamera.name}");
-                MainCamera.Hijack(gameMainCamera);
+                MainCamera.Hijack(gameMainCamera, false);
                 ReEffectUtils.AddEffects(gameMainCamera, MainCamera, /* Stopped DepthOfField, because it's blurry. */ useDepthOfField: false);
                 UIScreen.LinkToFront(MainCamera, 1.0f);
                 HandController.Link(MainCamera);

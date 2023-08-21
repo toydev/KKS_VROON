@@ -14,7 +14,7 @@ namespace KKS_VROON.Patches.HandPatches
     [HarmonyPatch(typeof(Camera))]
     class ScreenPointToRayPatch
     {
-        public static bool Enabled { get; set; } = false;
+        public static bool Enabled { get; set; } = true;
         public static Func<Ray?> GetRay { get; set; }
 
         [HarmonyPatch(nameof(Camera.ScreenPointToRay), new Type[] { typeof(Vector3) })]

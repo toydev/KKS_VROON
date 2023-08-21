@@ -16,8 +16,8 @@ namespace KKS_VROON.ScenePlugins.ActionScene
         {
             if (!HandController) return null;
 
-            // Translate hand movements to mouse movements while interrupting Camera.ScreenPointToRay.
-            if (ScreenPointToRayPatch.Enabled)
+            // Translate hand movements to mouse movements while processing HandCtrlPatch.
+            if (HandCtrlPatch.Processing)
             {
                 var deltaThreshold = 0.1f;  /* 10cm */
                 if (axisName == "Mouse X")

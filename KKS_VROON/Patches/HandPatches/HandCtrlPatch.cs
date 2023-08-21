@@ -4,16 +4,18 @@ using HarmonyLib;
 
 namespace KKS_VROON.Patches.HandPatches
 {
-    // Interrupt Camera.ScreenPointToRay during HandCtrl.LateProc.
+    // Report HandCtrl processing.
 
     [HarmonyPatch(typeof(HandCtrl))]
     public class HandCtrlPatch
     {
+        public static bool Processing { get; private set; }
+
         [HarmonyPatch(nameof(HandCtrl.LateProc))]
         [HarmonyPrefix]
         public static bool PrefixLateProc()
         {
-            ScreenPointToRayPatch.Enabled = true;
+            Processing = true;
             return true;
         }
 
@@ -21,7 +23,7 @@ namespace KKS_VROON.Patches.HandPatches
         [HarmonyFinalizer]
         public static Exception FinalizerLateProc(Exception __exception)
         {
-            ScreenPointToRayPatch.Enabled = false;
+            Processing = false;
             return __exception;
         }
     }

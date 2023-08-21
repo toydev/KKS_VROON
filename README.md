@@ -2,20 +2,12 @@
 
 # KKS_VROON - Simple VR plugin for Koikatsu Sunshine
 
-**It is a VR mod based on the concept of lying down and playing with one hand.**
+**It is a VR MOD compatible with both the main game and CharaStudio that you can play with one hand while lying down.**
 
-Do you know why this concept is important?
+KKS has a veriety of VR options. The main features of this MOD are as follows.
 
-The concept was important to me. Howevery, modifying KKS_VR was too difficult for me.
-So I made a simple VR mod from scratch. Of course, KKS_VR is a great mod and I used it as a great reference.
-
-The following is the basic idea of implementation.
-
-- Simply use the perspective of the game camera for the VR camera. And you can reset the front of the VR camera at any time. It is easy to do because the camera control is simple.
-- Convert hand controller operation to mouse operation. All mouse operations can be performed with one hand.
-
-Currently, only the main game is supported, but I think that the same concept can be applied to CharaStudio.
-Maybe it needs to support IMGUI
+- You can reset the front at any time. Sitting / standing / lying down, you can play in any position you like.
+- All mouse operations can be performed with just one hand controller. You can keep your other hand free.
 
 ----
 
@@ -23,7 +15,7 @@ Maybe it needs to support IMGUI
 
 - Meta Quest 2
 
-Welcome pull requests for any controller support.
+It reflects the ownership of the developer. Pull requests for additional support are welcome.
 
 ----
 
@@ -70,5 +62,5 @@ The left and right hand controller operations are the same.
 # For developers
 
 - [How to set up this project](/docs/project/HOW_TO_SETUP_THIS_PROJECT.md)
-- [Basic concepts and their implementations](/docs/project/BASIC_CONCEPTS_AND_IMPLEMENTATIONS.md)
+- [Basic implementation concepts](/docs/project/BASIC_IMPLEMENTATION_CONCEPTS.md)
 - [How to create a SteamVR project from scratch](/docs/project/HOW_TO_CREATE_STEAMVR_PROJECT.md)
