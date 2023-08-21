@@ -163,6 +163,7 @@
     <Compile Include="ScenePlugins\SceneNames.cs" />
     <Compile Include="ScenePlugins\ScenePluginManager.cs" />
     <Compile Include="ScenePlugins\SimpleScreenScene\SimpleScreenScenePlugin.cs" />
+    <Compile Include="ScenePlugins\StudioScene\StudioScenePlugin.cs" />
     <Compile Include="VRUtils\CameraCurtain.cs" />
     <Compile Include="VRUtils\CameraHijacker.cs" />
     <Compile Include="VRUtils\UGUICapture.cs" />

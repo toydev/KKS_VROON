@@ -9,6 +9,7 @@ using KKS_VROON.ScenePlugins.CustomScene;
 using KKS_VROON.ScenePlugins.HScene;
 using KKS_VROON.ScenePlugins.OpeningScene;
 using KKS_VROON.ScenePlugins.SimpleScreenScene;
+using KKS_VROON.ScenePlugins.StudioScene;
 using KKS_VROON.VRUtils;
 
 namespace KKS_VROON.ScenePlugins
@@ -43,6 +44,14 @@ namespace KKS_VROON.ScenePlugins
                         break;
                     case SceneNames.H:
                         CreateSceneControllerGameObject(typeof(HScenePlugin));
+                        break;
+
+                    // for CharaStudio
+                    case SceneNames.STUDIO_START:
+                        // Not supported: because the flickers.
+                        break;
+                    case SceneNames.STUDIO:
+                        CreateSceneControllerGameObject(typeof(StudioScenePlugin));
                         break;
                 }
             }
