@@ -41,8 +41,10 @@ namespace KKS_VROON.VRUtils
         }
         #endregion
 
-        public void Link(Camera parentCamera)
+        public void Hijack(Camera parentCamera)
         {
+            CameraHijacker.Hijack(parentCamera, Normal);
+
             if (VRUtils.VR.Initialized)
             {
                 VR.origin.rotation = parentCamera.transform.rotation * Quaternion.Inverse(BaseHeadLocalRotation);

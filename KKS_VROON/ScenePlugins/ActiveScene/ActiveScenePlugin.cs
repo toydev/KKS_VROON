@@ -69,10 +69,9 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
                     UIScreen.Camera.Normal.depth = UI_SCREEN_CAMERA_DEPTH;
                 }
 
-                CameraHijacker.Hijack(gameMainCamera, MainCamera.Normal);
+                MainCamera.Hijack(gameMainCamera);
                 ReEffectUtils.AddEffects(gameMainCamera, MainCamera, /* Stopped DepthOfField, because it's blurry. */ useDepthOfField: false);
                 MainCamera.Normal.depth = MAIN_CAMERA_DEPTH;
-                MainCamera.Link(gameMainCamera);
 
                 UIScreen.LinkToFront(MainCamera, DISTANCE_OF_SCREEN);
 
