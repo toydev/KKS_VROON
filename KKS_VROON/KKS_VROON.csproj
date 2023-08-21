@@ -135,6 +135,7 @@
     <Compile Include="Effects\ReBlur.cs" />
     <Compile Include="Effects\ReCrossFade.cs" />
     <Compile Include="Effects\ReDepthOfField.cs" />
+    <Compile Include="Effects\ReEffectUtils.cs" />
     <Compile Include="Effects\ReGlobalFog.cs" />
     <Compile Include="Effects\ReSepiaTone.cs" />
     <Compile Include="Effects\ReSunShafts.cs" />

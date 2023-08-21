@@ -70,21 +70,12 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
                 }
 
                 CameraHijacker.Hijack(gameMainCamera, MainCamera.Normal);
-                MainCamera.GetOrAddComponent<ReGlobalFog>().Source = gameMainCamera;
-                MainCamera.GetOrAddComponent<ReAmplifyOcclusionEffect>().Source = gameMainCamera;
-                MainCamera.GetOrAddComponent<ReBloomAndFlares>().Source = gameMainCamera;
-                MainCamera.GetOrAddComponent<ReAmplifyColorEffect>().Source = gameMainCamera;
-                MainCamera.GetOrAddComponent<ReSunShafts>().Source = gameMainCamera;
-                MainCamera.GetOrAddComponent<ReVignetteAndChromaticAberration>().Source = gameMainCamera;
-                // Stopped DepthOfField, because it's blurry.
-                // MainCamera.GetOrAddComponent<ReDepthOfField>().Source = gameMainCamera;
-                MainCamera.GetOrAddComponent<ReBlur>().Source = gameMainCamera;
-                MainCamera.GetOrAddComponent<ReCrossFade>().Source = gameMainCamera;
-                MainCamera.GetOrAddComponent<ReSepiaTone>().Source = gameMainCamera;
+                ReEffectUtils.AddEffects(gameMainCamera, MainCamera, /* Stopped DepthOfField, because it's blurry. */ useDepthOfField: false);
                 MainCamera.Normal.depth = MAIN_CAMERA_DEPTH;
-
                 MainCamera.Link(gameMainCamera);
+
                 UIScreen.LinkToFront(MainCamera, DISTANCE_OF_SCREEN);
+
                 GetComponent<ActiveSceneController>().SetOrigin(MainCamera);
             }
         }
