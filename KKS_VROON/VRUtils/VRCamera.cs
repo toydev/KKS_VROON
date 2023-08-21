@@ -84,7 +84,7 @@ namespace KKS_VROON.VRUtils
         private GameObject CameraObject { get; set; }
         private void Setup()
         {
-            if (!CameraObject)
+            if (!Normal)
             {
                 PluginLog.Info($"Setup: {name}");
 

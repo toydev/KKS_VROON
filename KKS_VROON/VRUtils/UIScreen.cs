@@ -88,7 +88,7 @@ namespace KKS_VROON.VRUtils
 
         private void Setup()
         {
-            if (!Camera)
+            if (!Camera || !Camera.Normal)
             {
                 PluginLog.Info($"Setup Camera: {name}");
                 Camera = VRCamera.Create(gameObject, nameof(Camera), CameraDepth, WithCurtain);
