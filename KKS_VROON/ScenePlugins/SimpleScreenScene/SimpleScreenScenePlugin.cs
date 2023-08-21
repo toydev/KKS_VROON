@@ -19,7 +19,7 @@ namespace KKS_VROON.ScenePlugins.SimpleScreenScene
             UpdateCamera(false);
         }
 
-        // Correspnd to the following camera updates.
+        // Correspond to the following camera updates.
         //
         // - initial construction
         // - user request
@@ -32,7 +32,6 @@ namespace KKS_VROON.ScenePlugins.SimpleScreenScene
             {
                 UIScreen = UIScreen.Create(new GameObject(gameObject.name + nameof(UIScreen)), UGUICapture, UI_SCREEN_LAYER);
                 UIScreen.Camera.Normal.clearFlags = CameraClearFlags.Skybox;
-                UIScreen.Camera.Normal.depth = UI_SCREEN_CAMERA_DEPTH;
             }
 
             UIScreen.LinkToFront(UIScreen.Camera, DISTANCE_OF_SCREEN);
@@ -42,8 +41,6 @@ namespace KKS_VROON.ScenePlugins.SimpleScreenScene
         public UIScreen UIScreen { get; set; }
 
         #region Constants
-        // Set depth larger than existing game camera.
-        public const int UI_SCREEN_CAMERA_DEPTH = 101;
         // Use game unused layers.
         public const int UGUI_CAPTURE_LAYER = 15;
         public const int UI_SCREEN_LAYER = 31;

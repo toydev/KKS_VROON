@@ -58,7 +58,6 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
 
                 MainCamera.Hijack(gameMainCamera);
                 ReEffectUtils.AddEffects(gameMainCamera, MainCamera, /* Stopped DepthOfField, because it's blurry. */ useDepthOfField: false);
-                MainCamera.Normal.depth = MAIN_CAMERA_DEPTH;
 
                 // Create objects as needed.
                 if (!UIScreen)
@@ -66,7 +65,6 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
                     UIScreen = UIScreen.Create(new GameObject(gameObject.name + nameof(UIScreen)), UGUICapture, UI_SCREEN_LAYER,
                         // issue #2: Don't use CameraCurtain during OpeningScene for dialog control when playing the game for the first time.
                         withCurtain: Manager.Scene.NowSceneNames?.Contains(SceneNames.OPENING_SCENE) != true);
-                    UIScreen.Camera.Normal.depth = UI_SCREEN_CAMERA_DEPTH;
                 }
 
                 UIScreen.LinkToFront(MainCamera, DISTANCE_OF_SCREEN);
@@ -82,9 +80,6 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
 
 
         #region Constants
-        // Set depth larger than existing game camera.
-        private const int MAIN_CAMERA_DEPTH = 100;
-        private const int UI_SCREEN_CAMERA_DEPTH = 101;
         // Use game unused layers.
         private const int UGUI_CAPTURE_LAYER = 15;
         private const int UI_SCREEN_LAYER = 31;
