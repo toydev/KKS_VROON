@@ -25,6 +25,8 @@ namespace KKS_VROON.ScenePlugins.SimpleScreenScene
         // - user request
         public void UpdateCamera(bool updateBaseHead)
         {
+            if (updateBaseHead) VRCamera.UpdateBaseHeadLocalValues();
+
             // Create objects as needed.
             if (!UIScreen)
             {
@@ -36,8 +38,6 @@ namespace KKS_VROON.ScenePlugins.SimpleScreenScene
 
             if (VR.Initialized)
             {
-                if (updateBaseHead) VRCamera.UpdateBaseHeadLocalValues();
-
                 // Link the hand controller and the VR main camera.
                 GetComponent<SimpleScreenSceneController>().SetOrigin(UIScreen.Camera.VR.origin);
 

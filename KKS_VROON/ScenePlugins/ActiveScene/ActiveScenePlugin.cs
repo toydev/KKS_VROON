@@ -48,6 +48,8 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
         // - change the scene (when the game main camera is broken)
         public void UpdateCamera(bool updateBaseHead)
         {
+            if (updateBaseHead) VRCamera.UpdateBaseHeadLocalValues();
+
             var gameMainCamera = CurrentGameMainCamera = Camera.main;
             if (gameMainCamera != null)
             {
@@ -81,10 +83,9 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
                 MainCamera.GetOrAddComponent<ReSepiaTone>().Source = gameMainCamera;
                 MainCamera.Normal.depth = MAIN_CAMERA_DEPTH;
 
+
                 if (VR.Initialized)
                 {
-                    if (updateBaseHead) VRCamera.UpdateBaseHeadLocalValues();
-
                     // Link the hand controller and the VR main camera.
                     GetComponent<ActiveSceneController>().SetOrigin(MainCamera.VR.origin);
 

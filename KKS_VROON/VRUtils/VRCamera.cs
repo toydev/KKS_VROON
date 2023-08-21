@@ -18,21 +18,24 @@ namespace KKS_VROON.VRUtils
         // Set the HMD's position / rotation at runtime as a base
         public static void UpdateBaseHeadLocalValues()
         {
-            var devices = new List<InputDevice>();
-            var characteristics = InputDeviceCharacteristics.HeadMounted;
-            InputDevices.GetDevicesWithCharacteristics(characteristics, devices);
-
-            if (0 < devices.Count)
+            if (VRUtils.VR.Initialized)
             {
-                var device = devices[0];
-                if (device.TryGetFeatureValue(CommonUsages.devicePosition, out var position))
-                {
-                    BaseHeadLocalPosition = position;
-                }
+                var devices = new List<InputDevice>();
+                var characteristics = InputDeviceCharacteristics.HeadMounted;
+                InputDevices.GetDevicesWithCharacteristics(characteristics, devices);
 
-                if (device.TryGetFeatureValue(CommonUsages.deviceRotation, out var rotation))
+                if (0 < devices.Count)
                 {
-                    BaseHeadLocalRotation = rotation;
+                    var device = devices[0];
+                    if (device.TryGetFeatureValue(CommonUsages.devicePosition, out var position))
+                    {
+                        BaseHeadLocalPosition = position;
+                    }
+
+                    if (device.TryGetFeatureValue(CommonUsages.deviceRotation, out var rotation))
+                    {
+                        BaseHeadLocalRotation = rotation;
+                    }
                 }
             }
         }
