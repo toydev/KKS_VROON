@@ -87,9 +87,6 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
         private static int[] UGUI_CAPTURE_TARGET_LAYER = new int[] { LayerMask.NameToLayer("UI"), UGUI_CAPTURE_LAYER };
         // Distance(meter)
         public const float DISTANCE_OF_SCREEN = 1f;
-        // Ignore the background during talk.
-        private string[] IGNORE_CANVAS = new string[] { "Canvas_BackGround" };
-        private string[] IGNORE_CAMERA = new string[] { "Camera_BackGround" };
         #endregion
 
         #region Control canvas
@@ -111,23 +108,6 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
 
             // Basic rule.
             return UGUI_CAPTURE_TARGET_LAYER.Contains(canvas.gameObject.layer);
-        }
-        #endregion
-
-        #region IgnoreCamera
-        void OnEnable()
-        {
-            Camera.onPreRender += OnPreRenderAllCamera;
-        }
-
-        void OnDisable()
-        {
-            Camera.onPreRender -= OnPreRenderAllCamera;
-        }
-
-        void OnPreRenderAllCamera(Camera camera)
-        {
-            if (IGNORE_CAMERA.Contains(camera.name)) CameraHijacker.Hijack(camera);
         }
         #endregion
 
