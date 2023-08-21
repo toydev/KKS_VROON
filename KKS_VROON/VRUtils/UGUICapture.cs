@@ -54,6 +54,7 @@ namespace KKS_VROON.VRUtils
         void Update()
         {
             var camera = GetComponent<Camera>();
+            var disableCanvas = new List<Canvas>();
             foreach (var canvas in CanvasGraphics.Keys)
             {
                 if (!ProcessedCanvas.Contains(canvas))
@@ -71,11 +72,17 @@ namespace KKS_VROON.VRUtils
                         }
                         else
                         {
-                            PluginLog.Info($"Disable canvas: {canvas.name} in {LayerMask.LayerToName(canvas.gameObject.layer)}");
-                            canvas.enabled = false;
+                            // Canvas cannot be disabled while processing CanvasGraphics.Keys
+                            disableCanvas.Add(canvas);
                         }
                     }
                 }
+            }
+
+            foreach (var canvas in disableCanvas)
+            {
+                PluginLog.Info($"Disable canvas: {canvas.name} in {LayerMask.LayerToName(canvas.gameObject.layer)}");
+                canvas.enabled = false;
             }
         }
 
