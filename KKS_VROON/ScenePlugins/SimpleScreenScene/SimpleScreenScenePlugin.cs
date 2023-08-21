@@ -14,6 +14,7 @@ namespace KKS_VROON.ScenePlugins.SimpleScreenScene
             gameObject.AddComponent<SimpleScreenSceneController>().SetLayer(UI_SCREEN_LAYER);
 
             UGUICapture = UGUICapture.Create(gameObject, nameof(UGUICapture), UGUI_CAPTURE_LAYER);
+            UIScreen = UIScreen.Create(gameObject, nameof(UIScreen), 100, UI_SCREEN_LAYER, UGUICapture, clearFlags: CameraClearFlags.Skybox);
 
             UpdateCamera(false);
         }
@@ -25,13 +26,6 @@ namespace KKS_VROON.ScenePlugins.SimpleScreenScene
         public void UpdateCamera(bool updateBaseHead)
         {
             if (updateBaseHead) VRCamera.UpdateBaseHeadLocalValues();
-
-            // Create objects as needed.
-            if (!UIScreen)
-            {
-                UIScreen = UIScreen.Create(new GameObject(gameObject.name + nameof(UIScreen)), UGUICapture, UI_SCREEN_LAYER);
-                UIScreen.Camera.Normal.clearFlags = CameraClearFlags.Skybox;
-            }
 
             UIScreen.LinkToFront(UIScreen.Camera, DISTANCE_OF_SCREEN);
             GetComponent<SimpleScreenSceneController>().SetOrigin(UIScreen.Camera);

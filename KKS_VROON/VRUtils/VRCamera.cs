@@ -41,13 +41,14 @@ namespace KKS_VROON.VRUtils
         }
         #endregion
 
-        public static VRCamera Create(GameObject parentGameObject, string name, bool withCurtain = true)
+        public static VRCamera Create(GameObject parentGameObject, string name, int depth, bool withCurtain = true)
         {
             var gameObject = new GameObject($"{parentGameObject.name}{name}");
             // Synchronized lifecycle
             gameObject.transform.parent = parentGameObject.transform;
             gameObject.SetActive(false);
             var result = gameObject.AddComponent<VRCamera>();
+            result.Depth = depth;
             result.WithCurtain = withCurtain;
             gameObject.SetActive(true);
             return result;
@@ -58,6 +59,7 @@ namespace KKS_VROON.VRUtils
             Setup();
 
             CameraHijacker.Hijack(parentCamera, Normal);
+            Normal.depth = Depth;
 
             if (VRUtils.VR.Initialized)
             {
@@ -77,6 +79,7 @@ namespace KKS_VROON.VRUtils
         public SteamVR_Camera VR { get; private set; }
 
         #region Implementations
+        private int Depth { get; set; }
         private bool WithCurtain { get; set; }
         private GameObject CameraObject { get; set; }
         private void Setup()
@@ -87,6 +90,7 @@ namespace KKS_VROON.VRUtils
 
                 CameraObject = new GameObject($"{name}Internal");
                 Normal = CameraObject.AddComponent<Camera>();
+                Normal.depth = Depth;
                 if (VRUtils.VR.Initialized)
                 {
                     VR = CameraObject.AddComponent<SteamVR_Camera>();

@@ -16,8 +16,11 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
 
             gameObject.AddComponent<ActiveSceneController>().SetLayer(UI_SCREEN_LAYER);
 
-            MainCamera = VRCamera.Create(gameObject, nameof(MainCamera));
+            MainCamera = VRCamera.Create(gameObject, nameof(MainCamera), 100);
             UGUICapture = UGUICapture.Create(gameObject, nameof(UGUICapture), UGUI_CAPTURE_LAYER, IsTargetCanvas);
+            UIScreen = UIScreen.Create(gameObject, nameof(UIScreen), 101, UI_SCREEN_LAYER, UGUICapture,
+                // issue #2: Don't use CameraCurtain during OpeningScene for dialog control when playing the game for the first time.
+                withCurtain: Manager.Scene.NowSceneNames?.Contains(SceneNames.OPENING_SCENE) != true);
 
             ActionScene = FindObjectOfType<ActionScene>();
 
@@ -58,14 +61,6 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
 
                 MainCamera.Hijack(gameMainCamera);
                 ReEffectUtils.AddEffects(gameMainCamera, MainCamera, /* Stopped DepthOfField, because it's blurry. */ useDepthOfField: false);
-
-                // Create objects as needed.
-                if (!UIScreen)
-                {
-                    UIScreen = UIScreen.Create(new GameObject(gameObject.name + nameof(UIScreen)), UGUICapture, UI_SCREEN_LAYER,
-                        // issue #2: Don't use CameraCurtain during OpeningScene for dialog control when playing the game for the first time.
-                        withCurtain: Manager.Scene.NowSceneNames?.Contains(SceneNames.OPENING_SCENE) != true);
-                }
 
                 UIScreen.LinkToFront(MainCamera, DISTANCE_OF_SCREEN);
 

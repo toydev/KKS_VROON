@@ -7,13 +7,18 @@ namespace KKS_VROON.VRUtils
     public class UIScreen : MonoBehaviour
     {
         #region Create
-        public static UIScreen Create(GameObject gameObject, UGUICapture UGUICapture, int uiScreenLayer, bool withCurtain = true)
+        public static UIScreen Create(GameObject parentGameObject, string name, int cameraDepth, int screenLayer, UGUICapture UGUICapture, bool withCurtain = true, CameraClearFlags clearFlags = CameraClearFlags.Depth)
         {
+            var gameObject = new GameObject($"{parentGameObject.name}{name}");
+            // Synchronized lifecycle
+            gameObject.transform.parent = parentGameObject.transform;
             gameObject.SetActive(false);
             var result = gameObject.AddComponent<UIScreen>();
             result.UGUICapture = UGUICapture;
-            result.UIScreenLayer = uiScreenLayer;
+            result.CameraDepth = cameraDepth;
+            result.ScreenLayer = screenLayer;
             result.WithCurtain = withCurtain;
+            result.ClearFlags = clearFlags;
             gameObject.SetActive(true);
             return result;
         }
@@ -21,6 +26,8 @@ namespace KKS_VROON.VRUtils
 
         public void LinkToFront(VRCamera targetCamera, float distance)
         {
+            Setup();
+
             if (VR.Initialized)
             {
                 // Put the screen in front.
@@ -30,19 +37,17 @@ namespace KKS_VROON.VRUtils
                     Camera.VR.origin.localPosition = Vector3.zero;
                     Camera.VR.origin.localRotation = Quaternion.identity;
                 }
-                transform.SetParent(targetCamera.VR.origin);
-                transform.localPosition = VRCamera.BaseHeadLocalPosition + VRCamera.BaseHeadLocalRotation * (distance * Vector3.forward);
-                transform.localRotation = VRCamera.BaseHeadLocalRotation;
+                Screen.transform.SetParent(targetCamera.VR.origin);
+                Screen.transform.localPosition = VRCamera.BaseHeadLocalPosition + VRCamera.BaseHeadLocalRotation * (distance * Vector3.forward);
+                Screen.transform.localRotation = VRCamera.BaseHeadLocalRotation;
             }
             else
             {
                 // Set as normal 2D screen.
                 Camera.Normal.orthographic = true;
-                Camera.Normal.orthographicSize = Screen.height / 2;
-                transform.SetParent(Camera.transform);
-                transform.localPosition = Vector3.forward;
-                transform.localRotation = Quaternion.identity;
-                transform.localScale = new Vector3(Screen.height, Screen.height, 1);
+                Camera.Normal.orthographicSize = 0.5f;
+                Screen.transform.localPosition = Vector3.forward;
+                Screen.transform.localRotation = Quaternion.identity;
             }
         }
 
@@ -52,7 +57,7 @@ namespace KKS_VROON.VRUtils
         #region Transform Screen <-> World
         public Vector2 GetScreenPositionFromWorld(Vector3 worldPositionOnScreen, Rect gameWindowRect)
         {
-            var localHitPoint = ScreenObject.transform.InverseTransformPoint(worldPositionOnScreen);
+            var localHitPoint = Screen.transform.InverseTransformPoint(worldPositionOnScreen);
             var actualWidth = gameWindowRect.height * 16f / 9f;
             return new Vector2(
                 (int)(gameWindowRect.x + (gameWindowRect.width - actualWidth) / 2f + (localHitPoint.x + 0.5f) * actualWidth),
@@ -61,70 +66,83 @@ namespace KKS_VROON.VRUtils
 
         public Vector3 GetWorldPositionFromScreen(float x, float y)
         {
-            return ScreenObject.transform.TransformPoint(
-                x / Screen.width - 0.5f,
-                y / Screen.height - 0.5f, 0f);
+            return Screen.transform.TransformPoint(
+                x / UnityEngine.Screen.width - 0.5f,
+                y / UnityEngine.Screen.height - 0.5f, 0f);
         }
         #endregion
 
         #region Implementations
+        private int CameraDepth { get; set; }
+        private int ScreenLayer { get; set; }
         private UGUICapture UGUICapture { get; set; }
-        private int UIScreenLayer { get; set; } = 31;
         private bool WithCurtain { get; set; }
-        private GameObject ScreenObject { get; set; }
+        private CameraClearFlags ClearFlags { get; set; }
+        private GameObject Screen { get; set; }
         private GameObject MouseCursor { get; set; }
 
         public Plane GetScreenPlane()
         {
-            return new Plane(ScreenObject.transform.forward, ScreenObject.transform.position);
+            return new Plane(Screen.transform.forward, Screen.transform.position);
+        }
+
+        private void Setup()
+        {
+            if (!Camera)
+            {
+                PluginLog.Info($"Setup Camera: {name}");
+                Camera = VRCamera.Create(gameObject, nameof(Camera), CameraDepth, WithCurtain);
+                Camera.Normal.cullingMask = 1 << ScreenLayer;
+                Camera.Normal.clearFlags = ClearFlags;
+                Camera.Normal.nearClipPlane = 0.01f;  // 1cm
+            }
+
+            if (!Screen)
+            {
+                PluginLog.Info($"Setup Screen: {name}");
+                Screen = new GameObject(gameObject.name + nameof(Screen));
+                Screen.transform.localScale = new Vector3(UGUICapture.Texture.width / (float)UGUICapture.Texture.height, 1f, 1f);
+                Screen.layer = ScreenLayer;
+                var meshFilter = Screen.AddComponent<MeshFilter>();
+                meshFilter.mesh = Resources.GetBuiltinResource<Mesh>("Quad.fbx");
+                var material = new Material(Shader.Find("Unlit/Transparent"))
+                {
+                    mainTexture = UGUICapture.Texture,
+                };
+                var meshRenderer = Screen.AddComponent<MeshRenderer>();
+                meshRenderer.material = material;
+            }
+
+            if (!MouseCursor)
+            {
+                PluginLog.Info($"Setup MouseCursor: {name}");
+                MouseCursor = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                MouseCursor.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+                MouseCursor.layer = ScreenLayer;
+                MouseCursor.GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Color"))
+                {
+                    color = new Color(0.9f, 0.9f, 0.9f, 0.5f),
+                };
+                var mouseCursorCollider = MouseCursor.GetComponent<Collider>();
+                if (mouseCursorCollider) Destroy(mouseCursorCollider);
+            }
         }
 
         void Awake()
         {
             PluginLog.Info($"Awake: {name}");
-
-            // Camera
-            Camera = VRCamera.Create(gameObject, nameof(Camera), WithCurtain);
-            Camera.Normal.cullingMask = 1 << UIScreenLayer;
-            Camera.Normal.clearFlags = CameraClearFlags.Depth;
-            Camera.Normal.nearClipPlane = 0.01f;  // 1cm
-
-            // Screen
-            ScreenObject = new GameObject(gameObject.name + nameof(Screen));
-            ScreenObject.transform.SetParent(transform, false);
-            ScreenObject.transform.localScale = new Vector3(UGUICapture.Texture.width / (float)UGUICapture.Texture.height, 1f, 0f);
-            ScreenObject.layer = UIScreenLayer;
-            var meshFilter = ScreenObject.AddComponent<MeshFilter>();
-            meshFilter.mesh = Resources.GetBuiltinResource<Mesh>("Quad.fbx");
-            var material = new Material(Shader.Find("Unlit/Transparent"))
-            {
-                mainTexture = UGUICapture.Texture,
-            };
-            var meshRenderer = ScreenObject.AddComponent<MeshRenderer>();
-            meshRenderer.material = material;
-
-            // MouseCursor
-            MouseCursor = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            MouseCursor.transform.SetParent(GetComponent<UIScreen>().transform);
-            MouseCursor.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
-            MouseCursor.GetComponent<MeshRenderer>().material = new Material(Shader.Find("Unlit/Color"))
-            {
-                color = new Color(0.9f, 0.9f, 0.9f, 0.5f),
-            };
-            var mouseCursorCollider = MouseCursor.GetComponent<Collider>();
-            if (mouseCursorCollider) Destroy(mouseCursorCollider);
+            Setup();
         }
 
         void Update()
         {
-            if (0 <= Input.mousePosition.x && Input.mousePosition.x <= Screen.width
-                && 0 <= Input.mousePosition.y && Input.mousePosition.y < Screen.height
-                && MouseCursorVisible)
+            if (0 <= Input.mousePosition.x && Input.mousePosition.x <= UnityEngine.Screen.width
+                && 0 <= Input.mousePosition.y && Input.mousePosition.y <= UnityEngine.Screen.height
+                && MouseCursorVisible
+            )
             {
                 MouseCursor.SetActive(true);
-                MouseCursor.gameObject.layer = UIScreenLayer;
-                MouseCursor.transform.position = GetWorldPositionFromScreen(
-                    Input.mousePosition.x, Input.mousePosition.y);
+                MouseCursor.transform.position = GetWorldPositionFromScreen(Input.mousePosition.x, Input.mousePosition.y);
             }
             else
             {
@@ -135,8 +153,9 @@ namespace KKS_VROON.VRUtils
         void OnDestroy()
         {
             PluginLog.Info($"OnDestroy: {name}");
-
-            if (Camera) Destroy(Camera.gameObject);
+            if (Camera) Destroy(Camera);
+            if (Screen) Destroy(Screen);
+            if (MouseCursor) Destroy(MouseCursor);
         }
         #endregion
     }
