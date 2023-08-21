@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 using KKS_VROON.Effects;
 using KKS_VROON.Logging;
@@ -19,7 +20,7 @@ namespace KKS_VROON.ScenePlugins.ActionScene
             PluginLog.Info($"Awake: {name}");
 
             MainCamera = VRCamera.Create(gameObject, nameof(MainCamera), 100);
-            var UGUI_CAPTURE_TARGET_LAYER = new int[] { LayerMask.NameToLayer("UI"), CustomLayers.UGUI_CAPTURE_LAYER };
+            var UGUI_CAPTURE_TARGET_LAYER = new int[] { LayerMask.NameToLayer("Default"), LayerMask.NameToLayer("UI"), CustomLayers.UGUI_CAPTURE_LAYER };
             UGUICapture = UGUICapture.Create(gameObject, nameof(UGUICapture), CustomLayers.UGUI_CAPTURE_LAYER, (canvas) =>
             {
                 // Canvas_Background is the background canvas for the talk scene.
@@ -47,8 +48,16 @@ namespace KKS_VROON.ScenePlugins.ActionScene
 
             if (ActionScene != null)
             {
-                // Force FPS mode
-                if (ActionScene.CameraState.Mode != ActionGame.CameraMode.FPS) ActionScene.CameraState.ModeChangeForce(ActionGame.CameraMode.FPS);
+                // Force FPS mode only once in each scene.
+                if (!CameraModeAdjustedInScene)
+                {
+                    CameraModeAdjustedInScene = true;
+                    if (ActionScene.CameraState.Mode != ActionGame.CameraMode.FPS)
+                    {
+                        PluginLog.Info("Force FPS mode");
+                        ActionScene.CameraState.ModeChangeForce(ActionGame.CameraMode.FPS);
+                    }
+                }
 
                 // Control the mouse pointer.
                 if (UIScreen) UIScreen.MouseCursorVisible = !ActionScene.isCursorLock;
@@ -80,6 +89,16 @@ namespace KKS_VROON.ScenePlugins.ActionScene
                 HandController.Link(MainCamera);
             }
         }
+
+        #region Reset CameraModeAdjustedInScene
+        private bool CameraModeAdjustedInScene { get; set; }
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            if (mode == LoadSceneMode.Additive) CameraModeAdjustedInScene = false;
+        }
+        void OnEnable() { SceneManager.sceneLoaded += OnSceneLoaded; }
+        void OnDisable() { SceneManager.sceneLoaded -= OnSceneLoaded; }
+        #endregion
 
         private VRCamera MainCamera { get; set; }
         private UGUICapture UGUICapture { get; set; }
