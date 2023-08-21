@@ -44,6 +44,8 @@ namespace KKS_VROON.VRUtils
         public static VRCamera Create(GameObject parentGameObject, string name, bool withCurtain = true)
         {
             var gameObject = new GameObject($"{parentGameObject.name}{name}");
+            // Synchronized lifecycle
+            gameObject.transform.parent = parentGameObject.transform;
             gameObject.SetActive(false);
             var result = gameObject.AddComponent<VRCamera>();
             result.WithCurtain = withCurtain;
