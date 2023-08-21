@@ -15,7 +15,7 @@ namespace KKS_VROON.ScenePlugins.SimpleScreenScene
             PluginLog.Info($"Awake: {name}");
 
             UGUICapture = UGUICapture.Create(gameObject, nameof(UGUICapture), CustomLayers.UGUI_CAPTURE_LAYER);
-            UIScreen = UIScreen.Create(gameObject, nameof(UIScreen), 100, CustomLayers.UI_SCREEN_LAYER, UGUICapture, clearFlags: CameraClearFlags.Skybox);
+            UIScreen = UIScreen.Create(gameObject, nameof(UIScreen), 100, CustomLayers.UI_SCREEN_LAYER, new UIScreenPanel[] { new UIScreenPanel(UGUICapture.Texture) }, clearFlags: CameraClearFlags.Skybox);
             HandController = VRHandController.Create(gameObject, nameof(VRHandController), CustomLayers.UI_SCREEN_LAYER);
             InputPatch.Emulator = new BasicMouseEmulator(HandController);
 

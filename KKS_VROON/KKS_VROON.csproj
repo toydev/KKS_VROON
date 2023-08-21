@@ -167,6 +167,7 @@
     <Compile Include="VRUtils\CameraHijacker.cs" />
     <Compile Include="VRUtils\UGUICapture.cs" />
     <Compile Include="VRUtils\UIScreen.cs" />
+    <Compile Include="VRUtils\UIScreenPanel.cs" />
     <Compile Include="VRUtils\VR.cs" />
     <Compile Include="VRUtils\VRCamera.cs" />
     <Compile Include="VRUtils\VRHandController.cs" />

@@ -28,7 +28,7 @@ namespace KKS_VROON.ScenePlugins.ActionScene
                 // Basic rule.
                 return UGUI_CAPTURE_TARGET_LAYER.Contains(canvas.gameObject.layer) ? UGUICapture.CanvasUpdateType.CAPTURE : UGUICapture.CanvasUpdateType.DISABLE;
             });
-            UIScreen = UIScreen.Create(gameObject, nameof(UIScreen), 101, CustomLayers.UI_SCREEN_LAYER, UGUICapture);
+            UIScreen = UIScreen.Create(gameObject, nameof(UIScreen), 101, CustomLayers.UI_SCREEN_LAYER, new UIScreenPanel[] { new UIScreenPanel(UGUICapture.Texture) });
             HandController = VRHandController.Create(gameObject, nameof(VRHandController), CustomLayers.UI_SCREEN_LAYER);
             HandController.GetOrAddComponent<VRHandControllerMouseIconAttachment>();
             InputPatch.Emulator = new ActionSceneMouseEmulator(HandController);
