@@ -9,9 +9,9 @@ namespace KKS_VROON.ScenePlugins.SimpleScreenScene
 {
     public class SimpleScreenSceneController : MonoBehaviour, IMouseEmulator
     {
-        public void SetOrigin(Transform vrCameraOrigin)
+        public void SetOrigin(VRCamera targetCamera)
         {
-            HandController.SetOrigin(vrCameraOrigin);
+            if (targetCamera.VR) HandController.SetOrigin(targetCamera.VR.origin);
         }
 
         public void SetLayer(int layer)

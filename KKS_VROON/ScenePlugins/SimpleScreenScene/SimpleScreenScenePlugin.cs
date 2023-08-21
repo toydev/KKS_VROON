@@ -37,10 +37,7 @@ namespace KKS_VROON.ScenePlugins.SimpleScreenScene
             }
 
             UIScreen.LinkToFront(UIScreen.Camera, DISTANCE_OF_SCREEN);
-
-            if (VR.Initialized)
-                // Link the hand controller and the VR main camera.
-                GetComponent<SimpleScreenSceneController>().SetOrigin(UIScreen.Camera.VR.origin);
+            GetComponent<SimpleScreenSceneController>().SetOrigin(UIScreen.Camera);
         }
 
         public UIScreen UIScreen { get; set; }
