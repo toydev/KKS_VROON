@@ -17,7 +17,7 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
             gameObject.AddComponent<ActiveSceneController>().SetLayer(UI_SCREEN_LAYER);
 
             MainCamera = VRCamera.Create(gameObject, nameof(MainCamera));
-            UGUICapture = UGUICapture.Create(new GameObject(gameObject.name + nameof(UGUICapture)), UGUI_CAPTURE_LAYER, IsTargetCanvas);
+            UGUICapture = UGUICapture.Create(gameObject, nameof(UGUICapture), UGUI_CAPTURE_LAYER, IsTargetCanvas);
 
             ActionScene = FindObjectOfType<ActionScene>();
 

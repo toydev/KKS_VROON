@@ -13,8 +13,7 @@ namespace KKS_VROON.ScenePlugins.SimpleScreenScene
 
             gameObject.AddComponent<SimpleScreenSceneController>().SetLayer(UI_SCREEN_LAYER);
 
-            UGUICapture = UGUICapture.Create(new GameObject(gameObject.name + nameof(UGUICapture)), UGUI_CAPTURE_LAYER);
-            UGUICapture.gameObject.transform.SetParent(gameObject.transform);
+            UGUICapture = UGUICapture.Create(gameObject, nameof(UGUICapture), UGUI_CAPTURE_LAYER);
 
             UpdateCamera(false);
         }

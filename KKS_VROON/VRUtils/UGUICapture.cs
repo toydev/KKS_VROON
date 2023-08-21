@@ -12,8 +12,11 @@ namespace KKS_VROON.VRUtils
 {
     public class UGUICapture : MonoBehaviour
     {
-        public static UGUICapture Create(GameObject gameObject, int layer, Func<Canvas, bool> isTarget = null)
+        public static UGUICapture Create(GameObject parentGameObject, string name, int layer, Func<Canvas, bool> isTarget = null)
         {
+            var gameObject = new GameObject($"{parentGameObject.name}{name}");
+            // Synchronized lifecycle
+            gameObject.transform.parent = parentGameObject.transform;
             gameObject.SetActive(false);
             var result = gameObject.AddComponent<UGUICapture>();
             result.Layer = layer;
