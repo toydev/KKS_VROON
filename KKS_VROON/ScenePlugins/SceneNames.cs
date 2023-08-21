@@ -8,6 +8,6 @@
         public const string ACTION = "Action";
 
         public const string FREE_H = "FreeH";
-        public const string H = "OpeningScene";
+        public const string H = "H";
     }
 }

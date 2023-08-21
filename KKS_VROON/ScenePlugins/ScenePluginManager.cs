@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 using KKS_VROON.Logging;
-using KKS_VROON.ScenePlugins.ActiveScene;
+using KKS_VROON.ScenePlugins.ActionScene;
+using KKS_VROON.ScenePlugins.HScene;
+using KKS_VROON.ScenePlugins.OpeningScene;
 using KKS_VROON.ScenePlugins.SimpleScreenScene;
 using KKS_VROON.VRUtils;
 
@@ -21,21 +23,22 @@ namespace KKS_VROON.ScenePlugins
             {
                 switch (scene.name)
                 {
+                    // for MainGame
                     case SceneNames.LOGO:
                     case SceneNames.TITLE:
                         CreateSceneControllerGameObject(typeof(SimpleScreenScenePlugin));
                         break;
                     case SceneNames.OPENING_SCENE:
-                    case SceneNames.ACTION:
-                        CreateSceneControllerGameObject(typeof(ActiveScenePlugin));
+                        CreateSceneControllerGameObject(typeof(OpeningScenePlugin));
                         break;
-
-                    // for FreeH
+                    case SceneNames.ACTION:
+                        CreateSceneControllerGameObject(typeof(ActionScenePlugin));
+                        break;
                     case SceneNames.FREE_H:
                         CreateSceneControllerGameObject(typeof(SimpleScreenScenePlugin));
                         break;
-                    case "H":
-                        CreateSceneControllerGameObject(typeof(ActiveScenePlugin));
+                    case SceneNames.H:
+                        CreateSceneControllerGameObject(typeof(HScenePlugin));
                         break;
                 }
             }

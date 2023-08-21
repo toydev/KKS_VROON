@@ -4,11 +4,11 @@ using KKS_VROON.Patches.HandPatches;
 using KKS_VROON.ScenePlugins.Common;
 using KKS_VROON.VRUtils;
 
-namespace KKS_VROON.ScenePlugins.ActiveScene
+namespace KKS_VROON.ScenePlugins.ActionScene
 {
-    public class ActiveSceneMouseEmulator : BasicMouseEmulator
+    public class ActionSceneMouseEmulator : BasicMouseEmulator
     {
-        public ActiveSceneMouseEmulator(VRHandController handController) : base(handController)
+        public ActionSceneMouseEmulator(VRHandController handController) : base(handController)
         {
         }
 
