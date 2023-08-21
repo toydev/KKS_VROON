@@ -7,6 +7,20 @@ namespace KKS_VROON.VRUtils
 {
     public class VRHandController : MonoBehaviour
     {
+        #region Create
+        public static VRHandController Create(GameObject parentGameObject, string name, int screenLayer)
+        {
+            var gameObject = new GameObject($"{parentGameObject.name}{name}");
+            // Synchronized lifecycle
+            gameObject.transform.parent = parentGameObject.transform;
+            gameObject.SetActive(false);
+            var result = gameObject.AddComponent<VRHandController>();
+            result.ScreenLayer = screenLayer;
+            gameObject.SetActive(true);
+            return result;
+        }
+        #endregion
+
         public static bool IsLeftHandActive { get; set; } = false;
         public static bool IsRightHandActive { get; set; } = false;
 
@@ -63,14 +77,14 @@ namespace KKS_VROON.VRUtils
             return null;
         }
 
-        public void SetOrigin(Transform origin)
+        public void Link(VRCamera targetCamera)
         {
-            if (enabled)
+            if (enabled && targetCamera.VR)
             {
-                LControllerVisual.origin = origin;
-                RControllerVisual.origin = origin;
-                LControllerPose.origin = origin;
-                RControllerPose.origin = origin;
+                LControllerVisual.origin = targetCamera.VR.origin;
+                RControllerVisual.origin = targetCamera.VR.origin;
+                LControllerPose.origin = targetCamera.VR.origin;
+                RControllerPose.origin = targetCamera.VR.origin;
             }
         }
 
@@ -110,6 +124,7 @@ namespace KKS_VROON.VRUtils
             }
         }
 
+        private int ScreenLayer { get; set; }
         private SteamVR_Behaviour_Pose LControllerVisual { get; set; }
         private SteamVR_Behaviour_Pose RControllerVisual { get; set; }
         private SteamVR_Behaviour_Pose LControllerPose { get; set; }
@@ -140,6 +155,7 @@ namespace KKS_VROON.VRUtils
                 RLaserPointer.gameObject.SetActive(IsRightHandActive);
                 LHandIcon.enabled = IsLeftHandActive;
                 RHandIcon.enabled = IsRightHandActive;
+                SetLayer(ScreenLayer);
             }
             else
             {
@@ -150,6 +166,8 @@ namespace KKS_VROON.VRUtils
         private SteamVR_Behaviour_Pose CreatePose(SteamVR_Input_Sources inputSource, bool withRenderModel)
         {
             var poseGameObject = new GameObject(gameObject.name + inputSource);
+            // Synchronized lifecycle
+            poseGameObject.transform.parent = gameObject.transform;
             poseGameObject.SetActive(false);
             var result = poseGameObject.AddComponent<SteamVR_Behaviour_Pose>();
             result.inputSource = inputSource;
@@ -164,9 +182,9 @@ namespace KKS_VROON.VRUtils
         private Transform CreateLarserPointer(SteamVR_Behaviour_Pose parentPose)
         {
             var result = new GameObject(gameObject.name + nameof(LineRenderer)).AddComponent<LineRenderer>();
-            result.gameObject.transform.SetParent(parentPose.transform);
-            result.gameObject.transform.localPosition = Vector3.zero;
-            result.gameObject.transform.localRotation = Quaternion.Euler(60.0f, 0.0f, 0.0f);
+            result.transform.SetParent(parentPose.transform);
+            result.transform.localPosition = Vector3.zero;
+            result.transform.localRotation = Quaternion.Euler(60.0f, 0.0f, 0.0f);
             result.startWidth = 0.01f;
             result.endWidth = 0.001f;
             result.positionCount = 2;

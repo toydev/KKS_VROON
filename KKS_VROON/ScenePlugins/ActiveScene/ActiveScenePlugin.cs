@@ -5,6 +5,10 @@ using UnityEngine;
 using KKS_VROON.Effects;
 using KKS_VROON.Logging;
 using KKS_VROON.VRUtils;
+using KKS_VROON.ScenePlugins.Common;
+using KKS_VROON.Patches.HandPatches;
+using KKS_VROON.Patches.InputPatches;
+using KKS_VROON.WindowNativeUtils;
 
 namespace KKS_VROON.ScenePlugins.ActiveScene
 {
@@ -32,7 +36,12 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
             UIScreen = UIScreen.Create(gameObject, nameof(UIScreen), 101, CustomLayers.UI_SCREEN_LAYER, UGUICapture,
                 // issue #2: Don't use CameraCurtain during OpeningScene for dialog control when playing the game for the first time.
                 withCurtain: Manager.Scene.NowSceneNames?.Contains(SceneNames.OPENING_SCENE) != true);
-            gameObject.AddComponent<ActiveSceneController>().SetLayer(CustomLayers.UI_SCREEN_LAYER);
+            HandController = VRHandController.Create(gameObject, nameof(VRHandController), CustomLayers.UI_SCREEN_LAYER);
+            HandController.GetOrAddComponent<VRHandControllerMouseIconAttachment>();
+            InputPatch.Emulator = new ActiveSceneMouseEmulator(HandController);
+            ScreenPointToRayPatch.GetRay = () => HandController ? HandController.GetRay() : null;
+            ColDisposableInfoPatch.Raycast = (collider) => HandController ? HandController.WideCast(collider, 0.4f, 10, 10, 10f) : null;
+            ColDisposableInfoPatch.MouseDown = () => HandController.State.IsTriggerOn;
             ActionScene = FindObjectOfType<ActionScene>();
 
             UpdateCamera(false);
@@ -48,7 +57,17 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
                 // Force FPS mode
                 if (ActionScene.CameraState.Mode != ActionGame.CameraMode.FPS) ActionScene.CameraState.ModeChangeForce(ActionGame.CameraMode.FPS);
                 if (UIScreen) UIScreen.MouseCursorVisible = !ActionScene.isCursorLock;
+
+                // Control the mouse pointer.
+                if (ActionScene.isCursorLock != true && HandController.State.IsPositionChanging() && UIScreen && HandController.RayCast(UIScreen.GetScreenPlane(), out var hit))
+                {
+                    var screenPosition = UIScreen.GetScreenPositionFromWorld(hit.point, WindowUtils.GetGameWindowRect());
+                    MouseKeyboardUtils.NativeMethods.SetCursorPos((int)screenPosition.x, (int)screenPosition.y);
+                }
             }
+
+            // Update base head.
+            if (HandController.State.IsButtonYDown || HandController.State.IsButtonBDown) UpdateCamera(true);
         }
 
         // Correspond to the following camera updates.
@@ -57,7 +76,7 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
         // - user request
         // - change the game main camera
         // - change the scene (when the game main camera is broken)
-        public void UpdateCamera(bool updateBaseHead)
+        private void UpdateCamera(bool updateBaseHead)
         {
             if (updateBaseHead) VRCamera.UpdateBaseHeadLocalValues();
 
@@ -68,14 +87,15 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
                 MainCamera.Hijack(gameMainCamera);
                 ReEffectUtils.AddEffects(gameMainCamera, MainCamera, /* Stopped DepthOfField, because it's blurry. */ useDepthOfField: false);
                 UIScreen.LinkToFront(MainCamera, 1.0f);
-                GetComponent<ActiveSceneController>().SetOrigin(MainCamera);
+                HandController.Link(MainCamera);
             }
         }
 
-        public UIScreen UIScreen { get; set; }
         private VRCamera MainCamera { get; set; }
+        private UGUICapture UGUICapture { get; set; }
+        private UIScreen UIScreen { get; set; }
         private Camera CurrentGameMainCamera { get; set; }
         private ActionScene ActionScene { get; set; }
-        private UGUICapture UGUICapture { get; set; }
+        private VRHandController HandController { get; set; }
     }
 }
