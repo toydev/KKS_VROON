@@ -168,6 +168,7 @@
     <Compile Include="VRUtils\VR.cs" />
     <Compile Include="VRUtils\VRCamera.cs" />
     <Compile Include="VRUtils\VRHandController.cs" />
+    <Compile Include="ScenePlugins\Common\VRHandControllerMouseIconAttachment.cs" />
     <Compile Include="VRUtils\VRHandControllerPoseSmoother.cs" />
     <Compile Include="VRUtils\VRHandControllerState.cs" />
     <Compile Include="VRUtils\VRMirrorManager.cs" />

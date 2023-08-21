@@ -2,9 +2,10 @@
 
 using KKS_VROON.Logging;
 using KKS_VROON.Patches.InputPatches;
+using KKS_VROON.Patches.HandPatches;
+using KKS_VROON.ScenePlugins.Common;
 using KKS_VROON.VRUtils;
 using KKS_VROON.WindowNativeUtils;
-using KKS_VROON.Patches.HandPatches;
 
 namespace KKS_VROON.ScenePlugins.ActiveScene
 {
@@ -27,6 +28,7 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
             ActionScene = FindObjectOfType<ActionScene>();
 
             HandController = new GameObject(gameObject.name + nameof(HandController)).AddComponent<VRHandController>();
+            HandController.GetOrAddComponent<VRHandControllerMouseIconAttachment>();
             InputPatch.Emulator = new ActiveSceneMouseEmulator(HandController);
             ScreenPointToRayPatch.GetRay = () => HandController ? HandController.GetRay() : null;
             ColDisposableInfoPatch.Raycast = (collider) => HandController ? HandController.WideCast(collider, 0.4f, 10, 10, 10f) : null;
@@ -55,23 +57,5 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
 
         private VRHandController HandController { get; set; }
         private ActionScene ActionScene { get; set; }
-
-        #region Cursor
-        void OnEnable()
-        {
-            CursorPatch.onChangeCursor += OnChangeCursor;
-        }
-
-        void OnDisable()
-        {
-            if (HandController) HandController.SetHandIcon(null);
-            CursorPatch.onChangeCursor -= OnChangeCursor;
-        }
-
-        void OnChangeCursor(Texture2D texture)
-        {
-            if (HandController) HandController.SetHandIcon(texture);
-        }
-        #endregion
     }
 }
