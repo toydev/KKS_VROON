@@ -83,16 +83,12 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
                 MainCamera.GetOrAddComponent<ReSepiaTone>().Source = gameMainCamera;
                 MainCamera.Normal.depth = MAIN_CAMERA_DEPTH;
 
+                MainCamera.Link(gameMainCamera);
 
                 if (VR.Initialized)
                 {
                     // Link the hand controller and the VR main camera.
                     GetComponent<ActiveSceneController>().SetOrigin(MainCamera.VR.origin);
-
-                    // Link the game main camera and the VR main camera.
-                    MainCamera.VR.origin.rotation = gameMainCamera.transform.rotation * Quaternion.Inverse(VRCamera.BaseHeadLocalRotation);
-                    MainCamera.VR.origin.position = gameMainCamera.transform.position - MainCamera.VR.origin.rotation * VRCamera.BaseHeadLocalPosition;
-                    MainCamera.VR.origin.SetParent(gameMainCamera.transform);
 
                     // Put the screen in front.
                     UIScreen.Camera.VR.origin.SetParent(MainCamera.VR.origin);
@@ -104,11 +100,6 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
                 }
                 else
                 {
-                    // Link the game main camera and the VR main camera.
-                    MainCamera.Normal.transform.SetParent(gameMainCamera.transform);
-                    MainCamera.Normal.transform.position = gameMainCamera.transform.position;
-                    MainCamera.Normal.transform.rotation = gameMainCamera.transform.rotation;
-
                     // Set as normal 2D screen.
                     UIScreen.Camera.Normal.orthographic = true;
                     UIScreen.Camera.Normal.orthographicSize = Screen.height / 2;

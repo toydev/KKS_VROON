@@ -41,6 +41,22 @@ namespace KKS_VROON.VRUtils
         }
         #endregion
 
+        public void Link(Camera parentCamera)
+        {
+            if (VRUtils.VR.Initialized)
+            {
+                VR.origin.rotation = parentCamera.transform.rotation * Quaternion.Inverse(BaseHeadLocalRotation);
+                VR.origin.position = parentCamera.transform.position - VR.origin.rotation * BaseHeadLocalPosition;
+                VR.origin.SetParent(parentCamera.transform);
+            }
+            else
+            {
+                Normal.transform.SetParent(parentCamera.transform);
+                Normal.transform.position = parentCamera.transform.position;
+                Normal.transform.rotation = parentCamera.transform.rotation;
+            }
+        }
+
         public Camera Normal { get; private set; }
         public SteamVR_Camera VR { get; private set; }
 
