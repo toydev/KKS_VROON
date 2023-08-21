@@ -18,6 +18,33 @@ namespace KKS_VROON.VRUtils
         }
         #endregion
 
+        public void LinkToFront(VRCamera targetCamera, float distance)
+        {
+            if (VR.Initialized)
+            {
+                // Put the screen in front.
+                if (Camera != targetCamera)
+                {
+                    Camera.VR.origin.SetParent(targetCamera.VR.origin);
+                    Camera.VR.origin.localPosition = Vector3.zero;
+                    Camera.VR.origin.localRotation = Quaternion.identity;
+                }
+                transform.SetParent(targetCamera.VR.origin);
+                transform.localPosition = VRCamera.BaseHeadLocalPosition + VRCamera.BaseHeadLocalRotation * (distance * Vector3.forward);
+                transform.localRotation = VRCamera.BaseHeadLocalRotation;
+            }
+            else
+            {
+                // Set as normal 2D screen.
+                Camera.Normal.orthographic = true;
+                Camera.Normal.orthographicSize = Screen.height / 2;
+                transform.SetParent(Camera.transform);
+                transform.localPosition = Vector3.forward;
+                transform.localRotation = Quaternion.identity;
+                transform.localScale = new Vector3(Screen.height, Screen.height, 1);
+            }
+        }
+
         public VRCamera Camera { get; private set; }
         public bool MouseCursorVisible { get; set; } = true;
 

@@ -84,30 +84,11 @@ namespace KKS_VROON.ScenePlugins.ActiveScene
                 MainCamera.Normal.depth = MAIN_CAMERA_DEPTH;
 
                 MainCamera.Link(gameMainCamera);
+                UIScreen.LinkToFront(MainCamera, DISTANCE_OF_SCREEN);
 
                 if (VR.Initialized)
-                {
                     // Link the hand controller and the VR main camera.
                     GetComponent<ActiveSceneController>().SetOrigin(MainCamera.VR.origin);
-
-                    // Put the screen in front.
-                    UIScreen.Camera.VR.origin.SetParent(MainCamera.VR.origin);
-                    UIScreen.Camera.VR.origin.localPosition = Vector3.zero;
-                    UIScreen.Camera.VR.origin.localRotation = Quaternion.identity;
-                    UIScreen.transform.SetParent(MainCamera.VR.origin);
-                    UIScreen.transform.localPosition = VRCamera.BaseHeadLocalPosition + VRCamera.BaseHeadLocalRotation * (DISTANCE_OF_SCREEN * Vector3.forward);
-                    UIScreen.transform.localRotation = VRCamera.BaseHeadLocalRotation;
-                }
-                else
-                {
-                    // Set as normal 2D screen.
-                    UIScreen.Camera.Normal.orthographic = true;
-                    UIScreen.Camera.Normal.orthographicSize = Screen.height / 2;
-                    UIScreen.transform.SetParent(UIScreen.Camera.transform);
-                    UIScreen.transform.localPosition = Vector3.forward;
-                    UIScreen.transform.localRotation = Quaternion.identity;
-                    UIScreen.transform.localScale = new Vector3(Screen.height, Screen.height, 1);
-                }
             }
         }
 
