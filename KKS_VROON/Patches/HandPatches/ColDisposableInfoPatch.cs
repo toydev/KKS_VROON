@@ -28,7 +28,7 @@ namespace KKS_VROON.Patches.HandPatches
         [HarmonyPrefix]
         public static bool PrefixEnd(ref TalkScene.ColDisposableInfo __instance)
         {
-            UnityEngine.Object.Destroy(__instance.col.GetComponent<ColDisposableInfoWrapper>());
+            if (__instance.col) UnityEngine.Object.Destroy(__instance.col.GetComponent<ColDisposableInfoWrapper>());
             return true;
         }
 
