@@ -147,6 +147,7 @@
     <Compile Include="Logging\PluginLog.cs" />
     <Compile Include="Patches\HandPatches\ColDisposableInfoPatch.cs" />
     <Compile Include="Patches\HandPatches\CursorPatch.cs" />
+    <Compile Include="Patches\HandPatches\EventSystemPatch.cs" />
     <Compile Include="Patches\HandPatches\GraphicRaycasterPatch.cs" />
     <Compile Include="Patches\HandPatches\SendMouseEventsPatch.cs" />
     <Compile Include="Patches\HandPatches\HandCtrlPatch.cs" />
