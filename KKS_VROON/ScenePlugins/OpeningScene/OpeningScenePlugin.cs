@@ -23,7 +23,7 @@ namespace KKS_VROON.ScenePlugins.OpeningScene
             {
                 // SceneCanvas is a canvas for loading display.
                 // issue #2: Disable SceneCanvas during autosave tutorial.
-                if ("SceneCanvas" == canvas.name && !Tutorial.Checked(Tutorial.Category.AutoSave)) return UGUICapture.CanvasUpdateType.CAPTURE;
+                if ("SceneCanvas" == canvas.name && !Tutorial.Checked(Tutorial.Category.AutoSave)) return UGUICapture.CanvasUpdateType.DISABLE;
                 // Basic rule.
                 return UGUI_CAPTURE_TARGET_LAYER.Contains(canvas.gameObject.layer) ? UGUICapture.CanvasUpdateType.CAPTURE : UGUICapture.CanvasUpdateType.DISABLE;
             });
