@@ -82,11 +82,11 @@ namespace KKS_VROON.VRUtils
                 (int)(gameWindowRect.y + (0.5f - localHitPoint.y) * gameWindowRect.height));
         }
 
-        public Vector3 GetWorldPositionFromScreen(float x, float y)
+        public Vector3? GetWorldPositionFromScreen(float x, float y)
         {
-            return MainScreen.transform.TransformPoint(
-                x / Screen.width - 0.5f,
-                y / Screen.height - 0.5f, 0f);
+            return MainScreen
+                ? (Vector3?)MainScreen.transform.TransformPoint(x / Screen.width - 0.5f, y / Screen.height - 0.5f, 0f)
+                : null;
         }
         #endregion
 
@@ -171,7 +171,8 @@ namespace KKS_VROON.VRUtils
             )
             {
                 MouseCursor.SetActive(true);
-                MouseCursor.transform.position = GetWorldPositionFromScreen(Input.mousePosition.x, Input.mousePosition.y);
+                var newPosition = GetWorldPositionFromScreen(Input.mousePosition.x, Input.mousePosition.y);
+                if (newPosition != null) MouseCursor.transform.position = newPosition.Value;
             }
             else
             {
