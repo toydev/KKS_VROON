@@ -11,11 +11,11 @@ KKS has a veriety of VR options. The main features of this MOD are as follows.
 
 ----
 
-# Controller Support
+# HMD Support
 
 - Meta Quest 2
 
-It reflects the ownership of the developer. Pull requests for additional support are welcome.
+Pull requests for additional support are welcome.
 
 ----
 
@@ -60,7 +60,19 @@ The left and right hand controller operations are the same.
 ----
 
 # For developers
+## Issues / Pull requests
 
+Please write in English or Japanese.
+
+- Bug report
+- Added controller support
+- Other
+  - Provide knowledge about this project if there is a feature you wolud like to implement.
+
+I don't usually use CharaStudio, so please write details about CharaStudio.
+
+## Document
 - [How to set up this project](/docs/project/HOW_TO_SETUP_THIS_PROJECT.md)
 - [Basic implementation concepts](/docs/project/BASIC_IMPLEMENTATION_CONCEPTS.md)
+- [About the VR controller](/docs/project/ABOUT_VR_CONTROLLER.md)
 - [How to create a SteamVR project from scratch](/docs/project/HOW_TO_CREATE_STEAMVR_PROJECT.md)
