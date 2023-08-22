@@ -28,7 +28,7 @@ namespace KKS_VROON
 
         private const string GUID = nameof(KKS_VROON);
         private const string Name = nameof(KKS_VROON);
-        private const string Version = "0.01";
+        private const string Version = "1.1";
 
         void Awake()
         {
