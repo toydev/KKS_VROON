@@ -64,29 +64,26 @@ namespace KKS_VROON.VRUtils
             var disableCanvas = new List<Canvas>();
             foreach (var canvas in CanvasGraphics.Keys)
             {
-                if (!ProcessedCanvas.Contains(canvas))
+                if (canvas.enabled && (!ProcessedCanvas.Contains(canvas) || (canvas.renderMode != RenderMode.ScreenSpaceCamera || canvas.worldCamera != camera))    )
                 {
                     ProcessedCanvas.Add(canvas);
-                    if (canvas.enabled && (canvas.renderMode != RenderMode.ScreenSpaceCamera || canvas.worldCamera != camera))
+                    switch (GetCanvasUpdateType(canvas))
                     {
-                        switch (GetCanvasUpdateType(canvas))
-                        {
-                            case CanvasUpdateType.CAPTURE:
-                                PluginLog.Info($"Capture canvas: {canvas.name} in {canvas.gameObject.layer}:{LayerMask.LayerToName(canvas.gameObject.layer)}");
-                                canvas.renderMode = RenderMode.ScreenSpaceCamera;
-                                canvas.worldCamera = camera;
-                                foreach (var i in canvas.gameObject.GetComponentsInChildren<Transform>())
-                                    i.gameObject.layer = Layer;
-                                break;
-                            case CanvasUpdateType.DISABLE:
-                                // Canvas cannot be disabled while processing CanvasGraphics.Keys
-                                disableCanvas.Add(canvas);
-                                break;
-                            case CanvasUpdateType.SKIP:
-                            default:
-                                PluginLog.Info($"Skip canvas: {canvas.name} in {canvas.gameObject.layer}:{LayerMask.LayerToName(canvas.gameObject.layer)}");
-                                break;
-                        }
+                        case CanvasUpdateType.CAPTURE:
+                            PluginLog.Info($"Capture canvas: {canvas.name} in {canvas.gameObject.layer}:{LayerMask.LayerToName(canvas.gameObject.layer)}");
+                            canvas.renderMode = RenderMode.ScreenSpaceCamera;
+                            canvas.worldCamera = camera;
+                            foreach (var i in canvas.gameObject.GetComponentsInChildren<Transform>())
+                                i.gameObject.layer = Layer;
+                            break;
+                        case CanvasUpdateType.DISABLE:
+                            // Canvas cannot be disabled while processing CanvasGraphics.Keys
+                            disableCanvas.Add(canvas);
+                            break;
+                        case CanvasUpdateType.SKIP:
+                        default:
+                            PluginLog.Info($"Skip canvas: {canvas.name} in {canvas.gameObject.layer}:{LayerMask.LayerToName(canvas.gameObject.layer)}");
+                            break;
                     }
                 }
             }
