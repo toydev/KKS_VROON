@@ -21,6 +21,7 @@ namespace KKS_VROON
     {
         private void Setup()
         {
+            new Harmony(nameof(KKS_VROON)).PatchAll();
             VRCamera.UpdateBaseHeadLocalValues();
             ScenePluginManager.Initialize();
         }
@@ -35,8 +36,6 @@ namespace KKS_VROON
 
             // Assumption: The game window has focus immediately after startup.
             WindowUtils.InitializeGameWindowHandle();
-
-            new Harmony(nameof(KKS_VROON)).PatchAll();
 
             try
             {
