@@ -54,11 +54,11 @@ namespace KKS_VROON.VRUtils
             return result;
         }
 
-        public void Hijack(Camera parentCamera, bool synchronization = true)
+        public void Hijack(Camera parentCamera, bool useCopyFrom = true, bool synchronization = true)
         {
             Setup();
 
-            CameraHijacker.Hijack(parentCamera, Normal, synchronization);
+            CameraHijacker.Hijack(parentCamera, Normal, useCopyFrom, synchronization);
             Normal.depth = Depth;
 
             if (VRUtils.VR.Initialized)

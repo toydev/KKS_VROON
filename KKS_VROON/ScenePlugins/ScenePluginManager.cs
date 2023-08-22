@@ -55,16 +55,42 @@ namespace KKS_VROON.ScenePlugins
                         break;
                 }
             }
+            else
+            {
+                switch (scene.name)
+                {
+                    // for MainGame
+                    case SceneNames.CUSTOM_SCENE:
+                        CreateSceneControllerGameObject(typeof(CustomScenePlugin));
+                        break;
+                }
+            }
+        }
+
+        private void OnSceneUnloaded(Scene scene)
+        {
+            switch (scene.name)
+            {
+                // for MainGame
+                case SceneNames.CUSTOM_SCENE:
+                    if (Manager.Scene.NowSceneNames.Contains(SceneNames.OPENING_SCENE))
+                        CreateSceneControllerGameObject(typeof(OpeningScenePlugin));
+                    if (Manager.Scene.NowSceneNames.Contains(SceneNames.ACTION))
+                        CreateSceneControllerGameObject(typeof(ActionScenePlugin));
+                    break;
+            }
         }
 
         void OnEnable()
         {
             SceneManager.sceneLoaded += OnSceneLoaded;
+            SceneManager.sceneUnloaded += OnSceneUnloaded;
         }
 
         void OnDisable()
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
+            SceneManager.sceneUnloaded -= OnSceneUnloaded;
         }
         #endregion
 

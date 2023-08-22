@@ -8,6 +8,7 @@ using KKS_VROON.VRUtils;
 using KKS_VROON.ScenePlugins.Common;
 using KKS_VROON.Patches.InputPatches;
 using KKS_VROON.WindowNativeUtils;
+using Sirenix.Serialization.Utilities;
 
 namespace KKS_VROON.ScenePlugins.CustomScene
 {
@@ -18,7 +19,7 @@ namespace KKS_VROON.ScenePlugins.CustomScene
             PluginLog.Info($"Awake: {name}");
 
             var baseBackground = gameObject.AddComponent<Camera>();
-            baseBackground.depth = 99;
+            baseBackground.depth = 90;
             baseBackground.cullingMask = 0;
             baseBackground.clearFlags = CameraClearFlags.SolidColor;
             baseBackground.backgroundColor = Color.black;
@@ -32,15 +33,19 @@ namespace KKS_VROON.ScenePlugins.CustomScene
                     return UGUI_CAPTURE_TARGET_LAYER.Contains(canvas.gameObject.layer) ? UGUICapture.CanvasUpdateType.CAPTURE : UGUICapture.CanvasUpdateType.SKIP;
                 }
             );
-            UGUICaptureForBackground = UGUICapture.Create(gameObject, nameof(UGUICaptureForBackground), CustomLayers.BACKGROUND_UGUI_CAPTURE_LAYER,
-                (canvas) => "CvsBackground" == canvas.name ? UGUICapture.CanvasUpdateType.CAPTURE : UGUICapture.CanvasUpdateType.SKIP);
             UIScreen = UIScreen.Create(gameObject, nameof(UIScreen), 101, CustomLayers.UI_SCREEN_LAYER, new UIScreenPanel[] {
                 new UIScreenPanel(UGUICapture.Texture),
+            }, clearFlags: CameraClearFlags.Depth);
+            UGUICaptureForBackground = UGUICapture.Create(gameObject, nameof(UGUICaptureForBackground), CustomLayers.BACKGROUND_UGUI_CAPTURE_LAYER,
+                (canvas) => "CvsBackground" == canvas.name ? UGUICapture.CanvasUpdateType.CAPTURE : UGUICapture.CanvasUpdateType.SKIP);
+            UIScreenForBackground = UIScreen.Create(gameObject, nameof(UIScreenForBackground), 99, CustomLayers.BACKGROUND_UI_SCREEN_LAYER, new UIScreenPanel[] {
                 new UIScreenPanel(UGUICaptureForBackground.Texture, Vector3.forward * 3, Vector3.one * 5),
-            }, clearFlags: CameraClearFlags.Nothing);
+            }, mouseCursorVisible: false, clearFlags: CameraClearFlags.Nothing);
             HandController = VRHandController.Create(gameObject, nameof(VRHandController), CustomLayers.UI_SCREEN_LAYER);
             HandController.GetOrAddComponent<VRHandControllerMouseIconAttachment>();
             InputPatch.Emulator = new BasicMouseEmulator(HandController);
+
+            Camera.allCameras.Where(i => i.name == "ColorEffectMaskCamera").ForEach(i => { CameraHijacker.Hijack(i); });
 
             UpdateCamera(false);
         }
@@ -72,18 +77,19 @@ namespace KKS_VROON.ScenePlugins.CustomScene
             if (gameMainCamera != null)
             {
                 PluginLog.Info($"UpdateCamera to {gameMainCamera.name}");
-                gameMainCamera.clearFlags = CameraClearFlags.Nothing;
-                MainCamera.Hijack(gameMainCamera);
+                MainCamera.Hijack(gameMainCamera, useCopyFrom: false);
                 ReEffectUtils.AddEffects(gameMainCamera, MainCamera, /* Stopped DepthOfField, because it's blurry. */ useDepthOfField: false);
                 UIScreen.LinkToFront(MainCamera, 1.0f);
+                UIScreenForBackground.LinkToFront(MainCamera, 1.0f);
                 HandController.Link(MainCamera);
             }
         }
 
         private VRCamera MainCamera { get; set; }
         private UGUICapture UGUICapture { get; set; }
-        private UGUICapture UGUICaptureForBackground { get; set; }
         private UIScreen UIScreen { get; set; }
+        private UGUICapture UGUICaptureForBackground { get; set; }
+        private UIScreen UIScreenForBackground { get; set; }
         private Camera CurrentGameMainCamera { get; set; }
         private VRHandController HandController { get; set; }
     }

@@ -83,7 +83,7 @@ namespace KKS_VROON.ScenePlugins.ActionScene
             if (gameMainCamera != null)
             {
                 PluginLog.Info($"UpdateCamera to {gameMainCamera.name}");
-                MainCamera.Hijack(gameMainCamera, false);
+                MainCamera.Hijack(gameMainCamera, synchronization: false);
                 ReEffectUtils.AddEffects(gameMainCamera, MainCamera, /* Stopped DepthOfField, because it's blurry. */ useDepthOfField: false);
                 UIScreen.LinkToFront(MainCamera, 1.0f);
                 HandController.Link(MainCamera);

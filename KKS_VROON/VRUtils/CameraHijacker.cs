@@ -1,18 +1,18 @@
-﻿using UnityEngine;
+﻿using KKS_VROON.Logging;
+using UnityEngine;
 
 namespace KKS_VROON.VRUtils
 {
     public class CameraHijacker : MonoBehaviour
     {
-        public static void Hijack(Camera source, Camera destination = null, bool synchronization = true)
+        public static void Hijack(Camera source, Camera destination = null, bool useCopyFrom = true, bool synchronization = true)
         {
-            if (destination) destination.CopyFrom(source);
+            PluginLog.Info($"Hijack {source.name} to {destination?.name}");
+            if (destination && useCopyFrom) destination.CopyFrom(source);
             var hijacker = source.gameObject.GetOrAddComponent<CameraHijacker>();
-            hijacker.Synchronization = synchronization;
-            if (destination && hijacker) hijacker.Destination = destination;
+            if (destination && synchronization) hijacker.Destination = destination;
         }
 
-        private bool Synchronization { get; set; }
         private Camera Destination { get; set; }
         private int LastOnPreCullFrameCount { get; set; }
         private LayerMask LastCullingMask { get; set; }
@@ -32,7 +32,7 @@ namespace KKS_VROON.VRUtils
                 LastClearFlags = camera.clearFlags;
                 camera.cullingMask = 0;
                 camera.clearFlags = CameraClearFlags.Nothing;
-                if (Synchronization)
+                if (Destination != null)
                 {
                     Destination.cullingMask = LastCullingMask;
                     Destination.clearFlags = LastClearFlags;
