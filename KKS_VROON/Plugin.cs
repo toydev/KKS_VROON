@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Linq;
 
 using BepInEx;
 using KKAPI;
@@ -13,7 +11,7 @@ using HarmonyLib;
 
 namespace KKS_VROON
 {
-    [BepInPlugin(GUID, Name, Version)]
+    [BepInPlugin(nameof(KKS_VROON), nameof(KKS_VROON), "1.1")]
     [BepInProcess(KoikatuAPI.GameProcessName)]
     [BepInProcess(KoikatuAPI.StudioProcessName)]
     [BepInDependency(KoikatuAPI.GUID, KoikatuAPI.VersionConst)]
@@ -26,29 +24,25 @@ namespace KKS_VROON
             ScenePluginManager.Initialize();
         }
 
-        private const string GUID = nameof(KKS_VROON);
-        private const string Name = nameof(KKS_VROON);
-        private const string Version = "1.1";
-
         void Awake()
         {
             PluginLog.Setup(Logger);
 
-            // Assumption: The game window has focus immediately after startup.
-            WindowUtils.InitializeGameWindowHandle();
+            if (WindowUtils.InitializeGameWindowHandle())
+            {
+                PluginLog.Debug($"WindowRect: {WindowUtils.GetGameWindowRect()}");
 
-            try
-            {
-                // Debug vroon mode ... Apply plugin while on the 2D screen
-                if (Environment.CommandLine.Contains("--debug-vroon")) Setup();
-                else if (!KoikatuAPI.IsVR() && IsSteamVRRunning) VR.Initialize(() => Setup());
-            }
-            catch (Exception e)
-            {
-                PluginLog.Error(e);
+                try
+                {
+                    // Debug vroon mode ... Apply plugin while on the 2D screen
+                    if (Environment.CommandLine.Contains("--debug-vroon")) Setup();
+                    else if (!KoikatuAPI.IsVR() && WindowUtils.IsSteamVRRunning()) VR.Initialize(() => Setup());
+                }
+                catch (Exception e)
+                {
+                    PluginLog.Error(e);
+                }
             }
         }
-
-        private bool IsSteamVRRunning => Process.GetProcesses().Any(i => i.ProcessName == "vrcompositor");
     }
 }

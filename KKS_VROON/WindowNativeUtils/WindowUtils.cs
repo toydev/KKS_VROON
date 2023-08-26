@@ -1,14 +1,45 @@
-﻿using System;
+﻿using KKS_VROON.Logging;
+using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
+
 using UnityEngine;
 
 namespace KKS_VROON.WindowNativeUtils
 {
     public class WindowUtils
     {
-        public static void InitializeGameWindowHandle()
+        public static bool InitializeGameWindowHandle()
         {
-            GameWindowHandle = NativeMethods.GetForegroundWindow();
+            var currentProcessId = (uint)Process.GetCurrentProcess().Id;
+            NativeMethods.EnumWindows((hWnd, _) =>
+            {
+                NativeMethods.GetWindowThreadProcessId(hWnd, out var processId);
+                if (processId == currentProcessId && GetWindowClassName(hWnd) == "UnityWndClass")
+                {
+                    GameWindowHandle = hWnd;
+                    return false;
+                }
+
+                return true;
+            }, IntPtr.Zero);
+
+            return GameWindowHandle != IntPtr.Zero;
+        }
+
+        public static bool IsSteamVRRunning()
+        {
+            try
+            {
+                return Process.GetProcesses().Any(i => i.ProcessName == "vrcompositor");
+            }
+            catch (Exception e)
+            {
+                PluginLog.Error(e.Message);
+                return false;
+            }
         }
 
         public static Rect GetGameWindowRect()
@@ -24,20 +55,37 @@ namespace KKS_VROON.WindowNativeUtils
             return new Rect(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
         }
 
-        private static IntPtr GameWindowHandle { get; set; }
+        public static string GetWindowClassName(IntPtr hWnd)
+        {
+            var result = new StringBuilder(256);
+            NativeMethods.GetClassName(hWnd, result, result.Capacity);
+            return result.ToString();
+
+        }
+
+        private static IntPtr GameWindowHandle { get; set; } = IntPtr.Zero;
 
         #region NativeMethods
         public class NativeMethods
         {
-            [DllImport("user32.dll")]
-            public static extern IntPtr GetForegroundWindow();
-
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool GetClientRect(IntPtr hWnd, ref RECT lpRect);
 
             [DllImport("USER32.dll")]
             public static extern bool ClientToScreen(IntPtr hWnd, ref POINT lpPoint);
+
+            [DllImport("user32.dll")]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
+
+            public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
+
+            [DllImport("user32.dll", SetLastError = true)]
+            public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
+            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
         }
 
         public struct POINT
