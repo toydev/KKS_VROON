@@ -42,6 +42,12 @@ namespace KKS_VROON.WindowNativeUtils
             }
         }
 
+        public static void MakeWindowTopMost()
+        {
+            PluginLog.Debug("GameWindow set to topmost.");
+            NativeMethods.SetWindowPos(GameWindowHandle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+        }
+
         public static Rect GetGameWindowRect()
         {
             var rect = default(RECT);
@@ -86,6 +92,10 @@ namespace KKS_VROON.WindowNativeUtils
 
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
             public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
+
+            [DllImport("user32.dll")]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
         }
 
         public struct POINT
@@ -115,6 +125,10 @@ namespace KKS_VROON.WindowNativeUtils
                 Bottom = bottom;
             }
         }
+
+        public static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
+        public const uint SWP_NOSIZE = 0x0001;
+        public const uint SWP_NOMOVE = 0x0002;
         #endregion
     }
 }

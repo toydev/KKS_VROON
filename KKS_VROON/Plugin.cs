@@ -19,6 +19,7 @@ namespace KKS_VROON
     {
         private void Setup()
         {
+            WindowUtils.MakeWindowTopMost();
             new Harmony(nameof(KKS_VROON)).PatchAll();
             VRCamera.UpdateBaseHeadLocalValues();
             ScenePluginManager.Initialize();
@@ -30,8 +31,6 @@ namespace KKS_VROON
 
             if (WindowUtils.InitializeGameWindowHandle())
             {
-                PluginLog.Debug($"WindowRect: {WindowUtils.GetGameWindowRect()}");
-
                 try
                 {
                     // Debug vroon mode ... Apply plugin while on the 2D screen
