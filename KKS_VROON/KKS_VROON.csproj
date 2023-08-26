@@ -156,6 +156,7 @@
     <Compile Include="Patches\InputPatches\InputPatch.cs" />
     <Compile Include="Patches\SuppressCameraWarningPatches\CameraPatch.cs" />
     <Compile Include="Plugin.cs" />
+    <Compile Include="PluginConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScenePlugins\ActionScene\ActionSceneMouseEmulator.cs" />
     <Compile Include="ScenePlugins\ActionScene\ActionScenePlugin.cs" />

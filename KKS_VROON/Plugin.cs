@@ -11,7 +11,7 @@ using HarmonyLib;
 
 namespace KKS_VROON
 {
-    [BepInPlugin(nameof(KKS_VROON), nameof(KKS_VROON), "1.1")]
+    [BepInPlugin(nameof(KKS_VROON), "VROON", "1.1")]
     [BepInProcess(KoikatuAPI.GameProcessName)]
     [BepInProcess(KoikatuAPI.StudioProcessName)]
     [BepInDependency(KoikatuAPI.GUID, KoikatuAPI.VersionConst)]
@@ -19,7 +19,7 @@ namespace KKS_VROON
     {
         private void Setup()
         {
-            WindowUtils.MakeWindowTopMost();
+            if (PluginConfig.GameWindowTopMost.Value) WindowUtils.MakeWindowTopMost();
             new Harmony(nameof(KKS_VROON)).PatchAll();
             VRCamera.UpdateBaseHeadLocalValues();
             ScenePluginManager.Initialize();
@@ -28,6 +28,7 @@ namespace KKS_VROON
         void Awake()
         {
             PluginLog.Setup(Logger);
+            PluginConfig.Setup(Config);
 
             if (WindowUtils.InitializeGameWindowHandle())
             {
