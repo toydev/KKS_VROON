@@ -1,5 +1,5 @@
 # About the VR controller
-SteamVR_Input maps between VR controller manipulation and programmatic acion names.
+SteamVR_Input maps between VR controller manipulation and programmatic action names.
 
 Detailed definitions are in the file below.
 

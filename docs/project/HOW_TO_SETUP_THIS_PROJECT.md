@@ -8,7 +8,6 @@
 ----
 
 ## Setup
-
 1. Open SteamVRUnity as a project from Unity Hub.
 
 Download the Unity Editor as needed.

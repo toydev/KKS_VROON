@@ -1,7 +1,6 @@
 [English](README.md)
 
 # KKS_VROON - Simple VR plugin for Koikatsu Sunshine
-
 **横になって片手で遊べるメインゲーム/CharaStudio 両対応の VR MOD です。**
 
 KKS には様々な VR の選択肢があります。本 MOD の主要な特徴は以下の通りです。
@@ -12,7 +11,6 @@ KKS には様々な VR の選択肢があります。本 MOD の主要な特徴�
 ----
 
 # サポートしている HMD
-
 - Meta Quest 2
 
 サポート追加のプルリクエスト歓迎です。
@@ -20,7 +18,6 @@ KKS には様々な VR の選択肢があります。本 MOD の主要な特徴�
 ----
 
 # 前提
-
 - コイカツ！サンシャイン
 - 最新バージョンの BepInEx 5.X と KKAPI/ModdingAPI
 - SteamVR
@@ -31,7 +28,6 @@ KKS には様々な VR の選択肢があります。本 MOD の主要な特徴�
 ----
 
 # 遊び方
-
 ゲームに [KKS_VROON](https://github.com/toydev/KKS_VROON/releases) をインストールし、HMD と SteamVR を接続してゲームを開始してください。
 
 開始時に SteamVR のプロセスを検出して有効になります。
@@ -61,7 +57,6 @@ KKS には様々な VR の選択肢があります。本 MOD の主要な特徴�
 
 # 開発者向け
 ## Issues / Pull requests
-
 英語か日本語でお願いします。
 
 - バグ報告
@@ -72,7 +67,6 @@ KKS には様々な VR の選択肢があります。本 MOD の主要な特徴�
 CharaStudio を普段使っていないので、CharaStudio に関連する内容は詳しく書いてください。
 
 ## 資料
-
 - [このプロジェクトのセットアップ方法](/docs/project/HOW_TO_CREATE_STEAMVR_PROJECT.md)
 - [基本的な実装コンセプト](/docs/project/BASIC_IMPLEMENTATION_CONCEPTS.md)
 - [VR コントローラーについて](/docs/project/ABOUT_VR_CONTROLLER.md)

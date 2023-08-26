@@ -1,7 +1,6 @@
 [日本語](README.ja.md)
 
 # KKS_VROON - Simple VR plugin for Koikatsu Sunshine
-
 **It is a VR MOD compatible with both the main game and CharaStudio that you can play with one hand while lying down.**
 
 KKS has a veriety of VR options. The main features of this MOD are as follows.
@@ -12,7 +11,6 @@ KKS has a veriety of VR options. The main features of this MOD are as follows.
 ----
 
 # HMD Support
-
 - Meta Quest 2
 
 Pull requests for additional support are welcome.
@@ -20,7 +18,6 @@ Pull requests for additional support are welcome.
 ----
 
 # Prerequisites
-
 - Koikatsu Sunshine
 - Latest version of BepInEx 5.x and KKSAPI/ModdingAPI
 - SteamVR
@@ -31,7 +28,6 @@ Pull requests for additional support are welcome.
 ----
 
 # How to play
-
 Install [KKS_VROON](https://github.com/toydev/KKS_VROON/releases) into the game, connect the HMD and SteamVR, and start the game.
 
 Enabled by detecting the SteamVR process on startup.
@@ -39,10 +35,10 @@ Enabled by detecting the SteamVR process on startup.
 ----
 
 # Operations
-## Mouse and Hand controller
-The left and right hand controller operations are the same.
+## Mouse and VR controller
+The left and right VR controller operations are the same.
 
-|Mouse operation|Hand controller operation|
+|Mouse operation|VR controller operation|
 |----|----|
 |Left click|Press trigger|
 |Right click|Press grip|
@@ -52,8 +48,8 @@ The left and right hand controller operations are the same.
 |Lateral rotation when moving|Joystick|
 |Vertical rotation when moving|Looking up with HMD|
 
-## Hand controller only
-|Hand controller Operation|Action|
+## VR controller only
+|VR controller Operation|Action|
 |----|----|
 |Press Y / Press B|Reset the front of the VR camera|
 
