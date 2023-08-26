@@ -172,6 +172,7 @@
     <Compile Include="ScenePlugins\StudioScene\StudioScenePlugin.cs" />
     <Compile Include="VRUtils\CameraCurtain.cs" />
     <Compile Include="VRUtils\CameraHijacker.cs" />
+    <Compile Include="VRUtils\IMGUICapture.cs" />
     <Compile Include="VRUtils\UGUICapture.cs" />
     <Compile Include="VRUtils\UIScreen.cs" />
     <Compile Include="VRUtils\UIScreenPanel.cs" />
