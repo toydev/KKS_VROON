@@ -55,6 +55,8 @@ namespace KKS_VROON.ScenePlugins.CustomScene
             var gameMainCamera = Camera.main;
             if ((gameMainCamera && gameMainCamera != CurrentGameMainCamera) || !MainCamera) UpdateCamera(false);
 
+            InputPatch.Emulator.SendMouseEvent();
+
             // Control the mouse pointer.
             if (HandController.State.IsPositionChanging() && UIScreen && HandController.RayCast(UIScreen.GetScreenPlane(), out var hit))
                 MouseKeyboardUtils.SetCursorPos(UIScreen.GetScreenPositionFromWorld(hit.point, WindowUtils.GetGameWindowRect()));

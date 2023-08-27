@@ -6,5 +6,7 @@
         bool? GetMouseButton(int button);
         bool? GetMouseButtonDown(int button);
         bool? GetMouseButtonUp(int button);
+
+        void SendMouseEvent();
     }
 }

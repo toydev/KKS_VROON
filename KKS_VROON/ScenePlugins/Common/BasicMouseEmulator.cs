@@ -1,5 +1,6 @@
 ﻿using KKS_VROON.Patches.InputPatches;
 using KKS_VROON.VRUtils;
+using KKS_VROON.WindowNativeUtils;
 
 namespace KKS_VROON.ScenePlugins.Common
 {
@@ -67,6 +68,16 @@ namespace KKS_VROON.ScenePlugins.Common
                 case 2: return HandController.State.IsButtonXUp || HandController.State.IsButtonAUp;
                 default: return null;
             }
+        }
+
+        public virtual void SendMouseEvent()
+        {
+            if (HandController.State.IsTriggerUp) MouseKeyboardUtils.MouseLeftUp();
+            if (HandController.State.IsGripUp) MouseKeyboardUtils.MouseRightUp();
+            if (HandController.State.IsButtonXUp || HandController.State.IsButtonAUp) MouseKeyboardUtils.MouseMiddleUp();
+            if (HandController.State.IsTriggerDown) MouseKeyboardUtils.MouseLeftDown();
+            if (HandController.State.IsGripDown) MouseKeyboardUtils.MouseRightDown();
+            if (HandController.State.IsButtonXDown || HandController.State.IsButtonADown) MouseKeyboardUtils.MouseMiddleDown();
         }
     }
 }

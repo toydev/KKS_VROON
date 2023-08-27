@@ -27,7 +27,7 @@ namespace KKS_VROON.ScenePlugins.StudioScene
             UIScreen = UIScreen.Create(gameObject, nameof(UIScreen), 101, CustomLayers.UI_SCREEN_LAYER,
                 new UIScreenPanel[] {
                     new UIScreenPanel(UGUICapture.Texture),
-                    new UIScreenPanel(IMGUICapture.Texture, 0.001f * Vector3.forward, Vector3.one),
+                    new UIScreenPanel(IMGUICapture.Texture, -0.001f * Vector3.forward, Vector3.one),
                 }
             );
             HandController = VRHandController.Create(gameObject, nameof(VRHandController), CustomLayers.UI_SCREEN_LAYER);
@@ -44,6 +44,8 @@ namespace KKS_VROON.ScenePlugins.StudioScene
         {
             var gameMainCamera = Camera.main;
             if ((gameMainCamera && gameMainCamera != CurrentGameMainCamera) || !MainCamera) UpdateCamera(false);
+
+            InputPatch.Emulator.SendMouseEvent();
 
             // Control the mouse pointer.
             if (HandController.State.IsPositionChanging() && UIScreen && HandController.RayCast(UIScreen.GetScreenPlane(), out var hit))

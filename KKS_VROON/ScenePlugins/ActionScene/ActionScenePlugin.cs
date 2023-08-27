@@ -46,6 +46,8 @@ namespace KKS_VROON.ScenePlugins.ActionScene
             var gameMainCamera = Camera.main;
             if ((gameMainCamera && gameMainCamera != CurrentGameMainCamera) || !MainCamera) UpdateCamera(false);
 
+            InputPatch.Emulator.SendMouseEvent();
+
             if (ActionScene != null)
             {
                 // Force FPS mode only once in each scene.
