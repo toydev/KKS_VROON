@@ -27,7 +27,12 @@ namespace KKS_VROON.ScenePlugins.OpeningScene
                 // Basic rule.
                 return UGUI_CAPTURE_TARGET_LAYER.Contains(canvas.gameObject.layer) ? UGUICapture.CanvasUpdateType.CAPTURE : UGUICapture.CanvasUpdateType.DISABLE;
             });
-            UIScreen = UIScreen.Create(gameObject, nameof(UIScreen), 101, CustomLayers.UI_SCREEN_LAYER, new UIScreenPanel[] { new UIScreenPanel(UGUICapture.Texture) },
+            IMGUICapture = IMGUICapture.Create(gameObject);
+            UIScreen = UIScreen.Create(gameObject, nameof(UIScreen), 101, CustomLayers.UI_SCREEN_LAYER,
+                new UIScreenPanel[] {
+                    new UIScreenPanel(UGUICapture.Texture),
+                    new UIScreenPanel(IMGUICapture.Texture, -0.001f * Vector3.forward, Vector3.one),
+                },
                 // issue #2: Don't use CameraCurtain during OpeningScene for dialog control when playing the game for the first time.
                 withCurtain: Manager.Scene.NowSceneNames?.Contains(SceneNames.OPENING_SCENE) != true);
             HandController = VRHandController.Create(gameObject, nameof(VRHandController), CustomLayers.UI_SCREEN_LAYER);
@@ -74,6 +79,7 @@ namespace KKS_VROON.ScenePlugins.OpeningScene
 
         private VRCamera MainCamera { get; set; }
         private UGUICapture UGUICapture { get; set; }
+        private IMGUICapture IMGUICapture { get; set; }
         private UIScreen UIScreen { get; set; }
         private Camera CurrentGameMainCamera { get; set; }
         private VRHandController HandController { get; set; }

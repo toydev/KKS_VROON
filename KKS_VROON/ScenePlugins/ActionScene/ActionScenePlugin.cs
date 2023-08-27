@@ -29,7 +29,13 @@ namespace KKS_VROON.ScenePlugins.ActionScene
                 // Basic rule.
                 return UGUI_CAPTURE_TARGET_LAYER.Contains(canvas.gameObject.layer) ? UGUICapture.CanvasUpdateType.CAPTURE : UGUICapture.CanvasUpdateType.DISABLE;
             });
-            UIScreen = UIScreen.Create(gameObject, nameof(UIScreen), 110, CustomLayers.UI_SCREEN_LAYER, new UIScreenPanel[] { new UIScreenPanel(UGUICapture.Texture) });
+            IMGUICapture = IMGUICapture.Create(gameObject);
+            UIScreen = UIScreen.Create(gameObject, nameof(UIScreen), 110, CustomLayers.UI_SCREEN_LAYER,
+                new UIScreenPanel[] {
+                    new UIScreenPanel(UGUICapture.Texture),
+                    new UIScreenPanel(IMGUICapture.Texture, -0.001f * Vector3.forward, Vector3.one),
+                }
+            );
             HandController = VRHandController.Create(gameObject, nameof(VRHandController), CustomLayers.UI_SCREEN_LAYER);
             HandController.GetOrAddComponent<VRHandControllerMouseIconAttachment>();
             InputPatch.Emulator = new ActionSceneMouseEmulator(HandController);
@@ -104,7 +110,8 @@ namespace KKS_VROON.ScenePlugins.ActionScene
 
         private VRCamera MainCamera { get; set; }
         private UGUICapture UGUICapture { get; set; }
-        private UIScreen UIScreen { get; set; }
+        private IMGUICapture IMGUICapture { get; set; }
+         private UIScreen UIScreen { get; set; }
         private Camera CurrentGameMainCamera { get; set; }
         private VRHandController HandController { get; set; }
         private global::ActionScene ActionScene { get; set; }

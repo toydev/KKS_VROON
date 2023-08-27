@@ -33,14 +33,22 @@ namespace KKS_VROON.ScenePlugins.CustomScene
                     return UGUI_CAPTURE_TARGET_LAYER.Contains(canvas.gameObject.layer) ? UGUICapture.CanvasUpdateType.CAPTURE : UGUICapture.CanvasUpdateType.SKIP;
                 }
             );
-            UIScreen = UIScreen.Create(gameObject, nameof(UIScreen), 101, CustomLayers.UI_SCREEN_LAYER, new UIScreenPanel[] {
-                new UIScreenPanel(UGUICapture.Texture),
-            }, clearFlags: CameraClearFlags.Depth);
+            IMGUICapture = IMGUICapture.Create(gameObject);
+            UIScreen = UIScreen.Create(gameObject, nameof(UIScreen), 101, CustomLayers.UI_SCREEN_LAYER,
+                new UIScreenPanel[] {
+                    new UIScreenPanel(UGUICapture.Texture),
+                    new UIScreenPanel(IMGUICapture.Texture, -0.001f * Vector3.forward, Vector3.one),
+                },
+                clearFlags: CameraClearFlags.Depth
+            );
             UGUICaptureForBackground = UGUICapture.Create(gameObject, nameof(UGUICaptureForBackground), CustomLayers.BACKGROUND_UGUI_CAPTURE_LAYER,
                 (canvas) => "CvsBackground" == canvas.name ? UGUICapture.CanvasUpdateType.CAPTURE : UGUICapture.CanvasUpdateType.SKIP);
-            UIScreenForBackground = UIScreen.Create(gameObject, nameof(UIScreenForBackground), 99, CustomLayers.BACKGROUND_UI_SCREEN_LAYER, new UIScreenPanel[] {
-                new UIScreenPanel(UGUICaptureForBackground.Texture, Vector3.forward * 3, Vector3.one * 5),
-            }, mouseCursorVisible: false, clearFlags: CameraClearFlags.Nothing);
+            UIScreenForBackground = UIScreen.Create(gameObject, nameof(UIScreenForBackground), 99, CustomLayers.BACKGROUND_UI_SCREEN_LAYER,
+                new UIScreenPanel[] {
+                    new UIScreenPanel(UGUICaptureForBackground.Texture, Vector3.forward * 3, Vector3.one * 5),
+                },
+                mouseCursorVisible: false, clearFlags: CameraClearFlags.Nothing
+            );
             HandController = VRHandController.Create(gameObject, nameof(VRHandController), CustomLayers.UI_SCREEN_LAYER);
             HandController.GetOrAddComponent<VRHandControllerMouseIconAttachment>();
             InputPatch.Emulator = new BasicMouseEmulator(HandController);
@@ -89,7 +97,8 @@ namespace KKS_VROON.ScenePlugins.CustomScene
 
         private VRCamera MainCamera { get; set; }
         private UGUICapture UGUICapture { get; set; }
-        private UIScreen UIScreen { get; set; }
+        private IMGUICapture IMGUICapture { get; set; }
+         private UIScreen UIScreen { get; set; }
         private UGUICapture UGUICaptureForBackground { get; set; }
         private UIScreen UIScreenForBackground { get; set; }
         private Camera CurrentGameMainCamera { get; set; }
