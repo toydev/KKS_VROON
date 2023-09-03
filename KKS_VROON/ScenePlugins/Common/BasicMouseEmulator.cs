@@ -1,4 +1,6 @@
-﻿using KKS_VROON.Patches.InputPatches;
+﻿using UnityEngine;
+
+using KKS_VROON.Patches.InputPatches;
 using KKS_VROON.VRUtils;
 using KKS_VROON.WindowNativeUtils;
 
@@ -17,8 +19,10 @@ namespace KKS_VROON.ScenePlugins.Common
         {
             if (!HandController) return null;
 
-            if (axisName == "Mouse X") return HandController.State.JoystickAxis.x;
-            else if (axisName == "Mouse Y") return HandController.State.JoystickAxis.y;
+            var scalingFactory = PluginConfig.AxisScalingFactor.Value * Time.deltaTime;
+
+            if (axisName == "Mouse X") return HandController.State.JoystickAxis.x * scalingFactory;
+            else if (axisName == "Mouse Y") return HandController.State.JoystickAxis.y * scalingFactory;
             return null;
         }
 

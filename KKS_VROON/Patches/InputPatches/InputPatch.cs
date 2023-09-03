@@ -1,6 +1,7 @@
 ﻿using System;
 
 using HarmonyLib;
+using KKS_VROON.Logging;
 using UnityEngine;
 
 namespace KKS_VROON.Patches.InputPatches
