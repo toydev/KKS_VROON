@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace KKS_VROON.Patches.InputPatches
 {
-    // Interrupt Input.GetXxx with IMouseEmulator.
+    // Interrupt Input.GetAxis with IMouseEmulator.
 
     [HarmonyPatch(typeof(Input))]
     public class InputPatch
