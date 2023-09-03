@@ -62,9 +62,9 @@ KKS には様々な VR の選択肢があります。本 MOD の主要な特徴�
 |----|----|----|----|
 |GameWindowTopMost|Boolean|`true`|ゲームウィンドウを常に最前面に表示する。|
 |EnableMirror|Boolean|`false`|ミラーを有効/無効にする。|
-|MainGameJoystickViewSpeed|Float|`30.0f`|ジョイスティックによる視点移動の速度を調整するためのメインゲーム用のスケーリング係数。|
+|MainGameJoystickViewSpeed|Float|`20.0f`|ジョイスティックによる視点移動の速度を調整するためのメインゲーム用のスケーリング係数。|
 |CharaStudioJoystickViewSpeed|Float|`50.0f`|ジョイスティックによる視点移動の速度を調整するための CharaStudio 用のスケーリング係数。|
-|MouseWheelScalingFactor|int|`120`|マウスホイールのスケーリング係数。|
+|MouseWheelScalingFactor|int|`2000`|マウスホイールのスケーリング係数。|
 
 これらの設定は BepInEx の設定マネージャーで変更できます。
 
