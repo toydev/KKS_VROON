@@ -28,7 +28,7 @@ namespace KKS_VROON
             MainGameJoystickViewSpeed = config.Bind(
                 "Controls",
                 nameof(MainGameJoystickViewSpeed),
-                30.0f,
+                20.0f,
                 "Scaling factor for joystick-controlled view movement speed in MainGame");
             CharaStudioJoystickViewSpeed = config.Bind(
                 "Controls",
@@ -38,7 +38,7 @@ namespace KKS_VROON
             MouseWheelScalingFactor = config.Bind(
                 "Controls",
                 nameof(MouseWheelScalingFactor),
-                120,
+                2000,
                 "Scaling factor for mouse wheel");
         }
     }
