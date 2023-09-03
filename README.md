@@ -55,6 +55,19 @@ The left and right VR controller operations are the same.
 
 ----
 
+# Configuration Options
+The plugin provides the following configuration options:
+
+|Setting Name|Type|Default Value|Description|
+|----|----|----|----|
+|GameWindowTopMost|Boolean|`true`|Set the game window to always be on top.|
+|EnableMirror|Boolean|`false`|Enable or disable mirror in VR.|
+|AxisScalingFactor|Float|`20.0f`|Scaling factor for hand controller axis.|
+
+You can change these settings via the BepInEx configuration manager.
+
+----
+
 # For developers
 ## Issues / Pull requests
 
