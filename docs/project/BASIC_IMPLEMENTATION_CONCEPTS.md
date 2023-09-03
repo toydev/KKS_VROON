@@ -23,8 +23,6 @@ Convert hand controller button operations to mouse operations using mouse_event.
 
 In addition, HarmonyLib interrupts the operation of the hand controllers.
 
-Additionally, replace the following operations in HarmonyLib.
-
 - [InputPatch.cs](/KKS_VROON/Patches/InputPatches/InputPatch.cs)
   - UnityEngine.Input.GetAxis
 - [ScreenPointToRayPatch.cs](/KKS_VROON/Patches/HandPatches/ScreenPointToRayPatch.cs)
