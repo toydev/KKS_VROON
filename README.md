@@ -64,7 +64,7 @@ The plugin provides the following configuration options:
 |Setting Name|Type|Default Value|Description|
 |----|----|----|----|
 |GameWindowTopMost|Boolean|`true`|Set the game window to always be on top.|
-|EnableMirror|Boolean|`false`|Enable or disable mirror in VR.|
+|EnableMirror|Boolean|`false`|Enable or disable mirror.|
 |MainGameJoystickViewSpeed|Float|`30.0f`|Scaling factor for joystick-controlled view movement speed in MainGame.|
 |CharaStudioJoystickViewSpeed|Float|`50.0f`|Scaling factor for joystick-controlled view movement speed in CharaStudio.|
 |MouseWheelScalingFactor|int|`120`|Scaling factor for mouse wheel.|
