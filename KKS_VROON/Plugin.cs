@@ -12,7 +12,7 @@ using KKS_VROON.WindowNativeUtils;
 
 namespace KKS_VROON
 {
-    [BepInPlugin(nameof(KKS_VROON), "VROON", "1.1")]
+    [BepInPlugin(nameof(KKS_VROON), "VROON", "1.2")]
     [BepInProcess(KoikatuAPI.GameProcessName)]
     [BepInProcess(KoikatuAPI.StudioProcessName)]
     [BepInDependency(KoikatuAPI.GUID, KoikatuAPI.VersionConst)]
