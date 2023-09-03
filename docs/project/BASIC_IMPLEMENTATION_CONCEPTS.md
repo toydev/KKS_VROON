@@ -16,7 +16,7 @@ Once the VR camera's local transform is fixed, the VR camera transform can be le
 ----
 
 ## 2. Convert hand controller operation to basic mouse operation
-Convert hand controller button operations to mouse operations using mouse_event.
+Convert hand controller operations to mouse operations using mouse_event.
 
 - [BasicMouseEmulator.cs](/KKS_VROON/ScenePlugins/Common/BasicMouseEmulator.cs)
   - SendMouseEvent

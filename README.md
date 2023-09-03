@@ -45,6 +45,9 @@ The left and right VR controller operations are the same.
 |Middle click|Press X / Press A|
 |Select menu with pointer|Select menu with laser pointer|
 |Select a body part with pointer|Select a body part with laser pointer|
+|Left / Right click + mouse movements|Press trigger/grip + Joystick(Vertical control is suppressed when walking in MainGame)|
+|Mouse wheel|Joystick up and down|
+
 |Lateral rotation when moving|Joystick|
 |Vertical rotation when moving|Looking up with HMD|
 
@@ -62,8 +65,9 @@ The plugin provides the following configuration options:
 |----|----|----|----|
 |GameWindowTopMost|Boolean|`true`|Set the game window to always be on top.|
 |EnableMirror|Boolean|`false`|Enable or disable mirror in VR.|
-|MainGameAxisScalingFactor|Float|`30.0f`|Scaling factor for hand controller axis in MainGame.|
-|CharaStudioAxisScalingFactor|Float|`50.0f`|Scaling factor for hand controller axis in CharaStudio.|
+|MainGameJoystickViewSpeed|Float|`30.0f`|Scaling factor for joystick-controlled view movement speed in MainGame.|
+|CharaStudioJoystickViewSpeed|Float|`50.0f`|Scaling factor for joystick-controlled view movement speed in CharaStudio.|
+|MouseWheelScalingFactor|int|`120`|Scaling factor for mouse wheel.|
 
 You can change these settings via the BepInEx configuration manager.
 

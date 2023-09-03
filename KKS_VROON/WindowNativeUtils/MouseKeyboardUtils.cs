@@ -40,6 +40,11 @@ namespace KKS_VROON.WindowNativeUtils
             NativeMethods.mouse_event(MOUSEEVENTF_MIDDLEUP, 0, 0, 0, 0);
         }
 
+        public static void MouseWheel(int delta)
+        {
+            NativeMethods.mouse_event(MOUSEEVENTF_WHEEL, 0, 0, (uint)delta, 0);
+        }
+
         public static class NativeMethods
         {
             [DllImport("user32.dll")]
@@ -55,5 +60,6 @@ namespace KKS_VROON.WindowNativeUtils
         private const uint MOUSEEVENTF_RIGHTUP = 0x10;
         private const uint MOUSEEVENTF_MIDDLEDOWN = 0x20;
         private const uint MOUSEEVENTF_MIDDLEUP = 0x40;
+        private const uint MOUSEEVENTF_WHEEL = 0x0800;
     }
 }

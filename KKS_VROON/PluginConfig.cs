@@ -7,10 +7,11 @@ namespace KKS_VROON
     {
         public static ConfigEntry<bool> GameWindowTopMost { get; private set; }
         public static ConfigEntry<bool> EnableMirror { get; private set; }
-        public static ConfigEntry<float> MainGameAxisScalingFactor { get; private set; }
-        public static ConfigEntry<float> CharaStudioAxisScalingFactor { get; private set; }
+        public static ConfigEntry<float> MainGameJoystickViewSpeed { get; private set; }
+        public static ConfigEntry<float> CharaStudioJoystickViewSpeed { get; private set; }
+        public static ConfigEntry<int> MouseWheelScalingFactor { get; private set; }
 
-        public static float AxisScalingFactor { get => Plugin.GameMode == KKAPI.GameMode.Studio ? CharaStudioAxisScalingFactor.Value : MainGameAxisScalingFactor.Value; }
+        public static float JoystickViewSpeed { get => Plugin.GameMode == KKAPI.GameMode.Studio ? CharaStudioJoystickViewSpeed.Value : MainGameJoystickViewSpeed.Value; }
 
         public static void Setup(ConfigFile config)
         {
@@ -24,16 +25,21 @@ namespace KKS_VROON
                 nameof(EnableMirror),
                 false,
                 "Enable or disable mirror in VR");
-            MainGameAxisScalingFactor = config.Bind(
-                "MainGame",
-                "AxisScalingFactor",
+            MainGameJoystickViewSpeed = config.Bind(
+                "Controls",
+                nameof(MainGameJoystickViewSpeed),
                 30.0f,
-                "Scaling factor for hand controller axis in MainGame");
-            CharaStudioAxisScalingFactor = config.Bind(
-                "Studio",
-                "AxisScalingFactor",
+                "Scaling factor for joystick-controlled view movement speed in MainGame");
+            CharaStudioJoystickViewSpeed = config.Bind(
+                "Controls",
+                nameof(CharaStudioJoystickViewSpeed),
                 50.0f,
-                "Scaling factor for hand controller axis in CharaStudio");
+                "Scaling factor for joystick-controlled view movement speed in CharaStudio");
+            MouseWheelScalingFactor = config.Bind(
+                "Controls",
+                nameof(MouseWheelScalingFactor),
+                120,
+                "Scaling factor for mouse wheel");
         }
     }
 }

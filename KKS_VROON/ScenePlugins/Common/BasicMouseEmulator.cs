@@ -24,7 +24,7 @@ namespace KKS_VROON.ScenePlugins.Common
         {
             if (!HandController) return null;
 
-            var scalingFactory = PluginConfig.AxisScalingFactor * Time.deltaTime;
+            var scalingFactory = PluginConfig.JoystickViewSpeed * Time.deltaTime;
 
             if (axisName == "Mouse X") return ScaleAxis(HandController.State.JoystickAxis.x) * scalingFactory;
             else if (axisName == "Mouse Y") return ScaleAxis(HandController.State.JoystickAxis.y) * scalingFactory;
@@ -39,6 +39,7 @@ namespace KKS_VROON.ScenePlugins.Common
             if (HandController.State.IsTriggerDown) MouseKeyboardUtils.MouseLeftDown();
             if (HandController.State.IsGripDown) MouseKeyboardUtils.MouseRightDown();
             if (HandController.State.IsButtonXDown || HandController.State.IsButtonADown) MouseKeyboardUtils.MouseMiddleDown();
+            if (0.1f < Mathf.Abs(HandController.State.JoystickAxis.y)) MouseKeyboardUtils.MouseWheel((int)(PluginConfig.MouseWheelScalingFactor.Value * HandController.State.JoystickAxis.y));
         }
     }
 }
