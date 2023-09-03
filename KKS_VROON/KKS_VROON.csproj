@@ -65,6 +65,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -145,6 +146,7 @@
     <Compile Include="Effects\ReSunShafts.cs" />
     <Compile Include="Effects\ReVignetteAndChromaticAberration.cs" />
     <Compile Include="Logging\PluginLog.cs" />
+    <Compile Include="Patches\DialogPatches\OpenFileDialogPatch.cs" />
     <Compile Include="Patches\HandPatches\ColDisposableInfoPatch.cs" />
     <Compile Include="Patches\HandPatches\CursorPatch.cs" />
     <Compile Include="Patches\HandPatches\EventSystemPatch.cs" />
@@ -183,6 +185,7 @@
     <Compile Include="VRUtils\VRHandControllerPoseSmoother.cs" />
     <Compile Include="VRUtils\VRHandControllerState.cs" />
     <Compile Include="VRUtils\VRMirrorManager.cs" />
+    <Compile Include="VRUtils\WindowCapture.cs" />
     <Compile Include="WindowNativeUtils\MouseKeyboardUtils.cs" />
     <Compile Include="WindowNativeUtils\WindowUtils.cs" />
   </ItemGroup>
