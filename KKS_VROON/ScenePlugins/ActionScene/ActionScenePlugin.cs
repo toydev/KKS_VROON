@@ -17,7 +17,7 @@ namespace KKS_VROON.ScenePlugins.ActionScene
     {
         void Awake()
         {
-            PluginLog.Info($"Awake: {name}");
+            PluginLog.Debug($"Awake: {name}");
 
             MainCamera = VRCamera.Create(gameObject, nameof(MainCamera), 100);
             var UGUI_CAPTURE_TARGET_LAYER = new int[] { LayerMask.NameToLayer("Default"), LayerMask.NameToLayer("UI"), CustomLayers.UGUI_CAPTURE_LAYER };
@@ -62,7 +62,7 @@ namespace KKS_VROON.ScenePlugins.ActionScene
                     CameraModeAdjustedInScene = true;
                     if (ActionScene.CameraState.Mode != ActionGame.CameraMode.FPS)
                     {
-                        PluginLog.Info("Force FPS mode");
+                        PluginLog.Debug("Force FPS mode");
                         ActionScene.CameraState.ModeChangeForce(ActionGame.CameraMode.FPS);
                     }
                 }
@@ -90,7 +90,7 @@ namespace KKS_VROON.ScenePlugins.ActionScene
             var gameMainCamera = CurrentGameMainCamera = Camera.main;
             if (gameMainCamera != null)
             {
-                PluginLog.Info($"UpdateCamera to {gameMainCamera.name}");
+                PluginLog.Debug($"UpdateCamera to {gameMainCamera.name}");
                 MainCamera.Hijack(gameMainCamera, synchronization: false);
                 ReEffectUtils.AddEffects(gameMainCamera, MainCamera, /* Stopped DepthOfField, because it's blurry. */ useDepthOfField: false);
                 UIScreen.LinkToFront(MainCamera, 1.0f);

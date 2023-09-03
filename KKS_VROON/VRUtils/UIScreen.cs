@@ -109,7 +109,7 @@ namespace KKS_VROON.VRUtils
         {
             if (!Camera || !Camera.Normal)
             {
-                PluginLog.Info($"Setup Camera: {name}");
+                PluginLog.Debug($"Setup Camera: {name}");
                 Camera = VRCamera.Create(gameObject, nameof(Camera), CameraDepth, WithCurtain);
                 Camera.Normal.cullingMask = 1 << ScreenLayer;
                 Camera.Normal.clearFlags = ClearFlags;
@@ -120,7 +120,7 @@ namespace KKS_VROON.VRUtils
             {
                 if (!Screens[i])
                 {
-                    PluginLog.Info($"Setup Screen: {name}[{i}]");
+                    PluginLog.Debug($"Setup Screen: {name}[{i}]");
                     var screen = new GameObject($"{gameObject.name}Screen{i}");
                     var panel = Panels[i];
                     screen.transform.parent = transform;
@@ -143,7 +143,7 @@ namespace KKS_VROON.VRUtils
 
             if (!MouseCursor)
             {
-                PluginLog.Info($"Setup MouseCursor: {name}");
+                PluginLog.Debug($"Setup MouseCursor: {name}");
                 MouseCursor = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 MouseCursor.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
                 MouseCursor.layer = ScreenLayer;
@@ -158,7 +158,7 @@ namespace KKS_VROON.VRUtils
 
         void Awake()
         {
-            PluginLog.Info($"Awake: {name}");
+            PluginLog.Debug($"Awake: {name}");
             Screens = new GameObject[Panels.Length];
             Setup();
         }
@@ -182,7 +182,7 @@ namespace KKS_VROON.VRUtils
 
         void OnDestroy()
         {
-            PluginLog.Info($"OnDestroy: {name}");
+            PluginLog.Debug($"OnDestroy: {name}");
             if (Camera) Destroy(Camera);
             foreach (var screen in Screens) if (screen) Destroy(screen);
             if (MouseCursor) Destroy(MouseCursor);

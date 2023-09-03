@@ -15,12 +15,12 @@ namespace KKS_VROON.Effects
 
             if (source && !target)
             {
-                PluginLog.Info($"AddComponent");
+                PluginLog.Debug($"AddComponent");
                 target = gameObject.AddComponent<CrossFade>();
             }
             if (!source && target)
             {
-                PluginLog.Info($"RemoveComponent");
+                PluginLog.Debug($"RemoveComponent");
                 Destroy(target);
                 return;
             }

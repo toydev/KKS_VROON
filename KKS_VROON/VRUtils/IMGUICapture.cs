@@ -21,14 +21,14 @@ namespace KKS_VROON.VRUtils
 
         void Awake()
         {
-            PluginLog.Info($"Awake: {name}");
+            PluginLog.Debug($"Awake: {name}");
 
             Texture = new RenderTexture(Screen.width, Screen.height, 0, RenderTextureFormat.ARGB32);
         }
 
         void OnDestroy()
         {
-            PluginLog.Info($"OnDestroy: {name}");
+            PluginLog.Debug($"OnDestroy: {name}");
 
             if (Texture != null)
             {

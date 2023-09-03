@@ -16,7 +16,7 @@ namespace KKS_VROON.ScenePlugins.CustomScene
     {
         void Awake()
         {
-            PluginLog.Info($"Awake: {name}");
+            PluginLog.Debug($"Awake: {name}");
 
             var baseBackground = gameObject.AddComponent<Camera>();
             baseBackground.depth = 90;
@@ -86,7 +86,7 @@ namespace KKS_VROON.ScenePlugins.CustomScene
             var gameMainCamera = CurrentGameMainCamera = Camera.main;
             if (gameMainCamera != null)
             {
-                PluginLog.Info($"UpdateCamera to {gameMainCamera.name}");
+                PluginLog.Debug($"UpdateCamera to {gameMainCamera.name}");
                 MainCamera.Hijack(gameMainCamera, useCopyFrom: false);
                 ReEffectUtils.AddEffects(gameMainCamera, MainCamera, /* Stopped DepthOfField, because it's blurry. */ useDepthOfField: false);
                 UIScreen.LinkToFront(MainCamera, 1.0f);

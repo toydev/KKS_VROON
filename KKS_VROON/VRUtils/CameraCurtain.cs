@@ -15,8 +15,6 @@ namespace KKS_VROON.VRUtils
                 && !Manager.Scene.IsNowLoadingFade
                 ;
 
-            PluginLog.Change($"{name}: cameraEnabled", cameraEnabled);
-
             var camera = GetComponent<Camera>();
             if (camera) camera.enabled = cameraEnabled;
 

@@ -136,7 +136,7 @@ namespace KKS_VROON.VRUtils
 
         void Awake()
         {
-            PluginLog.Info("Awake");
+            PluginLog.Debug($"Awake: {name}");
 
             if (VR.Initialized)
             {

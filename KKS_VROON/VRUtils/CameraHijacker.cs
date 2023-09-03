@@ -7,7 +7,7 @@ namespace KKS_VROON.VRUtils
     {
         public static void Hijack(Camera source, Camera destination = null, bool useCopyFrom = true, bool synchronization = true)
         {
-            PluginLog.Info($"Hijack {source.name} to {destination?.name}");
+            PluginLog.Debug($"Hijack {source.name} to {destination?.name}");
             if (destination && useCopyFrom) destination.CopyFrom(source);
             var hijacker = source.gameObject.GetOrAddComponent<CameraHijacker>();
             if (destination && synchronization) hijacker.Destination = destination;

@@ -109,7 +109,7 @@ namespace KKS_VROON.ScenePlugins
 
         private GameObject CreateSceneControllerGameObject(Type type)
         {
-            PluginLog.Info($"CreateSceneGameObject: {type.Name}");
+            PluginLog.Debug($"CreateSceneGameObject: {type.Name}");
 
             if (CurrentSceneControllerGameObject != null) Destroy(CurrentSceneControllerGameObject);
 

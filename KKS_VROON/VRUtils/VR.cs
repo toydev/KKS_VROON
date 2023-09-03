@@ -37,7 +37,7 @@ namespace KKS_VROON.VRUtils
 
         private IEnumerator Setup()
         {
-            PluginLog.Info("Start Setup");
+            PluginLog.Debug("Start Setup");
 
             try
             {
@@ -49,17 +49,17 @@ namespace KKS_VROON.VRUtils
                 var vrLoader = ScriptableObject.CreateInstance<OpenVRLoader>();
                 if (vrLoader.Initialize())
                 {
-                    PluginLog.Info("OpenVR initialization succeeded.");
+                    PluginLog.Debug("OpenVR initialization succeeded.");
                 }
                 else
                 {
-                    PluginLog.Error("OpenVR initialization failed.");
+                    PluginLog.Debug("OpenVR initialization failed.");
                     yield break;
                 }
 
                 if (vrLoader.Start())
                 {
-                    PluginLog.Info("OpenVR started.");
+                    PluginLog.Debug("OpenVR started.");
                 }
                 else
                 {
@@ -78,7 +78,7 @@ namespace KKS_VROON.VRUtils
                 switch (SteamVR.initializedState)
                 {
                     case SteamVR.InitializedStates.InitializeSuccess:
-                        PluginLog.Info("SteamVR initialization succeeded.");
+                        PluginLog.Debug("SteamVR initialization succeeded.");
                         break;
                     case SteamVR.InitializedStates.InitializeFailure:
                         PluginLog.Error("SteamVR initialization failed.");
@@ -97,7 +97,7 @@ namespace KKS_VROON.VRUtils
             Initialized = true;
             ActionAfterInitialization?.Invoke();
 
-            PluginLog.Info("Finish Setup");
+            PluginLog.Debug("Finish Setup");
             Destroy(gameObject);
         }
     }

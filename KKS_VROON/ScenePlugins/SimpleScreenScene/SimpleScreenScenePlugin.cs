@@ -12,7 +12,7 @@ namespace KKS_VROON.ScenePlugins.SimpleScreenScene
     {
         void Awake()
         {
-            PluginLog.Info($"Awake: {name}");
+            PluginLog.Debug($"Awake: {name}");
 
             UGUICapture = UGUICapture.Create(gameObject, nameof(UGUICapture), CustomLayers.UGUI_CAPTURE_LAYER);
             IMGUICapture = IMGUICapture.Create(gameObject);

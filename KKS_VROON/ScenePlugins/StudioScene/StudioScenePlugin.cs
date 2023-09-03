@@ -16,7 +16,7 @@ namespace KKS_VROON.ScenePlugins.StudioScene
     {
         void Awake()
         {
-            PluginLog.Info($"Awake: {name}");
+            PluginLog.Debug($"Awake: {name}");
 
             MainCamera = VRCamera.Create(gameObject, nameof(MainCamera), 100);
             StudioRootCamera = VRCamera.Create(gameObject, nameof(StudioRootCamera), 100);
@@ -69,7 +69,7 @@ namespace KKS_VROON.ScenePlugins.StudioScene
             var gameStudioRootCamera = Camera.allCameras.Where(i => 0 < (i.cullingMask & 1 << LayerMask.NameToLayer("Studio/Route"))).FirstOrDefault();
             if (gameMainCamera != null)
             {
-                PluginLog.Info($"UpdateCamera to {gameMainCamera.name}");
+                PluginLog.Debug($"UpdateCamera to {gameMainCamera.name}");
                 MainCamera.Hijack(gameMainCamera);
                 ReEffectUtils.AddEffects(gameMainCamera, MainCamera);
                 if (gameStudioRootCamera) StudioRootCamera.Hijack(gameStudioRootCamera);

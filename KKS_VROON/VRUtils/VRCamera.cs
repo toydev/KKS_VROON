@@ -86,7 +86,7 @@ namespace KKS_VROON.VRUtils
         {
             if (!Normal)
             {
-                PluginLog.Info($"Setup: {name}");
+                PluginLog.Debug($"Setup: {name}");
 
                 CameraObject = new GameObject($"{name}Internal");
                 Normal = CameraObject.AddComponent<Camera>();
@@ -102,25 +102,25 @@ namespace KKS_VROON.VRUtils
 
                 if (WithCurtain)
                 {
-                    PluginLog.Info("Add CameraCurtain");
+                    PluginLog.Debug("Add CameraCurtain");
                     CameraObject.GetOrAddComponent<CameraCurtain>();
                 }
                 else
                 {
-                    PluginLog.Info("No CameraCurtain");
+                    PluginLog.Debug("No CameraCurtain");
                 }
             }
         }
 
         void Awake()
         {
-            PluginLog.Info($"Awake: {name}");
+            PluginLog.Debug($"Awake: {name}");
             Setup();
         }
 
         void OnDestroy()
         {
-            PluginLog.Info($"OnDestroy: {name}");
+            PluginLog.Debug($"OnDestroy: {name}");
             if (CameraObject) Destroy(CameraObject);
         }
         #endregion

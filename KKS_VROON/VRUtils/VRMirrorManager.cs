@@ -7,7 +7,7 @@ namespace KKS_VROON.VRUtils
     {
         void Awake()
         {
-            PluginLog.Info($"Awake: {name}");
+            PluginLog.Debug($"Awake: {name}");
 
             // Simply disable all mirrors for now.
             foreach (var i in FindObjectsOfType<MirrorReflection>()) Destroy(i);

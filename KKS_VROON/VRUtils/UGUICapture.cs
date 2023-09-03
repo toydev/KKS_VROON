@@ -40,7 +40,7 @@ namespace KKS_VROON.VRUtils
 
         void Awake()
         {
-            PluginLog.Info($"Awake: {name}");
+            PluginLog.Debug($"Awake: {name}");
 
             Texture = new RenderTexture(Screen.width, Screen.height, 24, RenderTextureFormat.ARGB32);
 
@@ -70,7 +70,7 @@ namespace KKS_VROON.VRUtils
                     switch (GetCanvasUpdateType(canvas))
                     {
                         case CanvasUpdateType.CAPTURE:
-                            PluginLog.Info($"Capture canvas: {canvas.name} in {canvas.gameObject.layer}:{LayerMask.LayerToName(canvas.gameObject.layer)}");
+                            PluginLog.Debug($"Capture canvas: {canvas.name} in {canvas.gameObject.layer}:{LayerMask.LayerToName(canvas.gameObject.layer)}");
                             canvas.renderMode = RenderMode.ScreenSpaceCamera;
                             canvas.worldCamera = camera;
                             foreach (var i in canvas.gameObject.GetComponentsInChildren<Transform>())
@@ -82,7 +82,7 @@ namespace KKS_VROON.VRUtils
                             break;
                         case CanvasUpdateType.SKIP:
                         default:
-                            PluginLog.Info($"Skip canvas: {canvas.name} in {canvas.gameObject.layer}:{LayerMask.LayerToName(canvas.gameObject.layer)}");
+                            PluginLog.Debug($"Skip canvas: {canvas.name} in {canvas.gameObject.layer}:{LayerMask.LayerToName(canvas.gameObject.layer)}");
                             break;
                     }
                 }
@@ -90,14 +90,14 @@ namespace KKS_VROON.VRUtils
 
             foreach (var canvas in disableCanvas)
             {
-                PluginLog.Info($"Disable canvas: {canvas.name} in {canvas.gameObject.layer}:{LayerMask.LayerToName(canvas.gameObject.layer)}");
+                PluginLog.Debug($"Disable canvas: {canvas.name} in {canvas.gameObject.layer}:{LayerMask.LayerToName(canvas.gameObject.layer)}");
                 canvas.enabled = false;
             }
         }
 
         void OnDestroy()
         {
-            PluginLog.Info($"OnDestroy: {name}");
+            PluginLog.Debug($"OnDestroy: {name}");
 
             if (Texture != null)
             {

@@ -21,12 +21,10 @@ namespace KKS_VROON.Patches.DialogPatches
         public static IEnumerable<CodeInstruction> TranspilerShowDialog(IEnumerable<CodeInstruction> instructions)
         {
             var codes = new List<CodeInstruction>(instructions);
-            PluginLog.Info($"... {typeof(OpenFileDialog).GetNestedType("NativeMethods", BindingFlags.NonPublic)}");
             var getOpenFileNameMethod = typeof(OpenFileDialog).GetNestedType("NativeMethods", BindingFlags.NonPublic).GetMethod("GetOpenFileName", BindingFlags.Public | BindingFlags.Static);
 
             for (int i = 0; i < codes.Count; i++)
             {
-                PluginLog.Info($"{i}: {codes[i].opcode}, {codes[i].operand}");
                 if ((codes[i].opcode == OpCodes.Call || codes[i].opcode == OpCodes.Callvirt) &&
                     codes[i].operand as MethodInfo == getOpenFileNameMethod)
                 {
