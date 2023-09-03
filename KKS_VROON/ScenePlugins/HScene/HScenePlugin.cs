@@ -48,7 +48,7 @@ namespace KKS_VROON.ScenePlugins.HScene
 
             // Control the mouse pointer.
             if (HandController.State.IsPositionChanging() && UIScreen && HandController.RayCast(UIScreen.GetScreenPlane(), out var hit))
-                MouseKeyboardUtils.SetCursorPos(UIScreen.GetScreenPositionFromWorld(hit.point, WindowUtils.GetGameWindowRect()));
+                MouseKeyboardUtils.SetCursorPos(UIScreen.GetScreenPositionFromWorld(hit.point, WindowUtils.GetGameClientRect()));
 
             // Update base head.
             if (HandController.State.IsButtonYDown || HandController.State.IsButtonBDown) UpdateCamera(true);

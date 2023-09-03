@@ -36,7 +36,7 @@ namespace KKS_VROON.ScenePlugins.SimpleScreenScene
             // Control the mouse pointer.
             if (HandController.State.IsPositionChanging() && HandController.RayCast(UIScreen.GetScreenPlane(), out var hit))
             {
-                var screenPosition = UIScreen.GetScreenPositionFromWorld(hit.point, WindowUtils.GetGameWindowRect());
+                var screenPosition = UIScreen.GetScreenPositionFromWorld(hit.point, WindowUtils.GetGameClientRect());
                 MouseKeyboardUtils.NativeMethods.SetCursorPos((int)screenPosition.x, (int)screenPosition.y);
             }
 

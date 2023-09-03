@@ -70,7 +70,7 @@ namespace KKS_VROON.ScenePlugins.ActionScene
                 // Control the mouse pointer.
                 if (UIScreen) UIScreen.MouseCursorVisible = !ActionScene.isCursorLock;
                 if (ActionScene.isCursorLock != true && HandController.State.IsPositionChanging() && UIScreen && HandController.RayCast(UIScreen.GetScreenPlane(), out var hit))
-                    MouseKeyboardUtils.SetCursorPos(UIScreen.GetScreenPositionFromWorld(hit.point, WindowUtils.GetGameWindowRect()));
+                    MouseKeyboardUtils.SetCursorPos(UIScreen.GetScreenPositionFromWorld(hit.point, WindowUtils.GetGameClientRect()));
             }
 
             // Update base head.
