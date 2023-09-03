@@ -62,7 +62,8 @@ The plugin provides the following configuration options:
 |----|----|----|----|
 |GameWindowTopMost|Boolean|`true`|Set the game window to always be on top.|
 |EnableMirror|Boolean|`false`|Enable or disable mirror in VR.|
-|AxisScalingFactor|Float|`20.0f`|Scaling factor for hand controller axis.|
+|MainGameAxisScalingFactor|Float|`30.0f`|Scaling factor for hand controller axis in MainGame.|
+|CharaStudioAxisScalingFactor|Float|`50.0f`|Scaling factor for hand controller axis in CharaStudio.|
 
 You can change these settings via the BepInEx configuration manager.
 

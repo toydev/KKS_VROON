@@ -7,7 +7,10 @@ namespace KKS_VROON
     {
         public static ConfigEntry<bool> GameWindowTopMost { get; private set; }
         public static ConfigEntry<bool> EnableMirror { get; private set; }
-        public static ConfigEntry<float> AxisScalingFactor { get; private set; }
+        public static ConfigEntry<float> MainGameAxisScalingFactor { get; private set; }
+        public static ConfigEntry<float> CharaStudioAxisScalingFactor { get; private set; }
+
+        public static float AxisScalingFactor { get => Plugin.GameMode == KKAPI.GameMode.Studio ? CharaStudioAxisScalingFactor.Value : MainGameAxisScalingFactor.Value; }
 
         public static void Setup(ConfigFile config)
         {
@@ -21,11 +24,16 @@ namespace KKS_VROON
                 nameof(EnableMirror),
                 false,
                 "Enable or disable mirror in VR");
-            AxisScalingFactor = config.Bind(
-                "Controls",
+            MainGameAxisScalingFactor = config.Bind(
+                "MainGame",
                 "AxisScalingFactor",
-                20.0f,
-                "Scaling factor for hand controller axis");
+                30.0f,
+                "Scaling factor for hand controller axis in MainGame");
+            CharaStudioAxisScalingFactor = config.Bind(
+                "Studio",
+                "AxisScalingFactor",
+                50.0f,
+                "Scaling factor for hand controller axis in CharaStudio");
         }
     }
 }

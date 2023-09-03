@@ -18,8 +18,12 @@ namespace KKS_VROON
     [BepInDependency(KoikatuAPI.GUID, KoikatuAPI.VersionConst)]
     public class Plugin : BaseUnityPlugin
     {
+        public static GameMode GameMode { get; private set; }
+
         private void Setup()
         {
+            GameMode = KoikatuAPI.GetCurrentGameMode();
+            PluginLog.Debug($"GameMode: {GameMode}");
             if (PluginConfig.GameWindowTopMost.Value) WindowUtils.MakeWindowTopMost();
             new Harmony(nameof(KKS_VROON)).PatchAll();
             VRCamera.UpdateBaseHeadLocalValues();

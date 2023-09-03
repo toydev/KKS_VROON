@@ -15,14 +15,19 @@ namespace KKS_VROON.ScenePlugins.Common
 
         public VRHandController HandController { get; set; }
 
+        private float ScaleAxis(float value)
+        {
+            return Mathf.Sign(value) * Mathf.Pow(Mathf.Abs(value), 2);
+        }
+
         public virtual float? GetAxis(string axisName)
         {
             if (!HandController) return null;
 
-            var scalingFactory = PluginConfig.AxisScalingFactor.Value * Time.deltaTime;
+            var scalingFactory = PluginConfig.AxisScalingFactor * Time.deltaTime;
 
-            if (axisName == "Mouse X") return HandController.State.JoystickAxis.x * scalingFactory;
-            else if (axisName == "Mouse Y") return HandController.State.JoystickAxis.y * scalingFactory;
+            if (axisName == "Mouse X") return ScaleAxis(HandController.State.JoystickAxis.x) * scalingFactory;
+            else if (axisName == "Mouse Y") return ScaleAxis(HandController.State.JoystickAxis.y) * scalingFactory;
             return null;
         }
 
