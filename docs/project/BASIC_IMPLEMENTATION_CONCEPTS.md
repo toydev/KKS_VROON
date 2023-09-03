@@ -16,13 +16,17 @@ Once the VR camera's local transform is fixed, the VR camera transform can be le
 ----
 
 ## 2. Convert hand controller operation to basic mouse operation
-HarmonyLib interrupts the following basic mouse operations with hand controller operations.
+Convert hand controller button operations to mouse operations using mouse_event.
+
+- [BasicMouseEmulator.cs](/KKS_VROON/ScenePlugins/Common/BasicMouseEmulator.cs)
+  - SendMouseEvent
+
+In addition, HarmonyLib interrupts the operation of the hand controllers.
+
+Additionally, replace the following operations in HarmonyLib.
 
 - [InputPatch.cs](/KKS_VROON/Patches/InputPatches/InputPatch.cs)
   - UnityEngine.Input.GetAxis
-  - UnityEngine.Input.GetMouseButton
-  - UnityEngine.Input.GetMouseButtonDown
-  - UnityEngine.Input.GetMouseButtonUp
 - [ScreenPointToRayPatch.cs](/KKS_VROON/Patches/HandPatches/ScreenPointToRayPatch.cs)
   - UnityEngine.Camera.ScreenPointToRay
 

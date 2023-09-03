@@ -73,13 +73,13 @@ namespace KKS_VROON.VRUtils
         public bool MouseCursorVisible { get; set; } = true;
 
         #region Transform Screen <-> World
-        public Vector2 GetScreenPositionFromWorld(Vector3 worldPositionOnScreen, Rect gameWindowRect)
+        public Vector2 GetScreenPositionFromWorld(Vector3 worldPositionOnScreen, Rect gameClientRect)
         {
             var localHitPoint = MainScreen.transform.InverseTransformPoint(worldPositionOnScreen);
-            var actualWidth = gameWindowRect.height * 16f / 9f;
+            var actualWidth = gameClientRect.height * 16f / 9f;
             return new Vector2(
-                (int)(gameWindowRect.x + (gameWindowRect.width - actualWidth) / 2f + (localHitPoint.x + 0.5f) * actualWidth),
-                (int)(gameWindowRect.y + (0.5f - localHitPoint.y) * gameWindowRect.height));
+                (int)(gameClientRect.x + (gameClientRect.width - actualWidth) / 2f + (localHitPoint.x + 0.5f) * actualWidth),
+                (int)(gameClientRect.y + (0.5f - localHitPoint.y) * gameClientRect.height));
         }
 
         public Vector3? GetWorldPositionFromScreen(float x, float y)

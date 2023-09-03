@@ -1,5 +1,6 @@
 ﻿using KKS_VROON.Logging;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -48,16 +49,25 @@ namespace KKS_VROON.WindowNativeUtils
             NativeMethods.SetWindowPos(GameWindowHandle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
         }
 
-        public static Rect GetGameWindowRect()
+        public static Rect GetGameClientRect() => GetClientRect(GameWindowHandle);
+
+        public static Rect GetClientRect(IntPtr hWnd)
         {
             var rect = default(RECT);
-            NativeMethods.GetClientRect(GameWindowHandle, ref rect);
+            NativeMethods.GetClientRect(hWnd, ref rect);
             var point = default(POINT);
-            NativeMethods.ClientToScreen(GameWindowHandle, ref point);
+            NativeMethods.ClientToScreen(hWnd, ref point);
             rect.Left = point.X;
             rect.Top = point.Y;
             rect.Right += point.X;
             rect.Bottom += point.Y;
+            return new Rect(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
+        }
+
+        public static Rect GetWindowRect(IntPtr hWnd)
+        {
+            var rect = default(RECT);
+            NativeMethods.GetWindowRect(hWnd, ref rect);
             return new Rect(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
         }
 
@@ -69,11 +79,28 @@ namespace KKS_VROON.WindowNativeUtils
 
         }
 
+        public static List<IntPtr> GetGameChildWindows()
+        {
+            var currentProcessId = (uint)Process.GetCurrentProcess().Id;
+            var result = new List<IntPtr>();
+            NativeMethods.EnumWindows((hWnd, _) =>
+            {
+                NativeMethods.GetWindowThreadProcessId(hWnd, out var processId);
+                if (processId == currentProcessId) result.Add(hWnd);
+                return true;
+            }, IntPtr.Zero);
+            return result;
+        }
+
         private static IntPtr GameWindowHandle { get; set; } = IntPtr.Zero;
 
         #region NativeMethods
         public class NativeMethods
         {
+            [DllImport("user32.dll")]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect);
+
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool GetClientRect(IntPtr hWnd, ref RECT lpRect);
@@ -92,6 +119,9 @@ namespace KKS_VROON.WindowNativeUtils
 
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
             public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
+
+            [DllImport("user32.dll")]
+            public static extern bool IsWindowVisible(IntPtr hWnd);
 
             [DllImport("user32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
