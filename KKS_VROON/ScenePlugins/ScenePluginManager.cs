@@ -114,6 +114,7 @@ namespace KKS_VROON.ScenePlugins
             if (CurrentSceneControllerGameObject != null) Destroy(CurrentSceneControllerGameObject);
 
             CurrentSceneControllerGameObject = new GameObject(type.Name);
+            DontDestroyOnLoad(CurrentSceneControllerGameObject);
             CurrentSceneControllerGameObject.AddComponent(type);
             return CurrentSceneControllerGameObject;
         }
