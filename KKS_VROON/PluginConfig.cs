@@ -5,7 +5,9 @@ namespace KKS_VROON
 {
     public class PluginConfig : MonoBehaviour
     {
-        public static ConfigEntry<bool> GameWindowTopMost;
+        public static ConfigEntry<bool> GameWindowTopMost { get; private set; }
+        public static ConfigEntry<bool> EnableMirror { get; private set; }
+
 
         public static void Setup(ConfigFile config)
         {
@@ -14,6 +16,11 @@ namespace KKS_VROON
                 nameof(GameWindowTopMost),
                 true,
                 "Set the game window to always be on top.");
+            EnableMirror = config.Bind(
+                "General",
+                nameof(EnableMirror),
+                false,
+                "Enable or disable mirror in VR");
         }
     }
 }

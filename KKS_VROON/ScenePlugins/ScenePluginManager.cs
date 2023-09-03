@@ -19,7 +19,8 @@ namespace KKS_VROON.ScenePlugins
         #region Control scene
         void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            new GameObject(nameof(VRMirrorManager) + scene.name).AddComponent<VRMirrorManager>();
+            if (!PluginConfig.EnableMirror.Value)
+                new GameObject(nameof(VRMirrorManager) + scene.name).AddComponent<VRMirrorManager>();
 
             if (mode == LoadSceneMode.Single)
             {
