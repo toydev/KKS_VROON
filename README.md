@@ -47,7 +47,6 @@ The left and right VR controller operations are the same.
 |Select a body part with pointer|Select a body part with laser pointer|
 |Left / Right click + mouse movements|Press trigger/grip + Joystick(Vertical control is suppressed when walking in MainGame)|
 |Mouse wheel|Joystick up and down|
-
 |Lateral rotation when moving|Joystick|
 |Vertical rotation when moving|Looking up with HMD|
 
