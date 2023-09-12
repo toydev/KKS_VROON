@@ -27,7 +27,8 @@ namespace KKS_VROON.ScenePlugins.HScene
                 new UIScreenPanel[] {
                     new UIScreenPanel(UGUICapture.Texture),
                     new UIScreenPanel(IMGUICapture.Texture, -0.001f * Vector3.forward, Vector3.one),
-                }
+                },
+                mouseCursorVisible: () => Cursor.visible
             );
             HandController = VRHandController.Create(gameObject, nameof(VRHandController), CustomLayers.UI_SCREEN_LAYER);
             HandController.GetOrAddComponent<VRHandControllerMouseIconAttachment>();
@@ -47,7 +48,7 @@ namespace KKS_VROON.ScenePlugins.HScene
             InputPatch.Emulator.SendMouseEvent();
 
             // Control the mouse pointer.
-            if (HandController.State.IsPositionChanging() && UIScreen && HandController.RayCast(UIScreen.GetScreenPlane(), out var hit))
+            if (Cursor.visible && HandController.State.IsPositionChanging() && UIScreen && HandController.RayCast(UIScreen.GetScreenPlane(), out var hit))
                 MouseKeyboardUtils.SetCursorPos(UIScreen.GetScreenPositionFromWorld(hit.point, WindowUtils.GetGameClientRect()));
 
             // Update base head.

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+
+using UnityEngine;
 
 using KKS_VROON.Logging;
 
@@ -15,7 +17,7 @@ namespace KKS_VROON.VRUtils
             UIScreenPanel[] panels,
             bool withCurtain = true,
             CameraClearFlags clearFlags = CameraClearFlags.Depth,
-            bool mouseCursorVisible = true
+            Func<bool> mouseCursorVisible = null
         )
         {
             var gameObject = new GameObject($"{parentGameObject.name}{name}");
@@ -70,7 +72,7 @@ namespace KKS_VROON.VRUtils
         }
 
         public VRCamera Camera { get; private set; }
-        public bool MouseCursorVisible { get; set; } = true;
+        public Func<bool> MouseCursorVisible { get; set; }
 
         #region Transform Screen <-> World
         public Vector2 GetScreenPositionFromWorld(Vector3 worldPositionOnScreen, Rect gameClientRect)
@@ -167,7 +169,7 @@ namespace KKS_VROON.VRUtils
         {
             if (0 <= Input.mousePosition.x && Input.mousePosition.x <= UnityEngine.Screen.width
                 && 0 <= Input.mousePosition.y && Input.mousePosition.y <= UnityEngine.Screen.height
-                && MouseCursorVisible
+                && (MouseCursorVisible == null || MouseCursorVisible())
             )
             {
                 MouseCursor.SetActive(true);

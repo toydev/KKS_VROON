@@ -39,7 +39,8 @@ namespace KKS_VROON.ScenePlugins.CustomScene
                     new UIScreenPanel(UGUICapture.Texture),
                     new UIScreenPanel(IMGUICapture.Texture, -0.001f * Vector3.forward, Vector3.one),
                 },
-                clearFlags: CameraClearFlags.Depth
+                clearFlags: CameraClearFlags.Depth,
+                mouseCursorVisible: () => Cursor.visible
             );
             UGUICaptureForBackground = UGUICapture.Create(gameObject, nameof(UGUICaptureForBackground), CustomLayers.BACKGROUND_UGUI_CAPTURE_LAYER,
                 (canvas) => "CvsBackground" == canvas.name ? UGUICapture.CanvasUpdateType.CAPTURE : UGUICapture.CanvasUpdateType.SKIP);
@@ -47,7 +48,8 @@ namespace KKS_VROON.ScenePlugins.CustomScene
                 new UIScreenPanel[] {
                     new UIScreenPanel(UGUICaptureForBackground.Texture, Vector3.forward * 3, Vector3.one * 5),
                 },
-                mouseCursorVisible: false, clearFlags: CameraClearFlags.Nothing
+                clearFlags: CameraClearFlags.Nothing,
+                mouseCursorVisible: () => false
             );
             HandController = VRHandController.Create(gameObject, nameof(VRHandController), CustomLayers.UI_SCREEN_LAYER);
             HandController.GetOrAddComponent<VRHandControllerMouseIconAttachment>();
@@ -66,7 +68,7 @@ namespace KKS_VROON.ScenePlugins.CustomScene
             InputPatch.Emulator.SendMouseEvent();
 
             // Control the mouse pointer.
-            if (HandController.State.IsPositionChanging() && UIScreen && HandController.RayCast(UIScreen.GetScreenPlane(), out var hit))
+            if (Cursor.visible && HandController.State.IsPositionChanging() && UIScreen && HandController.RayCast(UIScreen.GetScreenPlane(), out var hit))
                 MouseKeyboardUtils.SetCursorPos(UIScreen.GetScreenPositionFromWorld(hit.point, WindowUtils.GetGameClientRect()));
 
             // Update base head.

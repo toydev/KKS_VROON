@@ -34,7 +34,9 @@ namespace KKS_VROON.ScenePlugins.OpeningScene
                     new UIScreenPanel(IMGUICapture.Texture, -0.001f * Vector3.forward, Vector3.one),
                 },
                 // issue #2: Don't use CameraCurtain during OpeningScene for dialog control when playing the game for the first time.
-                withCurtain: Manager.Scene.NowSceneNames?.Contains(SceneNames.OPENING_SCENE) != true);
+                withCurtain: Manager.Scene.NowSceneNames?.Contains(SceneNames.OPENING_SCENE) != true,
+                mouseCursorVisible: () => Cursor.visible
+            );
             HandController = VRHandController.Create(gameObject, nameof(VRHandController), CustomLayers.UI_SCREEN_LAYER);
             InputPatch.Emulator = new BasicMouseEmulator(HandController);
 
@@ -49,7 +51,7 @@ namespace KKS_VROON.ScenePlugins.OpeningScene
             InputPatch.Emulator.SendMouseEvent();
 
             // Control the mouse pointer.
-            if (HandController.State.IsPositionChanging() && UIScreen && HandController.RayCast(UIScreen.GetScreenPlane(), out var hit))
+            if (Cursor.visible && HandController.State.IsPositionChanging() && UIScreen && HandController.RayCast(UIScreen.GetScreenPlane(), out var hit))
                 MouseKeyboardUtils.SetCursorPos(UIScreen.GetScreenPositionFromWorld(hit.point, WindowUtils.GetGameClientRect()));
 
             // Update base head.
