@@ -1,7 +1,6 @@
 # How to set up this project
 ## Prerequisites
-- Koikatsu Sunshine
-  - Must be a standard installation directory (C:\illusion\KoikatsuSunshine).
+- Set the Koikatsu Sunshine installation directory to the KKS_VROON_GAME_HOME environment variable (Example: KKS_VROON_GAME_HOME=C:\illusion\KoikatsuSunshine).
 - [Visual Studio Community](https://visualstudio.microsoft.com/vs/community/)
 - [Unity Hub](https://unity.com/download)
 

@@ -1,4 +1,9 @@
 # How to create a SteamVR project from scratch
+## Prerequisites
+- Set the Koikatsu Sunshine installation directory to the KKS_VROON_GAME_HOME environment variable (Example: KKS_VROON_GAME_HOME=C:\illusion\KoikatsuSunshine).
+- [Visual Studio Community](https://visualstudio.microsoft.com/vs/community/)
+- [Unity Hub](https://unity.com/download)
+
 ## Preparing IllusionLibs
 Configure nuget.config according to "How to use IllusionLibs in your project" below.
 
@@ -28,7 +33,7 @@ Add the source with Add As Link of Existing Item.
   - conditional compliation symbols: -
   - references:
     - IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModules
-    - UnityEngine.SubsystemsModule.dll (from C:\illusion\KoikatsuSunshine\KoikatsuSunshine_Data\Managed)
+    - UnityEngine.SubsystemsModule.dll (from $(KKS_VROON_GAME_HOME)\KoikatsuSunshine_Data\Managed)
 - SteamVRLib_Unity.XR.OpenVR
   - source: SteamVRUnity\Library\PackageCache\com.valvesoftware.unity.openvr@3ee6c452bc34\Runtime\*.cs
   - conditional compliation symbols: UNITY_5_3_OR_NEWER,UNITY_XR_MANAGEMENT
@@ -36,7 +41,7 @@ Add the source with Add As Link of Existing Item.
     - SteamVRLib_UnityEngine.XR.Management
     - IllusionLibs.KoikatsuSunshine.UnityEngine.CoreModules
     - IllusionLibs.KoikatsuSunshine.UnityEngine.XRModule
-    - UnityEngine.SubsystemsModule.dll (from C:\illusion\KoikatsuSunshine\KoikatsuSunshine_Data\Managed)
+    - UnityEngine.SubsystemsModule.dll (from $(KKS_VROON_GAME_HOME)\KoikatsuSunshine_Data\Managed)
 - SteamVRLib_Valve.VR
   - source:
     - SteamVRUnity\Assets\SteamVR\Input\*.cs

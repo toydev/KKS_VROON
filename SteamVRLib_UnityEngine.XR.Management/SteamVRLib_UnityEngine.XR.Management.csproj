@@ -56,7 +56,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.SubsystemsModule">
-      <HintPath>C:\illusion\KoikatsuSunshine\KoikatsuSunshine_Data\Managed\UnityEngine.SubsystemsModule.dll</HintPath>
+      <HintPath>$(KKS_VROON_GAME_HOME)\KoikatsuSunshine_Data\Managed\UnityEngine.SubsystemsModule.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

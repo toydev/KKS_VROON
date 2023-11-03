@@ -56,7 +56,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.SubsystemsModule">
-      <HintPath>C:\illusion\KoikatsuSunshine\KoikatsuSunshine_Data\Managed\UnityEngine.SubsystemsModule.dll</HintPath>
+      <HintPath>$(KKS_VROON_GAME_HOME)\KoikatsuSunshine_Data\Managed\UnityEngine.SubsystemsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.XRModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\IllusionLibs.KoikatsuSunshine.UnityEngine.XRModule.2019.4.9\lib\net46\UnityEngine.XRModule.dll</HintPath>
