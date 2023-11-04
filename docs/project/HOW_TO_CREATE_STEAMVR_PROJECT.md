@@ -49,7 +49,7 @@ Add the source with Add As Link of Existing Item.
     - SteamVRUnity\Assets\SteamVR\Scripts\*.cs
     - SteamVRUnity\Assets\SteamVR_Input\*.cs
     - SteamVRUnity\Assets\SteamVR_Input\ActionSetClasses\*.cs
-  - conditional compliation symbols: UNITY_5_3_OR_NEWER,UNITY_2017_2_OR_NEWER,OPENVR_XR_API
+  - conditional compliation symbols: UNITY_5_3_OR_NEWER,UNITY_2017_1_OR_NEWER,UNITY_2017_2_OR_NEWER,UNITY_2018_3_OR_NEWER,UNITY_2019_3_OR_NEWER,OPENVR_XR_API
   - references:
     - SteamVRLib_Unity.XR.OpenVR
     - IllusionLibs.KoikatsuSunshine.UnityEngine.AudioModule

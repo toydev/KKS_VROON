@@ -29,7 +29,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;UNITY_5_3_OR_NEWER,UNITY_2017_2_OR_NEWER,OPENVR_XR_API</DefineConstants>
+    <DefineConstants>TRACE;UNITY_5_3_OR_NEWER,UNITY_2017_1_OR_NEWER,UNITY_2017_2_OR_NEWER,UNITY_2018_3_OR_NEWER,UNITY_2019_3_OR_NEWER,OPENVR_XR_API</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
